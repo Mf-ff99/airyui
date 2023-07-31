@@ -1,0 +1,45 @@
+@import './base.css';
+
+/* background color: FFB4A2 */
+/* primary text:  6D6875 */
+/* primary color:  E5989B */
+/* secondary color: FFCDB2 */
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: #6D6875;
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(293, 71%, 57%, 0.2);
+    border-radius: 10px;
+    color: black;
+  }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFB4A2;
+  min-height: 100vh;
+  min-width: 900px;
+}
+
