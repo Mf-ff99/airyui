@@ -22,7 +22,7 @@ onMounted(() => {
 
 const handleLogout = () => {
   signOut(auth)
-
+  router.push('/')
 }
 </script>
 
@@ -32,8 +32,8 @@ const handleLogout = () => {
       <Main msg="You did it!" />
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
+        <RouterLink to="/login" v-if="!isLoggedIn">Login</RouterLink>
+        <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink>
         <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
         <button @click="handleLogout" v-if="isLoggedIn">Log out</button>
       </nav>

@@ -18,28 +18,31 @@ const email = ref("")
 const password = ref("")
 const errorMessage = ref("")
 
+// sign-in logic with error handling
+// stronger type/argument checking needed
 const signIn = () => {
     signInWithEmailAndPassword(getAuth(), email.value, password.value)
         .then((data) => {
             // Signed in 
-            const user = data.user;
             router.push('/')
-            console.log(user)
-            // ...
         })
         .catch((error) => {
             switch (error.code) {
                 case "auth/invalid-email":
                     errorMessage.value = "Invalid email address."
+                    alert(error.message)                    
                     break;
                 case "auth/user-not-found":
                     errorMessage.value = "User not found."
+                    alert(error.message)
                     break;
                 case "auth/wrong-password":
                     errorMessage.value = "Wrong password."
+                    alert(error.message)
                     break;
                 default:
                     errorMessage.value = "password or email is incorrect."
+                    alert(error.message)
                     break;
             }
         })
