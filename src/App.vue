@@ -1,41 +1,29 @@
-<script setup>
-import { RouterLink, RouterView, useRouter } from 'vue-router'
-import Main from './components/Main.vue'
-import { onMounted, ref} from "vue"
-const router = useRouter()
+<script>
+import { useRouter } from 'vue-router'
+import { useAuth} from "@/firebase"
 
-const isLoggedIn = ref(false)
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"
+// add logic here to redirect after login/logout
 
-// auth current state logic 
-let auth;
-onMounted(() => {
-  auth = getAuth()
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn.value = true
-    } else {
-      isLoggedIn.value = false
-    }
-  })
-})
-
-const handleLogout = () => {
-  signOut(auth)
-  router.push('/')
+export default {
+  setup() {
+    const { user, isLoggedIn, signOut, signIn } = useAuth()
+    return { user, isLoggedIn, signOut, signIn }
+  }
 }
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <Main msg="You did it!" />
+      <div class="greetings">
+        <h1>a i r y ui</h1>
+      </div>
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
+        <RouterLink to="/login" @click="signIn" v-if="!isLoggedIn">Login</RouterLink>
+        <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
         <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
-        <button @click="handleLogout" v-if="isLoggedIn">Log out</button>
+        <button @click="signOut" v-if="isLoggedIn">Log out</button>
       </nav>
     </div>
   </header>
@@ -77,6 +65,29 @@ nav button {
 
 nav button:hover {
   cursor: pointer;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 2.6rem;
+  position: relative;
+  top: -10px;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+.greetings h1,
+.greetings h3 {
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .greetings h1,
+  .greetings h3 {
+    text-align: left;
+  }
 }
 
 </style>
