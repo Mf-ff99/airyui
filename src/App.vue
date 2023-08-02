@@ -2,10 +2,10 @@
 import { useRouter } from 'vue-router'
 import { useAuth} from "@/firebase"
 
-// add logic here to redirect after login/logout
 
 export default {
   setup() {
+    // add logic here to redirect after login/logout
     const { user, isLoggedIn, signOut, signIn } = useAuth()
     return { user, isLoggedIn, signOut, signIn }
   }

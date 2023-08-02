@@ -1,7 +1,6 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
-import { useRouter } from 'vue-router'
 
 import { ref, onUnmounted, computed } from 'vue'
 
