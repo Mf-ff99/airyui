@@ -1,8 +1,9 @@
 <template>
     <span>dashboard</span>
-    <div>
+    <div class="messageWrapper">
         <Message v-for="{ id, text, userName, userId } in messages" 
-            :key="id" 
+            :key="id"
+            :id="id" 
             :name="userName" 
             :sender="userId == user?.uid">
             {{ text }}
@@ -13,7 +14,7 @@
 
     <div>
         <div>
-            <form @submit.prevent="sendMessage">
+            <form @submit.prevent="send">
                 <input v-model="message" type="text" placeholder="Type a message" required />
                 <button type="submit">Send</button>
             </form>
@@ -23,14 +24,15 @@
 
 <script>
 import { ref, watch, nextTick } from 'vue'
-import { useChat } from '@/firebase'
+import { useChat, useAuth } from '@/firebase'
 import Message from '../components/Message.vue'
+
+const { user } = useAuth()
 
 export default {
     setup() {
-        const { messages, sendMessage } = useChat();
-        const message = ref('');
-
+        const { messages, sendMessage, deleteMessage } = useChat()
+        
         const loadNewMessages = ref(null)
         watch(
             messages,
@@ -40,22 +42,35 @@ export default {
                 })
             },
             { deep: true }
-        )
-
+            )
+            
+        const message = ref('')
         const send = () => {
             sendMessage(message.value)
             message.value = ''
         }
 
-
         return {
             message,
             sendMessage,
             messages,
-            send
-        };
+            send,
+            user
+        }
     },
     components: { Message }
 }
 
 </script>
+
+<style>
+.messageWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 800px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+</style>

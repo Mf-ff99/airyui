@@ -41,25 +41,29 @@ const messagesQuery = messagesCollection.orderBy('createdAt', 'desc').limit(100)
 export function useChat() {
     const messages = ref([])
     const unsubscribe = messagesQuery.onSnapshot(snapshot => {
-        messages.value = snapshot.docs
-            .map(doc => ({ id: doc.id, ...doc.data() }))
-            .reverse()
+      messages.value = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .reverse()
     })
     onUnmounted(unsubscribe)
-
+  
     const { user, isLoggedIn } = useAuth()
     const sendMessage = text => {
-        if (!isLoggedIn.value) return
-        const { photoURL, uid, displayName } = user.value
-        messagesCollection.add({
-            userName: displayName,
-            userId: uid,
-            userPhotoURL: photoURL,
-            text,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        })
+      if (!isLoggedIn.value) return
+      const { uid, displayName } = user.value
+      messagesCollection.add({
+        userName: displayName,
+        userId: uid,
+        text: text,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
     }
-    return { messages, sendMessage }
-}
+
+    const deleteMessage = messageId => {
+        messagesCollection.doc(messageId).delete()
+    }
+  
+    return { messages, sendMessage, deleteMessage }
+  }
 
 
