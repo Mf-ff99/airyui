@@ -1,23 +1,25 @@
 <template>
-    <span>dashboard</span>
-    <div class="messageWrapper">
-        <Message v-for="{ id, text, userName, userId } in messages" 
-            :key="id"
-            :id="id" 
-            :name="userName" 
-            :sender="userId == user?.uid">
-            {{ text }}
-        </Message>
-    </div>
+    <div class="dashboardView">
+        <span>dashboard</span>
+        <div class="messageWrapper">
+            <Message v-for="{ id, text, userName, userId } in messages" 
+                :key="id"
+                :id="id" 
+                :name="userName" 
+                :sender="userId == user?.uid">
+                {{ text }}
+            </Message>
+        </div>
 
-    <div ref="loadNewMessages"></div>
+        <div ref="loadNewMessages"></div>
 
-    <div>
-        <div class="submitForm">
-            <form @submit.prevent="send">
-                <input v-model="message" type="text" placeholder="Type a message" required />
-                <button type="submit" class="sendButton">{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</button>
-            </form>
+        <div>
+            <div class="submitForm">
+                <form @submit.prevent="send">
+                    <textarea v-model="message" type="text" placeholder="Type a message" required />
+                    <button type="submit" class="sendButton">{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -71,6 +73,9 @@ export default {
 </script>
 
 <style>
+.dashboardView {
+    /* max-width: 80%; */
+}
 
 form {
     display: flex;
@@ -79,11 +84,15 @@ form {
     justify-content: space-between;
 }
 
-input {
+textarea {
     width: 80%;
     height: 30px;
     border-radius: 5px;
     border-width: 1px;
+    max-width: 300px;
+    max-height: 70px;
+    min-width: 300px;
+    min-height: 70px;
 }
 .sendButton {
     display: flex;
@@ -152,6 +161,7 @@ input {
     height: 800px;
     overflow-y: scroll;
     overflow-x: hidden;
+    /* max-width: 100vw; */
 }
 
 ::-webkit-scrollbar {
