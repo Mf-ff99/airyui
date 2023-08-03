@@ -29,13 +29,19 @@ export default {
         const userProfile = ref([])
 
         userProfile.value = useChat().getUserInfo(userId.value)
+            .then(({ userInfo }) => {
+                console.log(userInfo, 'userInfo')
+                return userInfo
+            })
+            .catch(error => console.log(error, 'error')
+        )
         
         onMounted(() => {
             userId.value = route.params.id
         })
 
-        userMessages.value = useChat().getUserMessages(route.params.id)
-        
+        // userMessages.value = useChat().getUserMessages(route.params.id)
+
         console.log(userProfile, 'profile')
         return {
             userId,
