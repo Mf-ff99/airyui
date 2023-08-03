@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Main from '../views/HomeView.vue'
+import ProfileView from '../views/ProfileView.vue'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
@@ -25,7 +26,13 @@ const router = createRouter({
       path: "/dashboard",
       component: () => import("../views/DashboardView.vue"),
       meta: { requiresAuth: true },
-    }
+    },
+    {
+      path: "/profile/:id",
+      name: "profile", 
+      component: ProfileView,
+      meta: { requiresAuth: true },
+    },
   ]
 })
 

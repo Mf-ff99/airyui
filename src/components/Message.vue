@@ -1,6 +1,6 @@
 <template>
     <div class="messageBodyWrapper">
-        <span v-if="!sender" class="sender">{{ name }}</span>
+        <router-link v-if="!sender" class="sender" :to="'/profile/' + id">{{ name }}</router-link>
         <!-- make the delete button a menu with delete and edit -->
         <button v-if="sender" class="deleteButton" @click="sender ? deleteUserMessage(id) : null"></button>
         <div>
@@ -48,11 +48,15 @@ export default {
 <style>
 .messageBodyWrapper {
     display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 0.5rem;
-    min-width: 100%;
+    min-width: fit-content;
+    background-color: #eee;
+    border-radius: 0.5rem;
+    padding: 5px 5px;
+    margin-right: 
 }
 
 .deleteButton::after {
@@ -63,6 +67,16 @@ export default {
 .sender {
     font-weight: bold;
     margin-right: 0.5rem;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.sender:hover {
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+    transition-duration: .4s;
+    border-radius: 5px;
 }
 
 .message {

@@ -56,6 +56,7 @@ export function useAuth() {
 const firestore = firebase.firestore()
 const messagesCollection = firestore.collection('messages')
 const messagesQuery = messagesCollection.orderBy('createdAt', 'desc').limit(100)
+const usersCollection = firestore.collection('users')
 
 export function useChat() {
     const messages = ref([])
@@ -78,11 +79,38 @@ export function useChat() {
       })
     }
 
+    const getUserInfo = (userId) => {
+      const userInfo = ref([])
+      const unsubscribe = usersCollection.where('userId', '==', userId).onSnapshot(snapshot => {
+        userInfo.value = snapshot.docs
+          .map(doc => ({ id: doc.id, ...doc.data() }))
+      })
+      // console.log(userInfo.value, 'fb user info')
+      onUnmounted(unsubscribe)
+      return { userInfo }
+    }
+
+    const getUserMessages = (userId) => {
+      const userMessages = ref([])
+      const unsubscribe = messagesCollection.onSnapshot(snapshot => {
+        userMessages.value = snapshot.docs
+          .map(doc => ({ id: doc.id, ...doc.data() }))
+      })
+      onUnmounted(unsubscribe)
+      console.log(userMessages, 'fb user id')
+      return { userMessages }
+    }
+
     const deleteMessage = messageId => {
         messagesCollection.doc(messageId).delete()
     }
   
-    return { messages, sendMessage, deleteMessage }
+    return { 
+      messages, 
+      sendMessage, 
+      deleteMessage, 
+      getUserMessages, 
+      getUserInfo }
   }
 
 
