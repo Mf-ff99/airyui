@@ -5,9 +5,22 @@ import { useAuth} from "@/firebase"
 
 export default {
   setup() {
-    // add logic here to redirect after login/logout
     const { user, isLoggedIn, signOut, signIn } = useAuth()
-    return { user, isLoggedIn, signOut, signIn }
+    const router = useRouter()
+
+    const signUserOut = () => {
+      signOut()
+      router.push('/')
+    }
+
+    const signUserIn = () => {
+      signIn()
+      .then(() => {
+        router.push('/dashboard')
+      })
+    }
+
+    return { user, isLoggedIn, signUserOut, signUserIn }
   }
 }
 </script>
@@ -20,10 +33,10 @@ export default {
       </div>
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/login" @click="signIn" v-if="!isLoggedIn">Login</RouterLink>
+        <a to="" class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
         <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
         <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
-        <button @click="signOut" v-if="isLoggedIn">Log out</button>
+        <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
       </nav>
     </div>
   </header>
@@ -32,6 +45,10 @@ export default {
 </template>
 
 <style scoped>
+
+.loginButton:hover {
+  cursor: pointer;
+}
 
 nav {
   padding: 5px;

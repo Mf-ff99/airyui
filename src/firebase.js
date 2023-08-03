@@ -21,14 +21,33 @@ export function useAuth() {
     const user = ref(null)
     const unsubscribe = auth.onAuthStateChanged(_user => (user.value = _user))
     onUnmounted(unsubscribe)
+
     const isLoggedIn = computed(() => user.value !== null)
+
+    const isFirstTimeLogin = computed(() => {
+      if (user.value.metadata.creationTime == user.value.metadata.lastSignInTime) {
+        return true
+      } else { return false } })
+
     const signIn = async () => {
         const googleProvider = new firebase.auth.GoogleAuthProvider()
         await auth.signInWithPopup(googleProvider)
-    }
+        if (isFirstTimeLogin.value) {
+          const { uid } = user.value
+          await firestore.collection('users').doc(uid).set({
+            userId: uid,
+            userProfileStatus: 'hey, im the default text! look at me, im a noob!!',
+            messagesSent: 0,
+            userRole: 'user',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          })
+        }
+      }
+
     const signOut = () => {
         auth.signOut()
     }
+
     return { user, isLoggedIn, signIn, signOut }
 }
 
