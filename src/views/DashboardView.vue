@@ -13,10 +13,10 @@
     <div ref="loadNewMessages"></div>
 
     <div>
-        <div>
+        <div class="submitForm">
             <form @submit.prevent="send">
                 <input v-model="message" type="text" placeholder="Type a message" required />
-                <button type="submit">Send</button>
+                <button type="submit" class="sendButton">{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</button>
             </form>
         </div>
     </div>
@@ -31,7 +31,8 @@ const { user } = useAuth()
 
 export default {
     setup() {
-        const { messages, sendMessage, deleteMessage } = useChat()
+        const { messages, sendMessage } = useChat()
+        const sendClicked = ref(false)
         
         const loadNewMessages = ref(null)
         watch(
@@ -43,11 +44,16 @@ export default {
             },
             { deep: true }
             )
-            
+
+
+        // the logic for sendButton text is broken    
         const message = ref('')
         const send = () => {
+            sendClicked.value = true
+            console.log(sendClicked.value)
             sendMessage(message.value)
             message.value = ''
+            // setTimeout(() => sendClicked.value = false, 2000);
         }
 
         return {
@@ -55,7 +61,8 @@ export default {
             sendMessage,
             messages,
             send,
-            user
+            user,
+            sendClicked
         }
     },
     components: { Message }
@@ -64,6 +71,79 @@ export default {
 </script>
 
 <style>
+
+form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+input {
+    width: 80%;
+    height: 30px;
+    border-radius: 5px;
+    border-width: 1px;
+}
+.sendButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    text-decoration: none;
+    color: #333333;
+    font-size: 18px;
+    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid #333333;
+    position: relative;
+    transition: 0.3s;
+    background-color: #ffffff00;
+    -webkit-transition-duration: .4s;
+    margin-right: 25px;
+}
+
+.sendButton::before, .sendButton::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform-origin: 100% 50%;
+  height: 1px;
+  width: 11px;
+  background-color: #333;
+  border-radius: 2px;
+  will-change: transform;
+  transition: .3s;
+}
+
+.sendButton::before {
+  transform: translateY(-50%) rotate(30deg);
+}
+
+.sendButton::after {
+  transform: translateY(-50%) rotate(-30deg);
+}
+
+.sendButton:hover::before {
+  transform: translate(5px, -50%) rotate(30deg);
+  color: white;
+}
+
+.sendButton:hover::after {
+  transform: translate(5px, -50%) rotate(-30deg);
+  color: white;
+}
+
+.sendButton:hover {
+    background-color: #333333;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+
 .messageWrapper {
     display: flex;
     flex-direction: column;
@@ -72,5 +152,39 @@ export default {
     height: 800px;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 </style>
