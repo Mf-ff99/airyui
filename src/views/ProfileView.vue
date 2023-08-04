@@ -2,14 +2,15 @@
     <span>profile view</span>
     <span>{{ userId }}</span>
     <div class="userMessages">
-        <span>{{ userProfile.userName }} aired out the following:</span>
-        <Message class="userProfileMessages" v-for="{ id, text, userName, userId } in userMessages.value" 
+        <span>{{ }} aired out the following:</span>
+        <Message class="userProfileMessages" v-for="{ id, text, userName, userId } in userMessages.userMessages" 
             :key="id"
             :id="id" 
             :name="userName" 
             :sender="userId == user?.uid">
             {{ text }}
         </Message>
+        {{ console.log(userProfile, 'profile') }}
     </div>  
 </template>
 
@@ -25,30 +26,27 @@ export default {
         const route = useRoute()
         const userId = ref('')
         const { user } = useAuth()
-        const userMessages = ref([])
         const userProfile = ref([])
+        const userMessages = ref([])
 
-        userProfile.value = useChat().getUserInfo(userId.value)
-            .then(({ userInfo }) => {
-                console.log(userInfo, 'userInfo')
-                return userInfo
-            })
-            .catch(error => console.log(error, 'error')
-        )
         
         onMounted(() => {
             userId.value = route.params.id
         })
+        
+        userProfile.value = useChat().getUserInfo(userId.value)
+        userMessages.value = useChat().getUserMessages(route.params.id)
 
-        // userMessages.value = useChat().getUserMessages(route.params.id)
+        // userMessages = userMessages.value.filter((message) => {
+        //     return message.userId == userId.value
+        // })
 
-        console.log(userProfile, 'profile')
         return {
             userId,
-            userMessages,
             Message,
             user,
-            userProfile
+            userProfile,
+            userMessages,
         }
     }
 }

@@ -80,24 +80,37 @@ export function useChat() {
       })
     }
 
-    const getUserInfo = (userId) => {
-      const userInfo = ref([])
+    // const getUserInfo = (userId) => {
+    //   const userInfo = ref([])
+    //   const unsubscribe = usersCollection.get().then(snapshot => {
+    //     const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    //     console.log(users, 'users')
+    //   }).catch(console.error)
+    //   onUnmounted(unsubscribe)
+    //   return { userInfo }
+    // }
+
+    const userProfileInfo = ref([])
+
+    const getUserInfo = async (userId) => {
       const unsubscribe = usersCollection.get().then(snapshot => {
-        const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-        console.log(users, 'users')
-      }).catch(console.error)
+        userProfileInfo.value = snapshot.docs
+          .map(doc => ({ id: doc.id, ...doc.data() }))
+      })
+      // userMessages.value = userMessages.value.filter(message => message.userId === userId)
       onUnmounted(unsubscribe)
-      return { userInfo }
+      return { userProfileInfo }
     }
+    
+    const userMessages = ref([])
 
     const getUserMessages = (userId) => {
-      const userMessages = ref([])
-      const unsubscribe = messagesCollection.where("userId", '==', userId).onSnapshot(snapshot => {
+      const unsubscribe = messagesCollection.get().then(snapshot => {
         userMessages.value = snapshot.docs
           .map(doc => ({ id: doc.id, ...doc.data() }))
       })
+      // userMessages.value = userMessages.value.filter(message => message.userId === userId)
       onUnmounted(unsubscribe)
-      console.log(userMessages, 'fb user id')
       return { userMessages }
     }
 
