@@ -80,18 +80,6 @@ export function useChat() {
       })
     }
 
-    const userMessages = ref([])
-
-    const getUserMessages = (userId) => {
-      const unsubscribe = messagesCollection.get().then(snapshot => {
-        userMessages.value = snapshot.docs
-          .map(doc => ({ id: doc.id, ...doc.data() }))
-      })
-      // userMessages.value = userMessages.value.filter(message => message.userId === userId)
-      onUnmounted(unsubscribe)
-      return { userMessages }
-    }
-
     const deleteMessage = messageId => {
         messagesCollection.doc(messageId).delete()
     }
@@ -99,15 +87,21 @@ export function useChat() {
     return { 
       messages, 
       sendMessage, 
-      deleteMessage, 
-      getUserMessages, 
-      getUser }
+      deleteMessage,  
+      getUser 
+    }
   }
 
-  export const getUser = async id => {
-      const user = await usersCollection.doc(id).get()
-      console.log(id, 'user')
-      return user ? user.data() : null
-    }
+export const getUser = async id => {
+  const user = await usersCollection.doc(id).get()
+  console.log(id, 'user')
+  return user ? user.data() : null
+}
+
+export const getUserMesssages = async userId => {
+  const userMessages = await messagesCollection.where('userId', '==', userId).get()
+  console.log(userMessages, 'userMessages in firebase.js')
+  return userMessages ? userMessages.data() : null
+}
 
 

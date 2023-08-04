@@ -16,7 +16,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useChat, useAuth, getUser } from '@/firebase'
+import { useAuth, getUser, getUserMesssages } from '@/firebase.js'
 import Message from '../components/Message.vue'
 
 export default {
@@ -35,17 +35,17 @@ export default {
             getUser(userId.value)
                 .then(user => {
                 userProfile.value = user;
-                console.log(userProfile.value, 'user profile in dashboard');
                 })
                 .catch(error => console.error(error));
+            
+                getUserMesssages(userId.value)
+                .then(messages => {
+                userMessages.value = messages;
+                console.log(userMessages)
+                })
+                .catch(error => console.error(error));
+            
             });
-        
-        // userProfile.value = useChat().getUserInfo(userId.value)
-        userMessages.value = useChat().getUserMessages(route.params.id)
-
-        // userMessages = userMessages.value.filter((message) => {
-        //     return message.userId == userId.value
-        // })
 
         return {
             userId,
