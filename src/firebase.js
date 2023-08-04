@@ -80,28 +80,6 @@ export function useChat() {
       })
     }
 
-    // const getUserInfo = (userId) => {
-    //   const userInfo = ref([])
-    //   const unsubscribe = usersCollection.get().then(snapshot => {
-    //     const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-    //     console.log(users, 'users')
-    //   }).catch(console.error)
-    //   onUnmounted(unsubscribe)
-    //   return { userInfo }
-    // }
-
-    const userProfileInfo = ref([])
-
-    const getUserInfo = async (userId) => {
-      const unsubscribe = usersCollection.get().then(snapshot => {
-        userProfileInfo.value = snapshot.docs
-          .map(doc => ({ id: doc.id, ...doc.data() }))
-      })
-      // userMessages.value = userMessages.value.filter(message => message.userId === userId)
-      onUnmounted(unsubscribe)
-      return { userProfileInfo }
-    }
-    
     const userMessages = ref([])
 
     const getUserMessages = (userId) => {
@@ -123,7 +101,13 @@ export function useChat() {
       sendMessage, 
       deleteMessage, 
       getUserMessages, 
-      getUserInfo }
+      getUser }
   }
+
+  export const getUser = async id => {
+      const user = await usersCollection.doc(id).get()
+      console.log(id, 'user')
+      return user ? user.data() : null
+    }
 
 

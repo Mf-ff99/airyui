@@ -4,7 +4,7 @@
         <div class="messageWrapper">
             <Message v-for="{ id, text, userName, userId } in messages" 
                 :key="id"
-                :id="id" 
+                :id="userId" 
                 :name="userName" 
                 :sender="userId == user?.uid">
                 {{ text }}

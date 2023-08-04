@@ -2,22 +2,21 @@
     <span>profile view</span>
     <span>{{ userId }}</span>
     <div class="userMessages">
-        <span>{{ }} aired out the following:</span>
+        <span>{{ userProfile.userId }} aired out the following:</span>
         <Message class="userProfileMessages" v-for="{ id, text, userName, userId } in userMessages.userMessages" 
             :key="id"
-            :id="id" 
+            :id="userId" 
             :name="userName" 
             :sender="userId == user?.uid">
             {{ text }}
         </Message>
-        {{ console.log(userProfile, 'profile') }}
     </div>  
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useChat, useAuth } from '@/firebase'
+import { useChat, useAuth, getUser } from '@/firebase'
 import Message from '../components/Message.vue'
 
 export default {
@@ -29,12 +28,19 @@ export default {
         const userProfile = ref([])
         const userMessages = ref([])
 
+        userId.value = route.params.id
+
         
         onMounted(() => {
-            userId.value = route.params.id
-        })
+            getUser(userId.value)
+                .then(user => {
+                userProfile.value = user;
+                console.log(userProfile.value, 'user profile in dashboard');
+                })
+                .catch(error => console.error(error));
+            });
         
-        userProfile.value = useChat().getUserInfo(userId.value)
+        // userProfile.value = useChat().getUserInfo(userId.value)
         userMessages.value = useChat().getUserMessages(route.params.id)
 
         // userMessages = userMessages.value.filter((message) => {
