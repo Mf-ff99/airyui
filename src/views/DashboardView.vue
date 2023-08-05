@@ -2,14 +2,17 @@
     <div class="dashboardView">
         <span>dashboard</span>
         <div class="messageWrapper">
-            <Message v-for="{ id, text, userName, userId } in messages" 
+            <Message v-for="{ id, text, userName, userId, createdAt } in messages" 
                 :key="id"
                 :id="userId" 
                 :name="userName" 
-                :sender="userId == user?.uid">
+                :sender="userId == user?.uid"
+                :createdAt="createdAt"
+                >
                 {{ text }}
             </Message>
         </div>
+        {{ console.log(messages) }}
 
         <div ref="loadNewMessages"></div>
 

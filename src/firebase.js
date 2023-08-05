@@ -93,15 +93,15 @@ export function useChat() {
   }
 
 export const getUser = async id => {
-  const user = await usersCollection.doc(id).get()
-  console.log(id, 'user')
-  return user ? user.data() : null
+  const snapshot = await usersCollection.where('userId', '==', id).get()
+  const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+  return user.length > 0 ? user : null
 }
 
 export const getUserMesssages = async userId => {
-  const userMessages = await messagesCollection.where('userId', '==', userId).get()
-  console.log(userMessages, 'userMessages in firebase.js')
-  return userMessages ? userMessages.data() : null
+  const snapshot = await messagesCollection.where('userId', '==', userId).orderBy('createdAt', 'desc').limit(1000).get()
+  const userMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+  return userMessages.length > 0 ? userMessages : null
 }
 
 

@@ -20,7 +20,12 @@ export default {
       })
     }
 
-    return { user, isLoggedIn, signUserOut, signUserIn }
+    return { 
+      user, 
+      isLoggedIn, 
+      signUserOut, 
+      signUserIn 
+    }
   }
 }
 </script>
@@ -33,20 +38,25 @@ export default {
       </div>
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <a to="" class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+        <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
         <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
         <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
+        <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
         <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
       </nav>
     </div>
   </header>
 
-  <RouterView />
+  <router-view :key="$route.path"/>
 </template>
 
 <style scoped>
 
 .loginButton:hover {
+  cursor: pointer;
+}
+
+.linkToProfile:hover {
   cursor: pointer;
 }
 

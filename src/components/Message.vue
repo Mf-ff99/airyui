@@ -5,6 +5,9 @@
         <button v-if="sender" class="deleteButton" @click="sender ? deleteUserMessage(id) : null"></button>
         <div>
             <div class="message">
+                <div class="messageCreatedDate">
+                    <!-- {{ createdAt? userReadableDate : '' }} -->
+                </div>
                 <slot />
             </div>
         </div>
@@ -30,16 +33,25 @@ export default {
         sender: {
             type: Boolean,
             default: false
+        },
+        createdAt: {
+            type: Object,
+            required: true,
+            default: null,
         }
     },
-    setup() {
+    setup(props) {
         const { user } = useAuth()
         
         const deleteUserMessage = (id) => useChat().deleteMessage(id)
 
+        let  messageCreatedOnDate = new Date(props.createdAt.seconds * 1000)
+        let userReadableDate = messageCreatedOnDate.toLocaleString()
+
         return {
             user,
-            deleteUserMessage
+            deleteUserMessage,
+            userReadableDate,
         }
     }
 }

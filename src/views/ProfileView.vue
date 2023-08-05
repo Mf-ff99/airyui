@@ -1,20 +1,23 @@
 <template>
     <span>profile view</span>
-    <span>{{ userId }}</span>
-    <div class="userMessages">
-        <span>{{ userProfile.userId }} aired out the following:</span>
-        <Message class="userProfileMessages" v-for="{ id, text, userName, userId } in userMessages.userMessages" 
-            :key="id"
-            :id="userId" 
-            :name="userName" 
-            :sender="userId == user?.uid">
-            {{ text }}
-        </Message>
-    </div>  
+    <div class="userMessages" v-if="userMessages.length">
+        <span>{{ userMessages.length > 0 ? userMessages[0].userName : 'ERROR, DON\'T LOOK, THERE\'S AN ERROR' }} has aired out the following:</span>
+        <Message v-for="{ id, text, userName, userId, createdAt } in userMessages" 
+                :key="`${id}-${userName}-${userId}-${createdAt.seconds}-${createdAt.nanoseconds}`"
+                :id="userId" 
+                :name="userName" 
+                :sender="userId == user?.uid"
+                :createdAt="createdAt"
+                >
+                {{ text }}
+            </Message>
+
+        </div>  
+        <div v-else>Loading profile...</div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuth, getUser, getUserMesssages } from '@/firebase.js'
 import Message from '../components/Message.vue'
@@ -28,23 +31,31 @@ export default {
         const userProfile = ref([])
         const userMessages = ref([])
 
+        const componentKey = ref(0)
+
         userId.value = route.params.id
 
+        const forceRender = () => {
+            componentKey.value += 1
+        }
         
         onMounted(() => {
             getUser(userId.value)
-                .then(user => {
-                userProfile.value = user;
+            .then(user => {
+                userProfile.value = user
+                forceRender()
                 })
-                .catch(error => console.error(error));
+                .catch(error => console.error(error))
             
-                getUserMesssages(userId.value)
+            getUserMesssages(userId.value)
                 .then(messages => {
-                userMessages.value = messages;
-                console.log(userMessages)
+                    if (!messages.length) {
+                        userMessages.value = ['user h']
+                        return;
+                    }
+                    userMessages.value = messages;
                 })
-                .catch(error => console.error(error));
-            
+                .catch(error => console.error(error))
             });
 
         return {
@@ -53,6 +64,8 @@ export default {
             user,
             userProfile,
             userMessages,
+            componentKey,
+
         }
     }
 }
@@ -70,6 +83,7 @@ export default {
 
 .userProfileMessages {
     padding: 5px;
+    margin: 5px;
     background-color: #eee;
 }
 
