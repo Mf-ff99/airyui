@@ -95,6 +95,36 @@ export default {
 
 <style>
 
+@media screen and (max-width: 916px) {
+  .messageWrapper {
+    max-width: 80vw;
+    max-height: 70vh;
+  }
+
+  form textarea {
+    width: 200px !important;
+    min-width: 100px !important;
+    max-height: 100px !important;
+    min-height: 60px !important;
+    margin-top: 10px;
+  }
+  #app {
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+
+   form button.sendButton {
+    /* hide button */
+    display: none;
+  }
+
+  .chatHeader {
+    max-width: 80vw;
+    margin-left: 0 auto;
+  }
+
+}
+
 .chatHeader {
     display: flex;
     flex-direction: row;

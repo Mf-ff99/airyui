@@ -1,12 +1,49 @@
+<template>
+  <header>
+    <div class="wrapper">
+      <div class="greetings">
+        <h1>a i r y ui</h1>
+      </div>
+      <nav>
+        <div class="pcNavbar">
+          <RouterLink to="/">Home</RouterLink>
+          <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+          <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
+          <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
+          <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
+          <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
+        </div>
+        <div class="mobileNavbar">
+          <div class="mobileMenuView" :id="hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
+            <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+            <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
+            <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
+            <a @click="signUserOut" v-if="isLoggedIn">Log out</a>
+            <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
+          </div>
+          <div class="hamburger" @click="hamburgerClicked">{{ hamburgerClickedRef ? '<==' : '==>'}}</div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <router-view :key="$route.path"/>
+</template>
+
 <script>
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 import { useAuth} from "@/firebase"
-
 
 export default {
   setup() {
     const { user, isLoggedIn, signOut, signIn } = useAuth()
     const router = useRouter()
+    const hamburgerClickedRef = ref(false)
+
+    const hamburgerClicked = () => {
+      hamburgerClickedRef.value = !hamburgerClickedRef.value
+    }
 
     const signUserOut = () => {
       signOut()
@@ -24,46 +61,76 @@ export default {
       user, 
       isLoggedIn, 
       signUserOut, 
-      signUserIn 
+      signUserIn,
+      hamburgerClicked,
+      hamburgerClickedRef
     }
   }
 }
 </script>
 
-<template>
-  <header>
-    <div class="wrapper">
-      <div class="greetings">
-        <h1>a i r y ui</h1>
-      </div>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
-        <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
-        <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
-        <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
-        <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
-      </nav>
-    </div>
-  </header>
-
-  <router-view :key="$route.path"/>
-</template>
-
 <style>
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 916px) {
   #app {
-    margin-right: 5%;
-    margin-left: 5%;
+    /* margin-right: 4%; */
+    margin-left: 0%;
+    max-height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 5px;
+  }
+
+  .hamburger {
+    cursor: pointer;
+    transition: .4s;
+  }
+
+  #hiddenMobileMenu {
+    display: none;
+  }
+
+  #displayMobileMenu {
+    
+  }
+
+  header {
+    width: 80vw;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    min-width: 200px;
+  }
+
+  nav {
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 40vw;
+    min-width: 100px !important;
+  }
+
+
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .pcNavbar {
+    display: none;
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 916px) {
 
   #app {
     margin-right: 30%;
     margin-left: 30%;
+  }
+
+  .mobileNavbar {
+    display: none;
   }
 }
 
