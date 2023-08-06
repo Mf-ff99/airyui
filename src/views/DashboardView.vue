@@ -15,13 +15,13 @@
             </Message>
           </div>
           <div v-else>Loading messages...</div>
+          <div ref="loadNewMessages"></div>
         </div>
-        <div ref="loadNewMessages"></div>
 
         <div>
             <div class="submitForm">
                 <form @submit.prevent="send">
-                    <textarea v-model="message" type="text" placeholder="Type a message" required />
+                    <textarea v-model="message" type="text" placeholder="Type a message" @keyup.enter="send" required />
                     <button type="submit" class="sendButton">{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</button>
                 </form>
             </div>
@@ -47,7 +47,7 @@ export default {
             messages,
             () => {
                 nextTick(() => {
-                    loadNewMessages.value?.scrollIntoView({ behavior: 'smooth' })
+                    loadNewMessages?.value.scrollIntoView({ behavior: 'smooth' })
                 })
             },
             { deep: true }
@@ -58,7 +58,6 @@ export default {
         const message = ref('')
         const send = () => {
             sendClicked.value = true
-            console.log(sendClicked.value)
             sendMessage(message.value)
             message.value = ''
             // setTimeout(() => sendClicked.value = false, 2000);
@@ -70,7 +69,8 @@ export default {
             messages,
             send,
             user,
-            sendClicked
+            sendClicked,
+            loadNewMessages
         }
     },
     components: { Message }
