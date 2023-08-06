@@ -4,14 +4,14 @@
         <div>
             <div class="userMessages" v-if="userMessages.length >= 1">
                 <span v-if="userMessages[0].userId == user?.uid">{{ userMessages.length > 0 ? 'You have' : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} aired out the following:</span>
-                <span v-else>{{ userMessages.length > 0 ? userMessages[0].userName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span>
+                <span v-else>{{ userMessages.length > 0 ? userMessages[0].userDisplayName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span>
                 <!-- For the life of me I cannot get props to be passed appropriately to the Message component, so here is a messy workaround that I'm not stoked on -->
                 <div>
                     <div class="messageWrapper">
-                        <div v-for="{ id, text, userName, userId, createdAt } in userMessages" :key="id">
+                        <div v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" :key="id">
                             <div class="messageHeader">
                                 <div>
-                                    {{ userName }}
+                                    {{ userDisplayName? userDisplayName : '[deleted]' }}
                                 </div>
                                 <div>
                                     {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
@@ -33,12 +33,16 @@
         </div>
         <div>
             <div class="userProfile">
-                <div class="profileStatus">
-                    <p>Status</p>
-                    <span>{{ userProfile?.length ? userProfile[0].userProfileStatus : ''}}</span>
+                <div class="userProfileHeader">
+                    <div class="profileStatus">
+                        <p>Status</p>
+                        <span>{{ userProfile?.length ? userProfile[0].userProfileStatus : ''}}</span>
+                    </div>
+                    <img class="profileImage" :src="`${userProfile[0]?.userAvatar}`" />
                 </div>
-                <div>
-                    <span>{{ userProfile[0]?.id }}</span>
+                <div class="userNameWrapper">
+                    <p>Username</p>
+                    <span>{{ userProfile[0]?.userDisplayName }}</span>
                 </div>
                 <div>
                     <span>{{ user?.createdAt ? new Date(userProfile.createdAt.seconds * 1000).toLocaleString() : '' }}</span>
@@ -77,7 +81,7 @@ export default {
                     return
                 }
                 userMessages.value = messages
-                    return
+                return
                 })
                 .catch(e => console.error(e), userMessages.value = ['nothing left to show here'])
         } 
@@ -130,6 +134,7 @@ export default {
 
 <style scoped>
 
+
 @media screen and (max-width: 800px) {
     .profileViewContainer {
         display: flex;
@@ -138,11 +143,24 @@ export default {
 }
 
 @media screen and (min-width: 800px) {
-
+    
     .profileViewContainer {
         display: flex;
         flex-direction: row;
     }
+}
+
+.userProfileHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profileImage {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
 }
 
 .deleteMessageButton {

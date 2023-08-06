@@ -3,13 +3,14 @@
         <span>dashboard</span>
         <div class="messageWrapper">
           <div class="messagesExistContainer" v-if="messages.length">
-            <Message v-for="{ id, text, userName, userId, createdAt } in messages" 
+            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in messages" 
                 :key="id"
                 :id="id"
                 :userId="userId" 
                 :name="userName" 
                 :sender="userId == user?.uid"
                 :createdAt="createdAt"
+                :userDisplayName="userDisplayName"
                 >
                 {{ text }}
             </Message>

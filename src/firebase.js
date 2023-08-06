@@ -64,21 +64,27 @@ const usersCollection = firestore.collection('users')
 
 export function useChat() {
     const messages = ref([])
+    const { user, isLoggedIn } = useAuth()
+    const sender = ref([])
+    
+    
     const unsubscribe = messagesQuery.onSnapshot(snapshot => {
       messages.value = snapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data() }))
-        .reverse()
+      .map(doc => ({ id: doc.id, ...doc.data() }))
+      .reverse()
     })
     onUnmounted(unsubscribe)
-  
-    const { user, isLoggedIn } = useAuth()
+    
     const sendMessage = text => {
+      sender.value  = getUser(user.value.uid)
+      const { userDisplayName } = sender.value
       if (!isLoggedIn.value) return
       const { uid, displayName } = user.value
       messagesCollection.add({
         userName: displayName,
         userId: uid,
         text: text,
+        userDisplayName: userDisplayName? userDisplayName : 'anon',
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       })
     }
@@ -103,7 +109,6 @@ export const getUser = async id => {
 export const getUserMesssages = async userId => {
   const snapshot = await messagesCollection.where('userId', '==', userId).orderBy('createdAt', 'desc').limit(1000).get()
   const userMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
-  console.log(userMessages, 'userMessages')
   return userMessages.length > 0 ? userMessages : null
 }
 
