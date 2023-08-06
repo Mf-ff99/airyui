@@ -3,11 +3,11 @@
         <div class="messageHeader">
             <!-- make the delete button a menu with delete and edit -->
             <div v-if="!sender">
-                <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">></span>
+                <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span>
                 <router-link class="isNotSender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
             </div>
             <div v-if="sender">
-                <span class="isSender" @click="toggleDisplaySenderMessageInfo">></span>
+                <span class="isSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span>
             </div>
             <div :class="senderMessageInfoClicked ? 'messageCreatedDate' : 'messageCreateDateHidden'">
                 {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
