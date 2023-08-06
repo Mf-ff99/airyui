@@ -53,8 +53,9 @@ export default {
 <style>
 
 ::-webkit-scrollbar {
-  width: 1px;
-  height: 1px;
+  width: 5px;
+  height: 5px;
+  transition: .4s;
 }
 ::-webkit-scrollbar-button {
   width: 0px;
@@ -66,7 +67,7 @@ export default {
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffffff;
+  background: #eee;
 }
 ::-webkit-scrollbar-thumb:active {
   background: #000000;
@@ -80,7 +81,7 @@ export default {
   background: #666666;
 }
 ::-webkit-scrollbar-track:active {
-  background: #333333;
+  background: #eee;
 }
 ::-webkit-scrollbar-corner {
   background: transparent;

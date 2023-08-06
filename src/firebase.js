@@ -2,7 +2,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 
-import { ref, onUnmounted, computed, onMounted } from 'vue'
+import { ref, onUnmounted, computed } from 'vue'
 
 firebase.initializeApp({
     apiKey: "AIzaSyD__7ULaWztR-lZfRZtBfbHE_nPTUo93cw",
@@ -82,7 +82,6 @@ export function useChat() {
 
     const deleteMessage = messageId => {
         messagesCollection.doc(messageId).delete()
-        console.log('message deleted')
     }
   
     return { 
@@ -101,6 +100,7 @@ export const getUser = async id => {
 export const getUserMesssages = async userId => {
   const snapshot = await messagesCollection.where('userId', '==', userId).orderBy('createdAt', 'desc').limit(1000).get()
   const userMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+  console.log(userMessages, 'userMessages')
   return userMessages.length > 0 ? userMessages : null
 }
 

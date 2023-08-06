@@ -2,6 +2,7 @@
     <div class="dashboardView">
         <span>dashboard</span>
         <div class="messageWrapper">
+          <div class="messagesExistContainer" v-if="messages.length">
             <Message v-for="{ id, text, userName, userId, createdAt } in messages" 
                 :key="id"
                 :id="id"
@@ -12,9 +13,9 @@
                 >
                 {{ text }}
             </Message>
+          </div>
+          <div v-else>Loading messages...</div>
         </div>
-        {{ console.log(messages) }}
-
         <div ref="loadNewMessages"></div>
 
         <div>
@@ -40,6 +41,7 @@ export default {
         const { messages, sendMessage } = useChat()
         const sendClicked = ref(false)
         
+        // logic for scrolling to bottom of messages
         const loadNewMessages = ref(null)
         watch(
             messages,
@@ -166,39 +168,5 @@ textarea {
     overflow-y: scroll;
     overflow-x: hidden;
     /* max-width: 100vw; */
-}
-
-::-webkit-scrollbar {
-  width: 1px;
-  height: 1px;
-}
-::-webkit-scrollbar-button {
-  width: 0px;
-  height: 0px;
-}
-::-webkit-scrollbar-thumb {
-  background: #e1e1e1;
-  border: 0px none #ffffff;
-  border-radius: 0px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #ffffff;
-}
-::-webkit-scrollbar-thumb:active {
-  background: #000000;
-}
-::-webkit-scrollbar-track {
-  background: #666666;
-  border: 0px none #ffffff;
-  border-radius: 50px;
-}
-::-webkit-scrollbar-track:hover {
-  background: #666666;
-}
-::-webkit-scrollbar-track:active {
-  background: #333333;
-}
-::-webkit-scrollbar-corner {
-  background: transparent;
 }
 </style>

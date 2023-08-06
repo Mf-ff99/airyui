@@ -1,13 +1,12 @@
 <template>
     <div class="messageBodyWrapper" v-if="createdAt">
-        <router-link v-if="!sender" class="sender" :to="'/profile/' + id">{{ name }}</router-link>
+        <router-link v-if="!sender" class="sender" :to="'/profile/' + userId">{{ name }}</router-link>
         <!-- make the delete button a menu with delete and edit -->
-        {{ console.log(id, 'id') }}
-        <button v-if="sender" class="deleteButton" @click="sender ? deleteUserMessage(id) : null"></button>
+        <button v-if="sender" @click="deleteUserMessage(id)">Delete</button>
         <div>
             <div class="message">
                 <div class="messageCreatedDate">
-                    <!-- {{ createdAt? createdAt.seconds.toLocaleString() : '' }} -->
+                    {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleDateString() : '' }}
                 </div>
                 <slot />
             </div>
