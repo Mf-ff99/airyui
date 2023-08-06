@@ -130,16 +130,19 @@ export default {
 
 <style scoped>
 
-@media screen and (in-width: 600px) {
+@media screen and (max-width: 800px) {
     .profileViewContainer {
         display: flex;
         flex-direction: column;
     }
 }
 
-.profileViewContainer {
-    display: flex;
-    flex-direction: row;
+@media screen and (min-width: 800px) {
+
+    .profileViewContainer {
+        display: flex;
+        flex-direction: row;
+    }
 }
 
 .deleteMessageButton {
