@@ -1,22 +1,24 @@
 <template>
-    <div class="messageBodyWrapper">
+    <div class="messageBodyWrapper" v-if="createdAt">
         <router-link v-if="!sender" class="sender" :to="'/profile/' + id">{{ name }}</router-link>
         <!-- make the delete button a menu with delete and edit -->
         <button v-if="sender" class="deleteButton" @click="sender ? deleteUserMessage(id) : null"></button>
         <div>
             <div class="message">
                 <div class="messageCreatedDate">
-                    <!-- {{ createdAt? userReadableDate : '' }} -->
+                    <!-- {{ createdAt? createdAt.seconds.toLocaleString() : '' }} -->
                 </div>
                 <slot />
             </div>
         </div>
     </div>
+    <div v-else>Loading message...</div>
 
 </template>
 
 <script>
 import { useAuth, useChat } from '@/firebase'
+import { ref } from 'vue'
 
 export default {
     props: {
@@ -36,22 +38,22 @@ export default {
         },
         createdAt: {
             type: Object,
-            required: true,
-            default: null,
-        }
+            required: true,        
+        },
     },
     setup(props) {
         const { user } = useAuth()
+        const messageCreatedOnDate = ref(null)
         
         const deleteUserMessage = (id) => useChat().deleteMessage(id)
-
-        let  messageCreatedOnDate = new Date(props.createdAt.seconds * 1000)
-        let userReadableDate = messageCreatedOnDate.toLocaleString()
+        
+        // messageCreatedOnDate.value = new Date(props.createdAt.seconds * 1000)
+        // let userReadableDate = messageCreatedOnDate.value.toLocaleString()
 
         return {
             user,
             deleteUserMessage,
-            userReadableDate,
+            // userReadableDate,
         }
     }
 }

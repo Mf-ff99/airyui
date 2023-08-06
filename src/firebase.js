@@ -87,8 +87,7 @@ export function useChat() {
     return { 
       messages, 
       sendMessage, 
-      deleteMessage,  
-      getUser 
+      deleteMessage, 
     }
   }
 
