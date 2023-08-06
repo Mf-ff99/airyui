@@ -62,8 +62,8 @@ export default {
 @media screen and (min-width: 800px) {
 
   #app {
-    margin-right: 20%;
-    margin-left: 20%;
+    margin-right: 30%;
+    margin-left: 30%;
   }
 }
 
@@ -111,13 +111,6 @@ export default {
   cursor: pointer;
 }
 
-nav {
-  padding: 5px;
-  min-width: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
 
 .wrapper {
   display: flex;
@@ -133,6 +126,30 @@ nav {
 header {
   margin-top: 0;
   padding: 10px;
+}
+
+nav {
+  padding: 5px;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+  transition: .4s;
+  border-radius: 5px;
+  margin: 0 5px; 
+  padding: 5px;
+}
+
+a:hover {
+  color: #eee !important;
+  cursor: pointer;
+  background-color: #333333;
+  transition: .4s;
 }
 
 nav button {

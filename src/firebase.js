@@ -5,13 +5,13 @@ import 'firebase/compat/firestore'
 import { ref, onUnmounted, computed } from 'vue'
 
 firebase.initializeApp({
-    apiKey: "AIzaSyD__7ULaWztR-lZfRZtBfbHE_nPTUo93cw",
-    authDomain: "airy-c2f79.firebaseapp.com",
-    projectId: "airy-c2f79",
-    storageBucket: "airy-c2f79.appspot.com",
-    messagingSenderId: "957779706012",
-    appId: "1:957779706012:web:1a49375964a5befbd0ad59",
-    measurementId: "G-VVGTQ9XVP4"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 })
 
 const auth = firebase.auth()

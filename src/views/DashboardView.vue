@@ -130,7 +130,7 @@ form {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 textarea {
@@ -142,6 +142,7 @@ textarea {
     max-height: 70px;
     min-width: 300px;
     min-height: 70px;
+    margin-right: 30px;
 }
 .sendButton {
     display: flex;

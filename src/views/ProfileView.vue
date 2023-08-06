@@ -16,12 +16,12 @@
                                 <div>
                                     {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
                                 </div>
+                            </div>
+                            <div class="messageFooter">
+                                {{ text }}
                                 <div v-if="userId == user?.uid">
                                     <button class="deleteMessageButton" @click="deleteUserMessage(id)">Delete</button>
                                 </div>  
-                            </div>
-                            <div>
-                                {{ text }}
                             </div>
                         </div>
                     </div>
@@ -150,6 +150,13 @@ export default {
     }
 }
 
+.messageFooter {
+    /* display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; */
+}
+
 .userProfileHeader {
     display: flex;
     flex-direction: row;
@@ -172,7 +179,7 @@ export default {
     background-color: #eee;
     border-radius: 5px;
     padding: 2px;
-    min-width: 80%;
+    min-width: fit-content;
 }
 
 .messageWrapper {

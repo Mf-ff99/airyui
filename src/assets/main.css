@@ -12,19 +12,10 @@
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: #6D6875;
-  transition: 0.4s;
-}
+
 
 @media (hover: hover) {
-  a:hover {
-    background-color: hsla(293, 71%, 57%, 0.2);
-    border-radius: 10px;
-    color: black;
-  }
+ 
 }
 
 body {

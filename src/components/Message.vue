@@ -2,18 +2,23 @@
     <div :class="'messageBodyWrapperRecipient'" v-if="createdAt">
         <div class="messageHeader">
             <!-- make the delete button a menu with delete and edit -->
-            <router-link v-if="!sender" class="isSender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
-            <router-link v-if="sender" class="isNotsender" :to="'/profile/' + userId">hey, i sent this one</router-link>
-            <div class="messageCreatedDate">
-                {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
+            <div v-if="!sender">
+                <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">></span>
+                <router-link class="isNotSender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
             </div>
+            <div v-if="sender">
+                <span class="isSender" @click="toggleDisplaySenderMessageInfo">></span>
+            </div>
+            <div :class="senderMessageInfoClicked ? 'messageCreatedDate' : 'messageCreateDateHidden'">
+                {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
+            </div> 
         </div>
         <div class="messageFooter" :id="sender ? 'senderView' : 'messageFooter'">
             <div class="message">
                 <slot />
                 
             </div>
-            <button v-if="sender" class="deleteButton" @click="deleteUserMessage(id)">Delete</button>
+            <!-- <button v-if="sender" class="deleteButton" @click="deleteUserMessage(id)">Delete</button> -->
         </div>
     </div>
     <div v-else>Loading message...</div>
@@ -59,19 +64,31 @@ export default {
         const { user } = useAuth()
         const { deleteMessage } = useChat()
         const messageCreator = ref([])
+        const senderMessageInfoClicked = ref(false)
 
         const deleteUserMessage = (id) => deleteMessage(id)
+
+        const toggleDisplaySenderMessageInfo = () => {
+            senderMessageInfoClicked.value = !senderMessageInfoClicked.value
+        }
 
         return {
             user,
             deleteUserMessage,
-            messageCreator
+            messageCreator,
+            toggleDisplaySenderMessageInfo,
+            senderMessageInfoClicked
         }
     }
 }
 </script>
 
 <style scoped>
+
+.isSender:hover, .isNotSender:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 .messageFooter {
     display: flex;
@@ -82,16 +99,34 @@ export default {
     margin-bottom: 0.5rem;
 }
 
+.messageBodyWrapperRecipient {
+    border-top: 5px black;
+    border-left: 1px black;
+    display: flex;
+}
+
 #senderView {
     flex-direction: row-reverse;
 }
 
 .messageHeader {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    align-items: flex-start;
+    /* justify-content: space-between; */
+    /* width: 100%; */
     margin-bottom: 0.5rem;
+}
+
+.messageCreateDateHidden {
+    display: none;
+    
+}
+
+
+
+.messageHeader a {
+    text-decoration: none;
+    color: #333333;
 }
 
 .messageCreatedDate {
@@ -117,6 +152,7 @@ div.messsage {
     border-radius: 0.5rem;
     padding: 5px 5px;
     margin-right: 10px;
+    border-bottom: 1px solid #333333;
 }
 
 .sender {
