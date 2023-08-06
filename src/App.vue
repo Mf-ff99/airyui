@@ -52,6 +52,22 @@ export default {
 
 <style>
 
+@media screen and (max-width: 800px) {
+  #app {
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+
+  #app {
+    margin-right: 20%;
+    margin-left: 20%;
+  }
+}
+
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -107,7 +123,9 @@ nav {
   display: flex;
   flex-direction: row;
   min-width: 500px;
+  max-width: 1000px;
 }
+
 .wrapper a {
   padding: 5px;
 }

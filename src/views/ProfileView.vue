@@ -1,31 +1,51 @@
 <template>
     <span>profile view</span>
-    <div class="userMessages" v-if="userMessages.length">
-        <span>{{ userMessages.length > 0 ? userMessages[0].userName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span>
-        <!-- For the life of me I cannot get props to be passed appropriately to the Message component, so here is a messy workaround -->
+    <div class="profileViewContainer">
         <div>
-            <div class="messageWrapper">
-                <div v-for="{ id, text, userName, userId, createdAt } in userMessages" :key="id">
-                    <div class="messageHeader">
-                        <div>
-                            {{ userName }}
+            <div class="userMessages" v-if="userMessages.length >= 1">
+                <span v-if="userMessages[0].userId == user?.uid">{{ userMessages.length > 0 ? 'You have' : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} aired out the following:</span>
+                <span v-else>{{ userMessages.length > 0 ? userMessages[0].userName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span>
+                <!-- For the life of me I cannot get props to be passed appropriately to the Message component, so here is a messy workaround that I'm not stoked on -->
+                <div>
+                    <div class="messageWrapper">
+                        <div v-for="{ id, text, userName, userId, createdAt } in userMessages" :key="id">
+                            <div class="messageHeader">
+                                <div>
+                                    {{ userName }}
+                                </div>
+                                <div>
+                                    {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
+                                </div>
+                                <div v-if="userId == user?.uid">
+                                    <button class="deleteMessageButton" @click="deleteUserMessage(id)">Delete</button>
+                                </div>  
+                            </div>
+                            <div>
+                                {{ text }}
+                            </div>
                         </div>
-                        <div>
-                            {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString() : '' }}
-                        </div>
-                        <div v-if="userId == user?.uid">
-                            <button @click="deleteUserMessage(id)">Delete</button>
-                        </div>  
-                    </div>
-                    <div>
-                        {{ text }}
                     </div>
                 </div>
             </div>
+            <div v-else>
+                no messages to be found :( try sending something!
+            </div>
         </div>
-
-        </div>  
-        <div v-else>Loading profile...</div>
+        <div>
+            <div class="userProfile">
+                <div class="profileStatus">
+                    <p>Status</p>
+                    <span>{{ userProfile?.length ? userProfile[0].userProfileStatus : ''}}</span>
+                </div>
+                <div>
+                    <span>{{ userProfile[0]?.id }}</span>
+                </div>
+                <div>
+                    <span>{{ user?.createdAt ? new Date(userProfile.createdAt.seconds * 1000).toLocaleString() : '' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -51,15 +71,15 @@ export default {
         const deleteUserMessage = (id) => {
             deleteMessage(id)
             getUserMesssages(userId.value)
-                .then(messages => {
-                    if (!messages.length) {
-                        userMessages.value = ['user has no messages']
-                        return
-                    }
-                    userMessages.value = messages
+            .then(messages => {
+                if (!messages.length) {
+                    userMessages.value = ['user has no messages']
+                    return
+                }
+                userMessages.value = messages
                     return
                 })
-                .catch(error => console.error(error))
+                .catch(e => console.error(e), userMessages.value = ['nothing left to show here'])
         } 
         
         onMounted(() => {
@@ -78,7 +98,7 @@ export default {
                     userMessages.value = messages
                     return
                 })
-                .catch(error => console.error(error))
+                .catch(e => console.error(e), userMessages.value = ['nothing left to show here'])
             });
 
 
@@ -109,6 +129,22 @@ export default {
 </script>
 
 <style scoped>
+
+@media screen and (in-width: 600px) {
+    .profileViewContainer {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.profileViewContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.deleteMessageButton {
+    cursor: pointer;
+}
 
 .messageWrapper div {
     margin: 5px;

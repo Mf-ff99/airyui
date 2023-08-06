@@ -36,9 +36,12 @@ export function useAuth() {
           const { uid } = user.value
           await firestore.collection('users').doc(uid).set({
             userId: uid,
-            userProfileStatus: 'hey, im the default text! look at me, im a noob!!',
+            userProfileStatus: 'hey, im the default status! look at me, im a noob!! i don\'t know how to change my default status!',
             messagesSent: 0,
             userRole: 'user',
+            userAvatar: 'https://picsum.photos/200',
+            userDisplayName: 'anon',
+            following: [],
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
           })
         }

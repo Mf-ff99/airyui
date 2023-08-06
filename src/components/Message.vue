@@ -1,14 +1,18 @@
 <template>
     <div class="messageBodyWrapper" v-if="createdAt">
-        <router-link v-if="!sender" class="sender" :to="'/profile/' + userId">{{ name }}</router-link>
-        <!-- make the delete button a menu with delete and edit -->
-        <button v-if="sender" @click="deleteUserMessage(id)">Delete</button>
+        <div class="messageHeader">
+            <!-- make the delete button a menu with delete and edit -->
+            <router-link v-if="!sender" class="sender" :to="'/profile/' + userId">{{ name }}</router-link>
+            <router-link v-if="sender" class="sender" :to="'/profile/' + userId">hey, i sent this one</router-link>
+            <div class="messageCreatedDate">
+                {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
+            </div>
+            <button v-if="sender" class="deleteButton" @click="deleteUserMessage(id)">Delete</button>
+        </div>
         <div>
             <div class="message">
-                <div class="messageCreatedDate">
-                    {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleDateString() : '' }}
-                </div>
                 <slot />
+                
             </div>
         </div>
     </div>
@@ -65,34 +69,48 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.messageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.messageCreatedDate {
+    font-size: 12px;
+    padding: 2px;
+}
+
+div.messsage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 400px;
+}
 .messageBodyWrapper {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 0.5rem;
-    min-width: fit-content;
+    min-width: 400px;
     background-color: #eee;
     border-radius: 0.5rem;
     padding: 5px 5px;
     margin-right: 
 }
 
-.deleteButton::after {
-    display: inline-block;
-    content: "\00d7"; /* This is the X character */
-}
-
 .sender {
-    font-weight: bold;
     margin-right: 0.5rem;
     font-size: 12px;
     padding: 2px;
 }
 
 .sender:hover {
-    background-color: gray;
+    background-color: #333333;
     color: white;
     cursor: pointer;
     transition-duration: .4s;
@@ -115,21 +133,22 @@ export default {
     line-height: 1;
     text-decoration: none;
     color: #333333;
-    font-size: 18px;
-    border-radius: 5px;
-    width: 20px;
-    height: 20px;
+    font-size: 12px;
+    border-radius: 2px;
+    padding: 4px;
+    /* width: 20px;
+    height: 20px; */
     border: 1px solid #333333;
     padding-right: 2px;
-    position: relative;
+    /* position: relative; */
     transition: 0.3s;
     background-color: #ffffff00;
     -webkit-transition-duration: .4s;
     margin-right: 25px;
 }
 .deleteButton:hover {
-    background-color: #333333;
-    color: #ffffff;
+    background-color: #eee;
+    /* color: #ffffff; */
     cursor: pointer;
 }
 
