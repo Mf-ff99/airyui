@@ -4,7 +4,8 @@
         <div class="messageWrapper">
             <Message v-for="{ id, text, userName, userId, createdAt } in messages" 
                 :key="id"
-                :id="userId" 
+                :id="id"
+                :userId="userId" 
                 :name="userName" 
                 :sender="userId == user?.uid"
                 :createdAt="createdAt"

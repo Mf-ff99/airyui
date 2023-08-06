@@ -2,6 +2,7 @@
     <div class="messageBodyWrapper" v-if="createdAt">
         <router-link v-if="!sender" class="sender" :to="'/profile/' + id">{{ name }}</router-link>
         <!-- make the delete button a menu with delete and edit -->
+        {{ console.log(id, 'id') }}
         <button v-if="sender" class="deleteButton" @click="sender ? deleteUserMessage(id) : null"></button>
         <div>
             <div class="message">
@@ -40,12 +41,18 @@ export default {
             type: Object,
             required: true,        
         },
+        userId: {
+            type: String,
+            required: true,
+            default: ''
+        },
     },
-    setup(props) {
+    setup() {
         const { user } = useAuth()
-        const messageCreatedOnDate = ref(null)
-        
-        const deleteUserMessage = (id) => useChat().deleteMessage(id)
+        const { deleteMessage } = useChat()
+        // const messageCreatedOnDate = ref(null)
+
+        const deleteUserMessage = (id) => deleteMessage(id)
         
         // messageCreatedOnDate.value = new Date(props.createdAt.seconds * 1000)
         // let userReadableDate = messageCreatedOnDate.value.toLocaleString()

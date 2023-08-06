@@ -2,7 +2,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 
-import { ref, onUnmounted, computed } from 'vue'
+import { ref, onUnmounted, computed, onMounted } from 'vue'
 
 firebase.initializeApp({
     apiKey: "AIzaSyD__7ULaWztR-lZfRZtBfbHE_nPTUo93cw",
@@ -82,12 +82,13 @@ export function useChat() {
 
     const deleteMessage = messageId => {
         messagesCollection.doc(messageId).delete()
+        console.log('message deleted')
     }
   
     return { 
       messages, 
       sendMessage, 
-      deleteMessage, 
+      deleteMessage
     }
   }
 

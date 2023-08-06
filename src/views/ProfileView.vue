@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, nextTick, onServerPrefetch, onUpdated, onBeforeUpdate, onBeforeMount } from 'vue'
+import { ref, onMounted, watch, nextTick} from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuth, getUser, getUserMesssages } from '@/firebase.js'
 import Message from '../components/Message.vue'
