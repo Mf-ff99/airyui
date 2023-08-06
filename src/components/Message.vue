@@ -1,19 +1,19 @@
 <template>
-    <div class="messageBodyWrapper" v-if="createdAt">
+    <div :class="'messageBodyWrapperRecipient'" v-if="createdAt">
         <div class="messageHeader">
             <!-- make the delete button a menu with delete and edit -->
-            <router-link v-if="!sender" class="sender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
-            <router-link v-if="sender" class="sender" :to="'/profile/' + userId">hey, i sent this one</router-link>
+            <router-link v-if="!sender" class="isSender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
+            <router-link v-if="sender" class="isNotsender" :to="'/profile/' + userId">hey, i sent this one</router-link>
             <div class="messageCreatedDate">
                 {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
             </div>
-            <button v-if="sender" class="deleteButton" @click="deleteUserMessage(id)">Delete</button>
         </div>
-        <div>
+        <div class="messageFooter" :id="sender ? 'senderView' : 'messageFooter'">
             <div class="message">
                 <slot />
                 
             </div>
+            <button v-if="sender" class="deleteButton" @click="deleteUserMessage(id)">Delete</button>
         </div>
     </div>
     <div v-else>Loading message...</div>
@@ -65,15 +65,26 @@ export default {
         return {
             user,
             deleteUserMessage,
-            messageCreator,
-            // messageCreatorData,
-            // userReadableDate,
+            messageCreator
         }
     }
 }
 </script>
 
 <style scoped>
+
+.messageFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+#senderView {
+    flex-direction: row-reverse;
+}
 
 .messageHeader {
     display: flex;
@@ -100,11 +111,12 @@ div.messsage {
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 0.5rem;
-    min-width: 400px;
+    min-width: 800px;
+    max-width: 100%;
     background-color: #eee;
     border-radius: 0.5rem;
     padding: 5px 5px;
-    margin-right: 
+    margin-right: 10px;
 }
 
 .sender {

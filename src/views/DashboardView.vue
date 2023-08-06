@@ -1,6 +1,12 @@
 <template>
     <div class="dashboardView">
+      <div class="chatHeader">
         <span>dashboard</span>
+        <div class="scrollCheckboxWrapper">
+          <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
+          <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll.value ? 'enable scroll' : 'disable scroll'  }}</label>
+        </div>
+      </div>
         <div class="messageWrapper">
           <div class="messagesExistContainer" v-if="messages.length">
             <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in messages" 
@@ -41,14 +47,20 @@ export default {
     setup() {
         const { messages, sendMessage } = useChat()
         const sendClicked = ref(false)
+        const disableScroll = ref(false)
+
+        const onDisableScrollToggle = () => {
+            disableScroll.value = !disableScroll.value
+        }
         
-        // logic for scrolling to bottom of messages
-        const loadNewMessages = ref(null)
+        // logic for scrolling to bottom when there are messages
+        const loadNewMessages = ref(disableScroll.value)
         watch(
             messages,
             () => {
                 nextTick(() => {
-                    loadNewMessages?.value.scrollIntoView({ behavior: 'smooth' })
+                  if (disableScroll.value) return
+                    loadNewMessages?.value?.scrollIntoView({ behavior: 'smooth' })
                 })
             },
             { deep: true }
@@ -71,7 +83,9 @@ export default {
             send,
             user,
             sendClicked,
-            loadNewMessages
+            loadNewMessages,
+            onDisableScrollToggle,
+            disableScroll
         }
     },
     components: { Message }
@@ -80,8 +94,36 @@ export default {
 </script>
 
 <style>
-.dashboardView {
-    /* max-width: 80%; */
+
+.chatHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #333333;
+    color: #a4a7ac;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.scrollCheckboxWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.scrollCheckboxWrapper label {
+  margin: 2px;
+  cursor: pointer;
+}
+
+.scrollCheckboxWrapper input {
+  margin: 5px;
+  cursor: pointer;
 }
 
 form {

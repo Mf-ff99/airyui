@@ -172,6 +172,7 @@ export default {
     background-color: #eee;
     border-radius: 5px;
     padding: 2px;
+    min-width: 80%;
 }
 
 .messageWrapper {
