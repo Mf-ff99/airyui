@@ -111,12 +111,11 @@ export default {
     min-width: 100px !important;
   }
 
-
-
+  
   nav a {
     font-size: 12px;
   }
-
+  
   .pcNavbar {
     display: none;
   }
@@ -130,8 +129,57 @@ export default {
   }
 
   .mobileNavbar {
+    display: none !important;
+  }
+
+  .displayedMobileMenu {
     display: none;
   }
+
+  #hiddenMobileMenu {
+    display: none;
+  }
+
+}
+/* color scheme for dark/light mode */
+@media (prefers-color-scheme: dark) {
+  #app {
+    background-color: black !important;
+    color: black !important;
+  }
+
+  h1 {
+    color: white !important;
+  }
+
+  a {
+    color: white !important;
+  }
+
+  .isNotSender, .isSender {
+    color: white !important;
+  }
+
+  .profileViewContainer {
+    background-color: black !important;
+    color: white !important;
+  }
+  
+  .messageWrapper div {
+    color: black !important;
+  }
+
+  main {
+    background-color: black !important;
+    color: white !important;
+  }
+
+
+}
+
+#app {
+  background-color: white;
+  color: black;
 }
 
 
