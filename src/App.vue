@@ -80,6 +80,12 @@ export default {
     overflow-x: hidden;
     padding: 5px;
     position: fixed;
+    min-height: 100vh;
+  }
+
+  form {
+    bottom: 0;
+    position: fixed;
   }
 
   .hamburger{
@@ -154,6 +160,12 @@ export default {
     min-width: 100px !important;
     /* overflow-x: hidden;
     overflow-y: hidden; */
+  }
+
+  .submitForm {
+    position: fixed;
+    bottom: 0;
+    left: 0;
   }
 
   
