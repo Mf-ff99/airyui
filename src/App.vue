@@ -18,8 +18,8 @@
             <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
             <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
             <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
-            <a @click="signUserOut" v-if="isLoggedIn">Log out</a>
             <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
+            <a @click="signUserOut" v-if="isLoggedIn">Log out</a>
           </div>
           <div class="hamburger" @click="hamburgerClicked">{{ hamburgerClickedRef ? '<==' : '==>'}}</div>
         </div>
@@ -81,17 +81,60 @@ export default {
     padding: 5px;
   }
 
-  .hamburger {
+  .hamburger{
+    width: 20px;
+    height: 2px;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 10;
+    transition: all .5s ease;
     cursor: pointer;
-    transition: .4s;
+    position: relative;
   }
 
   #hiddenMobileMenu {
-    display: none;
+    /* display: none; */
+    right: -500px;
   }
 
-  #displayMobileMenu {
-    
+  .mobileNavbar {
+    /* position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: -500px;
+    background-color:  white;
+    height: 50%;
+    width: 60%;
+    right: 0;
+    padding-top: 50px;
+    z-index: 1;
+    */
+    transition: all .5s ease-out; 
+  }
+
+  .mobileMenuView {
+    /* border-bottom: .5px solid rgb(182, 181, 181);
+    padding: 24px 0;
+    text-align: center;
+    transition: all .2s ease-out;
+    z-index: 2;
+    position: absolute; */
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 50px;
+    background-color:  white;
+    height: 200px;
+    width: 60%;
+    right: 0;
+    padding-top: 50px;
+    z-index: 1;
+    transition: all .5s ease-in-out;
+    border-radius: 7px;
+    border-left: solid black;
+    border-top: solid black;
+    border-bottom: solid black;
   }
 
   header {
@@ -170,6 +213,16 @@ export default {
   }
 
   main {
+    background-color: black !important;
+    color: white !important;
+  }
+
+  .sendButton {
+    background-color: #eee !important;
+    color: black !important;
+  }
+
+  .sendButton:hover {
     background-color: black !important;
     color: white !important;
   }
