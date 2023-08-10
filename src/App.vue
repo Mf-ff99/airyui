@@ -79,6 +79,7 @@ export default {
     overflow-y: hidden;
     overflow-x: hidden;
     padding: 5px;
+    position: fixed;
   }
 
   .hamburger{
@@ -119,7 +120,7 @@ export default {
     transition: all .2s ease-out;
     z-index: 2;
     position: absolute; */
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,7 +130,6 @@ export default {
     width: 60%;
     right: 0;
     padding-top: 50px;
-    z-index: 1;
     transition: all .5s ease-in-out;
     border-radius: 7px;
     border-left: solid black;
@@ -152,6 +152,8 @@ export default {
     justify-content: center;
     width: 40vw;
     min-width: 100px !important;
+    /* overflow-x: hidden;
+    overflow-y: hidden; */
   }
 
   
