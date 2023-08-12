@@ -39,7 +39,7 @@ export default {
   setup() {
     const { user, isLoggedIn, signOut, signIn } = useAuth()
     const router = useRouter()
-    const hamburgerClickedRef = ref(false)
+    const hamburgerClickedRef = ref(true)
 
     const hamburgerClicked = () => {
       hamburgerClickedRef.value = !hamburgerClickedRef.value
