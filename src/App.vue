@@ -241,6 +241,10 @@ export default {
     color: white !important;
   }
 
+  div.messageCreatedDate {
+    color: white !important;
+  }
+
 
 }
 
