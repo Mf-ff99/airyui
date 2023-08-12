@@ -14,14 +14,14 @@
           <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
         </div>
         <div class="mobileNavbar">
-          <div class="mobileMenuView" :id="hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
+          <div class="mobileMenuView" :id="!hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
             <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
             <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
             <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
             <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
             <a @click="signUserOut" v-if="isLoggedIn">Log out</a>
           </div>
-          <div class="hamburger" @click="hamburgerClicked">{{ hamburgerClickedRef ? '<==' : '==>'}}</div>
+          <div class="hamburger" @click="hamburgerClicked">{{ !hamburgerClickedRef ? '<==' : '==>'}}</div>
         </div>
       </nav>
     </div>
@@ -39,7 +39,7 @@ export default {
   setup() {
     const { user, isLoggedIn, signOut, signIn } = useAuth()
     const router = useRouter()
-    const hamburgerClickedRef = ref(true)
+    const hamburgerClickedRef = ref(false)
 
     const hamburgerClicked = () => {
       hamburgerClickedRef.value = !hamburgerClickedRef.value
