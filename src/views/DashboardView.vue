@@ -1,7 +1,14 @@
 <template>
     <div class="dashboardView">
       <div class="chatHeader">
-        <span>dashboard</span>
+        <ul class="chatRoomSelector">
+          <li>
+            <span>general</span>
+          </li>
+          <li>
+            <span>following</span>
+          </li>
+        </ul>
         <div class="scrollCheckboxWrapper">
           <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
           <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll.value ? 'enable scroll' : 'disable scroll'  }}</label>
@@ -123,6 +130,28 @@ export default {
     margin-left: 0 auto;
   }
 
+}
+
+ul.chatRoomSelector li {
+  list-style: none;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 5px;
+  border: red 1px;
+  transition: .4s ease-in-out;
+}
+
+ul.chatRoomSelector li:hover {
+  background-color: #a4a7ac;
+  color: #333333;
+}
+
+ul.chatRoomSelector {
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+  justify-content: space-between;
 }
 
 .chatHeader {
