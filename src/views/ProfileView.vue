@@ -75,7 +75,7 @@ export default {
             deleteUserMessage,
         }
     },
-    components: { EditUserModal, Message }
+    components: { EditUserModal }
 }
 </script>
 
@@ -88,7 +88,7 @@ export default {
                 <span v-if="userMessages[0].userId == user?.uid">{{ userMessages.length > 0 ? 'You have' : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} aired out the following:</span>
                 <span v-else>{{ userMessages.length > 0 ? userMessages[0].userDisplayName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span>
                 <!-- For the life of me I cannot get props to be passed appropriately to the Message component, so here is a messy workaround that I'm not stoked on -->
-                <!-- turns out, I am an idiot. When importing a component/template, you must also EXPORT IT, THIS ISN'T REACT FML -->
+                <!-- turns out, I am an idiot. When importing a component/template, you must also EXPORT IT within the script, THIS ISN'T REACT FML -->
                 <div>
                     <div class="messageWrapper">
                         <div v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" :key="id">
@@ -132,6 +132,9 @@ export default {
                 </div>
                 <div v-if="user?.uid == userId">
                     <EditUserModal />
+                </div>
+                <div v-else>
+                    <button>Follow</button>
                 </div>
             </div>
         </div>
