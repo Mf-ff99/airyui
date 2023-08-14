@@ -31,7 +31,9 @@ export default {
                 return
                 })
                 .catch(e => console.error(e), userMessages.value = ['nothing left to show here'])
-        } 
+        }
+
+        console.log(userId)
         
         onMounted(() => {
             getUser(userId.value)
@@ -131,7 +133,7 @@ export default {
                     <span>{{ user?.createdAt ? new Date(userProfile.createdAt.seconds * 1000).toLocaleString() : '' }}</span>
                 </div>
                 <div v-if="user?.uid == userId">
-                    <EditUserModal />
+                    <EditUserModal :userId="user.uid"/>
                 </div>
                 <div v-else>
                     <button>Follow</button>

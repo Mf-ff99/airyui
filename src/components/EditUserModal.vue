@@ -1,10 +1,28 @@
 <script setup>
 import { ref } from 'vue'
+import { editUserData, getUser } from '@/firebase.js'
+
+defineProps(['userId'])
 
 const open = ref(false)
 const userStatus = ref('')
 const userDisplayName = ref('')
 // const userProfileImage = ref('')
+
+const updateUser = (userId, userName, userStatus) => {
+            // console.log(userId, userName, userStatus)
+            editUserData(userId, userName, userStatus)
+            .then(() => {
+                getUser(userId)
+                .then(user => {
+                    console.log(user), 'user'
+                    })
+                    .catch(error => console.error(error))
+            })
+            .catch(error => console.error(error))
+        }
+
+    
 </script>
 
 <template>
@@ -21,7 +39,7 @@ const userDisplayName = ref('')
         <p>Edit profile</p>
         <input v-model="userStatus" type="text" placeholder="Update your status" />
         <input v-model="userDisplayName" type="text" placeholder="Update your display name" />
-        <button @click="updateProfile">Update</button>
+        <button @click="updateUser(userId, userDisplayName, userStatus)">Update</button>
     </div>
     </div>
 </template>
