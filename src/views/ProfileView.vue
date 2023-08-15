@@ -162,13 +162,6 @@ export default {
     }
 }
 
-.messageFooter {
-    /* display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between; */
-}
-
 .userProfileHeader {
     display: flex;
     flex-direction: row;
