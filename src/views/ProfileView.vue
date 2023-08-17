@@ -13,7 +13,7 @@ export default {
         const route = useRoute()
         const { user } = useAuth()
         const userProfile = ref([])
-        const { deleteMessage } = useChat()
+        const { deleteMessage, messages } = useChat()
 
         const componentKey = ref(1)
 
@@ -28,10 +28,12 @@ export default {
                     return
                 }
                 userMessages.value = messages
+                loadNewMessages.value = true
                 return
                 })
                 .catch(e => console.error(e), userMessages.value = ['nothing left to show here'])
-        }
+                
+            }
 
         console.log(userId)
         
@@ -57,7 +59,7 @@ export default {
 
             const loadNewMessages = ref(null)
             watch(
-                userMessages,
+                messages,
                 () => {
                     nextTick(() => {
                         loadNewMessages.value?.scrollIntoView({ behavior: 'smooth' })
@@ -110,17 +112,17 @@ export default {
                             </div>
                         </div>
                     -->
-                    <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" 
-                :key="id"
-                :id="id"
-                :userId="userId" 
-                :name="userName" 
-                :sender="userId == user?.uid"
-                :createdAt="createdAt"
-                :userDisplayName="userDisplayName"
-                >
-                {{ text }}
-            </Message>
+                <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" 
+                    :key="id"
+                    :id="id"
+                    :userId="userId" 
+                    :name="userName" 
+                    :sender="userId == user?.uid"
+                    :createdAt="createdAt"
+                    :userDisplayName="userDisplayName"
+                    >
+                    {{ text }}
+                </Message>
                     </div> 
                 </div>
             </div>

@@ -39,8 +39,9 @@ export default {
         const messageCreator = ref([])
         const senderMessageInfoClicked = ref(false)
 
-        const deleteUserMessage = (id) => deleteMessage(id)
-
+        const deleteUserMessage = (id) => {
+            deleteMessage(id)
+        }
         const toggleDisplaySenderMessageInfo = () => {
             senderMessageInfoClicked.value = !senderMessageInfoClicked.value
         }
@@ -68,7 +69,7 @@ export default {
                 <span class="isSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span>
             </div>
             <div :class="senderMessageInfoClicked ? 'messageCreatedDate' : 'messageCreateDateHidden'">
-                <button class="deleteButton" @click="deleteUserMessage(id)">Delete</button>
+                <button v-if="user?.uid == userId" class="deleteButton" @click="deleteUserMessage(id)">Delete</button>
                 {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
             </div> 
         </div>
