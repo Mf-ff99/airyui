@@ -59,7 +59,7 @@ export default {
 
             const loadNewMessages = ref(null)
             watch(
-                messages,
+                userMessages,
                 () => {
                     nextTick(() => {
                         loadNewMessages.value?.scrollIntoView({ behavior: 'smooth' })
@@ -76,6 +76,7 @@ export default {
             userMessages,
             componentKey,
             deleteUserMessage,
+            messages,
         }
     },
     components: { EditUserModal, Message }

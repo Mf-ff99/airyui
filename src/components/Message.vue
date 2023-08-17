@@ -117,6 +117,7 @@ export default {
     /* justify-content: space-between; */
     /* width: 100%; */
     margin-bottom: 0.5rem;
+    transition: 4s ease-in-out;
 }
 
 .messageCreateDateHidden {
