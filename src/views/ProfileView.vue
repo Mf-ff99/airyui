@@ -69,7 +69,6 @@ export default {
 
         return {
             userId,
-            Message,
             user,
             userProfile,
             userMessages,
@@ -77,7 +76,7 @@ export default {
             deleteUserMessage,
         }
     },
-    components: { EditUserModal }
+    components: { EditUserModal, Message }
 }
 </script>
 
@@ -93,6 +92,7 @@ export default {
                 <!-- turns out, I am an idiot. When importing a component/template, you must also EXPORT IT within the script, THIS ISN'T REACT FML -->
                 <div>
                     <div class="messageWrapper">
+                            <!-- 
                         <div v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" :key="id">
                             <div class="messageHeader">
                                 <div>
@@ -109,7 +109,19 @@ export default {
                                 </div>  
                             </div>
                         </div>
-                    </div>
+                    -->
+                    <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" 
+                :key="id"
+                :id="id"
+                :userId="userId" 
+                :name="userName" 
+                :sender="userId == user?.uid"
+                :createdAt="createdAt"
+                :userDisplayName="userDisplayName"
+                >
+                {{ text }}
+            </Message>
+                    </div> 
                 </div>
             </div>
              <div v-else>

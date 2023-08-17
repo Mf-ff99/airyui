@@ -1,30 +1,3 @@
-<template>
-    <div :class="'messageBodyWrapperRecipient'" v-if="createdAt">
-        <div class="messageHeader">
-            <!-- make the delete button a menu with delete and edit -->
-            <div v-if="!sender">
-                <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span>
-                <router-link class="isNotSender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
-            </div>
-            <div v-if="sender">
-                <span class="isSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span>
-            </div>
-            <div :class="senderMessageInfoClicked ? 'messageCreatedDate' : 'messageCreateDateHidden'">
-                {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
-            </div> 
-        </div>
-        <div class="messageFooter" :id="sender ? 'senderView' : 'messageFooter'">
-            <div class="message">
-                <slot />
-                
-            </div>
-            <!-- <button v-if="sender" class="deleteButton" @click="deleteUserMessage(id)">Delete</button> -->
-        </div>
-    </div>
-    <div v-else>Loading message...</div>
-
-</template>
-
 <script>
 import { useAuth, useChat } from '@/firebase'
 import { ref } from 'vue'
@@ -82,6 +55,34 @@ export default {
     }
 }
 </script>
+
+<template>
+    <div :class="'messageBodyWrapperRecipient'" v-if="createdAt">
+        <div class="messageHeader">
+            <!-- make the delete button a menu with delete and edit -->
+            <div v-if="!sender">
+                <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span>
+                <router-link class="isNotSender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
+            </div>
+            <div v-if="sender">
+                <span class="isSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span>
+            </div>
+            <div :class="senderMessageInfoClicked ? 'messageCreatedDate' : 'messageCreateDateHidden'">
+                <button class="deleteButton" @click="deleteUserMessage(id)">Delete</button>
+                {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
+            </div> 
+        </div>
+        <div class="messageFooter" :id="sender ? 'senderView' : 'messageFooter'">
+            <div class="message">
+                <slot />
+                
+            </div>
+            <!-- <button v-if="sender" class="deleteButton" @click="deleteUserMessage(id)">Delete</button> -->
+        </div>
+    </div>
+    <div v-else>Loading message...</div>
+
+</template>
 
 <style scoped>
 
