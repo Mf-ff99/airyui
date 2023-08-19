@@ -72,15 +72,12 @@ export default {
             },
             { deep: true }
             )
-
-
-        // the logic for sendButton text is broken    
+  
         const message = ref('')
         const send = () => {
             sendClicked.value = true
             sendMessage(message.value)
             message.value = ''
-            // setTimeout(() => sendClicked.value = false, 2000);
         }
 
         return {
