@@ -91,28 +91,8 @@ export default {
            <div class="userMessages" v-if="userMessages.length >= 1">
                 <span v-if="userMessages[0].userId == user?.uid">{{ userMessages.length > 0 ? 'You have' : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} aired out the following:</span>
                 <span v-else>{{ userMessages.length > 0 ? userMessages[0].userDisplayName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span>
-                <!-- For the life of me I cannot get props to be passed appropriately to the Message component, so here is a messy workaround that I'm not stoked on -->
-                <!-- turns out, I am an idiot. When importing a component/template, you must also EXPORT IT within the script, THIS ISN'T REACT FML -->
                 <div>
-                    <div class="messageWrapper">
-                            <!-- 
-                        <div v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" :key="id">
-                            <div class="messageHeader">
-                                <div>
-                                    {{ userDisplayName? userDisplayName : '[deleted]' }}
-                                </div>
-                                <div>
-                                    {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
-                                </div>
-                            </div>
-                            <div class="messageFooter">
-                                {{ text }}
-                                <div v-if="userId == user?.uid">
-                                    <button class="deleteMessageButton" @click="deleteUserMessage(id)">Delete</button>
-                                </div>  
-                            </div>
-                        </div>
-                    -->
+                    <div class="messageWrapper">         
                 <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" 
                     :key="id"
                     :id="id"
