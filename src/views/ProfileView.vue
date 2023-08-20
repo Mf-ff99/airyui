@@ -137,6 +137,10 @@ export default {
         max-width: 95vw;
     }
 
+    .messageWrapper {
+        padding-top: 150px;
+    }
+
 }
 
 @media screen and (min-width: 800px) {
@@ -185,6 +189,8 @@ export default {
     justify-content: center;
     padding: 10px;
     height: 100%;
+    border-bottom: 1px solid #eee;
+    box-shadow: outset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 .userProfileMessages {
