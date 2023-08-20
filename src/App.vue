@@ -2,7 +2,11 @@
   <header>
     <div class="wrapper">
       <div class="greetings">
-        <h1>a i r y ui</h1>
+        <h2>
+          <a href="/dashboard">
+            a i r y ui
+          </a>
+        </h2>
       </div>
       <nav>
         <div class="pcNavbar">
@@ -71,6 +75,10 @@ export default {
 
 <style>
 
+a h2:hover {
+  background-color: none;
+}
+
 @media screen and (max-width: 916px) {
   #app {
     /* margin-right: 4%; */
@@ -81,6 +89,14 @@ export default {
     padding: 5px;
     position: fixed;
     min-height: 100vh;
+  }
+
+  header {
+    padding: 5px !important;
+  }
+
+  header div.wrapper {
+    max-height: 50px;
   }
 
   form {

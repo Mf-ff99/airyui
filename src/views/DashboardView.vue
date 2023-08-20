@@ -134,6 +134,10 @@ export default {
     margin-left: 0 auto;
   }
 
+  .submitForm {
+    padding-top: 5px;
+  }
+
 }
 
 ul.chatRoomSelector li {
