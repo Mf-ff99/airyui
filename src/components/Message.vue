@@ -38,9 +38,11 @@ export default {
         const { deleteMessage } = useChat()
         const messageCreator = ref([])
         const senderMessageInfoClicked = ref(false)
+        const messageDeletedRef = ref(false)
 
         const deleteUserMessage = (id) => {
             deleteMessage(id)
+            messageDeletedRef.value = true
         }
         const toggleDisplaySenderMessageInfo = () => {
             senderMessageInfoClicked.value = !senderMessageInfoClicked.value
@@ -48,6 +50,7 @@ export default {
 
         return {
             user,
+            messageDeletedRef,
             deleteUserMessage,
             messageCreator,
             toggleDisplaySenderMessageInfo,
@@ -58,7 +61,7 @@ export default {
 </script>
 
 <template>
-    <div :class="'messageBodyWrapperRecipient'" v-if="createdAt">
+    <div :class="'messageBodyWrapperRecipient'" v-if="createdAt" :id="[messageDeletedRef ? 'inActive' : '']">
         <div class="messageHeader">
             <!-- make the delete button a menu with delete and edit -->
             <div v-if="!sender">
@@ -86,6 +89,10 @@ export default {
 </template>
 
 <style scoped>
+
+#inActive {
+    display: none;
+}
 
 .isSender:hover, .isNotSender:hover {
     cursor: pointer;

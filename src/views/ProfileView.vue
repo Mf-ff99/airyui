@@ -1,7 +1,7 @@
 <script>
-import { ref, onMounted, watch, nextTick} from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAuth, getUser, getUserMesssages, useChat } from '@/firebase.js'
+import { useAuth, getUser, useChat } from '@/firebase.js'
 import Message from '../components/Message.vue'
 import EditUserModal from '../components/EditUserModal.vue'
 
@@ -13,29 +13,11 @@ export default {
         const route = useRoute()
         const { user } = useAuth()
         const userProfile = ref([])
-        const { deleteMessage, messages } = useChat()
+        const { messages } = useChat()
 
         const componentKey = ref(1)
 
         userId.value = route.params.id
-
-        const deleteUserMessage = (id) => {
-            deleteMessage(id)
-            getUserMesssages(userId.value)
-            .then(messages => {
-                if (!messages.length) {
-                    userMessages.value = ['user has no messages']
-                    return
-                }
-                userMessages.value = messages
-                loadNewMessages.value = true
-                return
-                })
-                .catch(e => console.error(e), userMessages.value = ['nothing left to show here'])
-                
-            }
-
-        console.log(userId)
         
         onMounted(() => {
             getUser(userId.value)
@@ -44,7 +26,7 @@ export default {
                     })
                     .catch(error => console.error(error))
             
-            getUserMesssages(userId.value)
+            useChat().getUserMessages(userId.value)
                 .then(messages => {
                     if (!messages.length) {
                         userMessages.value = ['user has no messages']
@@ -75,7 +57,6 @@ export default {
             userProfile,
             userMessages,
             componentKey,
-            deleteUserMessage,
             messages,
         }
     },
@@ -110,6 +91,7 @@ export default {
              <div v-else>
                 no messages to be found :( try sending something!
             </div> 
+            <div ref="loadNewMessages"></div>
         </div>
         <div>
             <div class="userProfile">

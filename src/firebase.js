@@ -66,6 +66,7 @@ export function useChat() {
     const messages = ref([])
     const { user, isLoggedIn } = useAuth()
     const sender = ref([])
+    const userMessages = ref([])
     
     
     const unsubscribe = messagesQuery.onSnapshot(snapshot => {
@@ -92,11 +93,19 @@ export function useChat() {
     const deleteMessage = messageId => {
         messagesCollection.doc(messageId).delete()
     }
+
+    const getUserMessages = async userId => {
+      const snapshot = await messagesCollection.where('userId', '==', userId).orderBy('createdAt', 'desc').limit(1000).get()
+      userMessages.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+      return userMessages.value ? userMessages.value : null
+    }
+
   
     return { 
       messages, 
       sendMessage, 
-      deleteMessage
+      deleteMessage,
+      getUserMessages,
     }
   }
 
@@ -106,11 +115,14 @@ export const getUser = async id => {
   return user.length > 0 ? user : null
 }
 
-export const getUserMesssages = async userId => {
-  const snapshot = await messagesCollection.where('userId', '==', userId).orderBy('createdAt', 'desc').limit(1000).get()
-  const userMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
-  return userMessages.length > 0 ? userMessages : null
-}
+
+
+// export function getUserMesssages = async userId => {
+//   const userMessages = ref([])
+//   const snapshot = await messagesCollection.where('userId', '==', userId).orderBy('createdAt', 'desc').limit(1000).get()
+//   userMessages.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+//   return userMessages.length > 0 ? userMessages : null
+// }
 
 export const editUserData = async (userId, newUserDisplayName, newUserStatus) => {
   // update user collection with newUserDisplayName and newUserStatus
