@@ -129,6 +129,14 @@ export default {
         display: flex;
         flex-direction: column;
     }
+
+    .userMessages {
+        max-height: 500px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-width: 95vw;
+    }
+
 }
 
 @media screen and (min-width: 800px) {
@@ -157,11 +165,11 @@ export default {
 }
 
 .messageWrapper div {
-    margin: 5px;
+    /* margin: 5px;
     background-color: #eee;
     border-radius: 5px;
     padding: 2px;
-    min-width: fit-content;
+    min-width: fit-content; */
 }
 
 .messageWrapper {

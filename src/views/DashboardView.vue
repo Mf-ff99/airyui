@@ -101,8 +101,9 @@ export default {
 
 @media screen and (max-width: 916px) {
   .messageWrapper {
-    max-width: 80vw;
+    /* max-width: 80vw; */
     max-height: 70vh;
+    background-color: white !important;
   }
 
   form textarea {
@@ -123,7 +124,12 @@ export default {
   }
 
   .chatHeader {
-    max-width: 80vw;
+    /* max-width: 80vw; */
+    margin-left: 0 auto;
+  }
+
+  .dashboardView {
+    /* max-width: 80vw; */
     margin-left: 0 auto;
   }
 

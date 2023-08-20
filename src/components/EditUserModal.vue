@@ -52,5 +52,10 @@ const updateUser = (userId, userName, userStatus) => {
   left: 50%;
   width: 300px;
   margin-left: -150px;
+  background-color: white;
+  color: black;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 3px;
 }
 </style>

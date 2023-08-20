@@ -90,6 +90,12 @@ export default {
 
 <style scoped>
 
+@media screen and (max-width: 800px) {
+    .messageFooter {
+        width: 20vw !important;
+    }
+}
+
 #inActive {
     display: none;
 }

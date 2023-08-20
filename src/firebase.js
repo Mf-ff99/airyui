@@ -115,15 +115,6 @@ export const getUser = async id => {
   return user.length > 0 ? user : null
 }
 
-
-
-// export function getUserMesssages = async userId => {
-//   const userMessages = ref([])
-//   const snapshot = await messagesCollection.where('userId', '==', userId).orderBy('createdAt', 'desc').limit(1000).get()
-//   userMessages.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
-//   return userMessages.length > 0 ? userMessages : null
-// }
-
 export const editUserData = async (userId, newUserDisplayName, newUserStatus) => {
   // update user collection with newUserDisplayName and newUserStatus
   console.log(userId, newUserDisplayName, newUserStatus)
