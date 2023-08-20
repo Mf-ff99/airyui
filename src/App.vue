@@ -163,8 +163,9 @@ a h2:hover {
     width: 80vw;
   }
 
-  .wrapper {
-    flex-direction: column;
+  header div.wrapper {
+    align-items: space-around;
+    justify-content: space-between;
     min-width: 200px;
   }
 
