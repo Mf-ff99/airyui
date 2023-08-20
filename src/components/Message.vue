@@ -92,7 +92,8 @@ export default {
 
 @media screen and (max-width: 800px) {
     .messageFooter {
-        width: 20vw !important;
+        width: fit-content !important;
+        padding-left: 1px;
     }
 }
 
