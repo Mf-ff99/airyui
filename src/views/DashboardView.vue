@@ -116,6 +116,7 @@ export default {
   #app {
     overflow-y: auto;
     overflow-x: auto;
+    min-width: 100%;
   }
 
    form button.sendButton {
