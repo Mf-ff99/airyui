@@ -79,7 +79,6 @@ export function useChat() {
     const sendMessage = async text => {
       sender.value = await getUser(user.value.uid)
       const userDisplayName = sender.value[0].userDisplayName
-      console.log(userDisplayName, 'user')
       if (!isLoggedIn.value) return
       const { uid, displayName } = user.value
       messagesCollection.add({
@@ -125,6 +124,17 @@ export const editUserData = async (userId, newUserDisplayName, newUserStatus) =>
   await usersCollection.doc(userDocId).update({
     userDisplayName: newUserDisplayName,
     userProfileStatus: newUserStatus
+  })
+}
+
+export const followUserById = async (userId, userToFollowId) => {
+  // update user collection with newUserDisplayName and newUserStatus
+  console.log(userId, userToFollowId)
+  const snapshot = await usersCollection.where('userId', '==', userId).get()
+  const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+  const userDocId = user[0].id
+  await usersCollection.doc(userDocId).update({
+    following: firebase.firestore.FieldValue.arrayUnion(userToFollowId)
   })
 }
 

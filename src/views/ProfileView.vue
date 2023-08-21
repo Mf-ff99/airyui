@@ -1,7 +1,7 @@
 <script>
 import { ref, onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAuth, getUser, useChat } from '@/firebase.js'
+import { useAuth, getUser, useChat, followUserById } from '@/firebase.js'
 import Message from '../components/Message.vue'
 import EditUserModal from '../components/EditUserModal.vue'
 
@@ -18,6 +18,10 @@ export default {
         const componentKey = ref(1)
 
         userId.value = route.params.id
+
+        const followUser = userId => {
+            followUserById(user.value?.uid, userId)
+        }
         
         onMounted(() => {
             getUser(userId.value)
@@ -58,6 +62,7 @@ export default {
             userMessages,
             componentKey,
             messages,
+            followUser,
         }
     },
     components: { EditUserModal, Message }
@@ -113,7 +118,7 @@ export default {
                     <EditUserModal :userId="user.uid"/>
                 </div>
                 <div v-else>
-                    <button>Follow</button>
+                    <button @click="followUser(userId)">Follow</button>
                 </div>
             </div>
         </div>
