@@ -76,9 +76,10 @@ export function useChat() {
     })
     onUnmounted(unsubscribe)
     
-    const sendMessage = text => {
-      sender.value  = getUser(user.value.uid)
-      const { userDisplayName } = sender.value
+    const sendMessage = async text => {
+      sender.value = await getUser(user.value.uid)
+      const userDisplayName = sender.value[0].userDisplayName
+      console.log(userDisplayName, 'user')
       if (!isLoggedIn.value) return
       const { uid, displayName } = user.value
       messagesCollection.add({

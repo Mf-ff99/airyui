@@ -146,7 +146,7 @@ ul.chatRoomSelector li {
   padding: 5px;
   margin-left: 5px;
   border-radius: 5px;
-  border: red 1px;
+  /* border: red 1px; */
   transition: .4s ease-in-out;
 }
 
