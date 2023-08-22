@@ -1,14 +1,6 @@
 <template>
     <div class="dashboardView">
       <div class="chatHeader">
-        <ul class="chatRoomSelector">
-          <li>
-            <span>general</span>
-          </li>
-          <li>
-            <span>following</span>
-          </li>
-        </ul>
         <div class="scrollCheckboxWrapper">
           <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
           <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll.value ? 'enable scroll' : 'disable scroll'  }}</label>
