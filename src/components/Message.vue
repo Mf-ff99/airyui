@@ -44,6 +44,7 @@ export default {
             deleteMessage(id)
             messageDeletedRef.value = true
         }
+        
         const toggleDisplaySenderMessageInfo = () => {
             senderMessageInfoClicked.value = !senderMessageInfoClicked.value
         }

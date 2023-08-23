@@ -1,16 +1,21 @@
 <script>
 import { LocalChat, useAuth } from '@/firebase.js'
 import Message from '../components/Message.vue'
+import { onMounted, ref } from 'vue'
 
 const { user } = useAuth()
 
 export default {
     setup() {
-        const { uid } = user.value
-        const { followersMessages } = LocalChat(uid)
+        const followingMessages = ref([])
 
+        onMounted(() => {
+            const { followersMessages } = LocalChat(user.value?.uid)
+            followingMessages.value = followersMessages
+            console.log(user.value?.uid)
+        })
         return {
-            followersMessages,
+            followingMessages,
             user
         }
     },
@@ -35,7 +40,6 @@ export default {
     <div v-else>
         no messages to be found :( try following someone who is active!
     </div>
-
 
 </template>
 
