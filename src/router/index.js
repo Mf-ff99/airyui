@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Main from '../views/HomeView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import LocalView from '../views/LocalView.vue'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
@@ -31,6 +32,12 @@ const router = createRouter({
       path: "/profile/:id",
       name: "profile", 
       component: ProfileView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/local",
+      name: "local", 
+      component: LocalView,
       meta: { requiresAuth: true },
     },
   ]

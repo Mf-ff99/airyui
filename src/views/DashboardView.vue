@@ -1,40 +1,3 @@
-<template>
-    <div class="dashboardView">
-      <div class="chatHeader">
-        <div class="scrollCheckboxWrapper">
-          <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
-          <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll.value ? 'enable scroll' : 'disable scroll'  }}</label>
-        </div>
-      </div>
-        <div class="messageWrapper">
-          <div class="messagesExistContainer" v-if="messages.length">
-            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in messages" 
-                :key="id"
-                :id="id"
-                :userId="userId" 
-                :name="userName" 
-                :sender="userId == user?.uid"
-                :createdAt="createdAt"
-                :userDisplayName="userDisplayName"
-                >
-                {{ text }}
-            </Message>
-          </div>
-          <div v-else>Loading messages...</div>
-          <div ref="loadNewMessages"></div>
-        </div>
-
-        <div>
-            <div class="submitForm">
-                <form @submit.prevent="send">
-                    <textarea v-model="message" type="text" placeholder="Type a message" @keyup.enter="send" required />
-                    <button type="submit" class="sendButton">{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</template>
-
 <script>
 import { ref, watch, nextTick } from 'vue'
 import { useChat, useAuth } from '@/firebase'
@@ -88,6 +51,43 @@ export default {
 }
 
 </script>
+
+<template>
+    <div class="dashboardView">
+      <div class="chatHeader">
+        <div class="scrollCheckboxWrapper">
+          <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
+          <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll.value ? 'enable scroll' : 'disable scroll'  }}</label>
+        </div>
+      </div>
+        <div class="messageWrapper">
+          <div class="messagesExistContainer" v-if="messages.length">
+            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in messages" 
+                :key="id"
+                :id="id"
+                :userId="userId" 
+                :name="userName" 
+                :sender="userId == user?.uid"
+                :createdAt="createdAt"
+                :userDisplayName="userDisplayName"
+                >
+                {{ text }}
+            </Message>
+          </div>
+          <div v-else>Loading messages...</div>
+          <div ref="loadNewMessages"></div>
+        </div>
+
+        <div>
+            <div class="submitForm">
+                <form @submit.prevent="send">
+                    <textarea v-model="message" type="text" placeholder="Type a message" @keyup.enter="send" required />
+                    <button type="submit" class="sendButton">{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
 
 <style>
 

@@ -13,7 +13,7 @@
           <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
           <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
           <RouterLink to="/dashboard" v-if="isLoggedIn">Global</RouterLink>
-          <RouterLink to="/local">Local</RouterLink>
+          <RouterLink to="/local" v-if="isLoggedIn">Local</RouterLink>
           <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
           <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
         </div>

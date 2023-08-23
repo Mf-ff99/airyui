@@ -109,6 +109,46 @@ export function useChat() {
     }
   }
 
+// function LocalView should get all of the user's follower's messages, and sort them by date
+export function LocalChat(userId) {
+  const followersMessages = ref([])
+  
+  const getUsersFollowers = async userId => {
+    const snapshot = await usersCollection.where('userId', '==', userId).get()
+    const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+    const userFollowers = user[0].following
+    return userFollowers
+  }
+
+  const getFollowersMessages = async userFollowers => {
+    const snapshot = await messagesCollection.where('userId', 'in', userFollowers).orderBy('createdAt', 'desc').limit(1000).get()
+    followersMessages.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+    return followersMessages.value ? followersMessages.value : null
+  }
+
+  getUsersFollowers(userId).then(userFollowers => {
+    getFollowersMessages(userFollowers)
+  })
+
+  
+  
+  // here we need to query for the user's followers
+  // then find the messages with IDs that match the followers
+  // and then sort them by date
+  // and then return them to the LocalView component
+  // and then display them in the LocalView component
+  // and then profit
+
+    
+    return {
+      followersMessages,
+      
+    }
+}
+
+
+
+
 export const getUser = async id => {
   const snapshot = await usersCollection.where('userId', '==', id).get()
   const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
