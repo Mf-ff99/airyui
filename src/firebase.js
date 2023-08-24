@@ -112,6 +112,9 @@ export function useChat() {
 // function FollowingChat should get all of the user's follower's messages, and sort them by date. 
 // This has turned out to be an enormous problem for me, and I am sure it is due to something very dumb.
 // i wish i never started on this stupid vue app
+// I believe that the problem is that these functions should be executed in an onMounted hook
+// inside of the view where I am calling FollowingChat(). The answer is likely to be found in simply
+// following the same pattern as ProfileView. 
 
 export function FollowingChat() {
   const followersMessages = ref([])
