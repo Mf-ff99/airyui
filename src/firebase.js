@@ -109,7 +109,10 @@ export function useChat() {
     }
   }
 
-// function LocalView should get all of the user's follower's messages, and sort them by date
+// function FollowingChat should get all of the user's follower's messages, and sort them by date. 
+// This has turned out to be an enormous problem for me, and I am sure it is due to something very dumb.
+// i wish i never started on this stupid vue app
+
 export function FollowingChat() {
   const followersMessages = ref([])
   const { user, isLoggedIn } = useAuth()
@@ -133,6 +136,8 @@ export function FollowingChat() {
       getFollowersMessages(userFollowers)
     })
   }
+
+  console.log(followersMessages.value, 'followersMessages')
     
     return {
       followersMessages,
