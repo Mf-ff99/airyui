@@ -1,19 +1,22 @@
 <script>
-import { LocalChat, useAuth } from '@/firebase.js'
+import { FollowingChat, useAuth } from '@/firebase.js'
 import Message from '../components/Message.vue'
 import { onMounted, ref } from 'vue'
 
-const { user } = useAuth()
+const { user, isLoggedIn } = useAuth()
 
 export default {
     setup() {
         const followingMessages = ref([])
 
         onMounted(() => {
-            const { followersMessages } = LocalChat(user.value?.uid)
-            followingMessages.value = followersMessages
-            console.log(user.value?.uid)
+            if(isLoggedIn.value) {
+                const { followersMessages } = FollowingChat()
+                followingMessages.value = followersMessages
+                console.log(user.value)
+            }
         })
+
         return {
             followingMessages,
             user
@@ -24,8 +27,8 @@ export default {
 </script>
 
 <template>
-    <div v-if="followersMessages.length">
-        <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages" 
+    <div v-if="followingMessages.length">
+        <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followingMessages" 
             :key="id"
             :id="id"
             :userId="userId" 
