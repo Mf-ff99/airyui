@@ -61,10 +61,10 @@ const messagesCollection = firestore.collection('messages')
 const messagesQuery = messagesCollection.orderBy('createdAt', 'desc').limit(100)
 const usersCollection = firestore.collection('users')
 // const usersQuery = usersCollection.orderBy('createdAt', 'desc').limit(1)
+const { user, isLoggedIn } = useAuth()
 
 export function useChat() {
     const messages = ref([])
-    const { user, isLoggedIn } = useAuth()
     const sender = ref([])
     const userMessages = ref([])
     
@@ -116,10 +116,9 @@ export function useChat() {
 // inside of the view where I am calling FollowingChat(). The answer is likely to be found in simply
 // following the same pattern as ProfileView. 
 
+const followersMessages = ref([])
 export function FollowingChat() {
-  const followersMessages = ref([])
-  const { user, isLoggedIn } = useAuth()
-  
+
   const getUsersFollowers = async userId => {
     const snapshot = await usersCollection.where('userId', '==', userId).get()
     const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
@@ -133,23 +132,18 @@ export function FollowingChat() {
     return followersMessages.value ? followersMessages.value : null
   }
 
-  if (isLoggedIn.value) {
-    console.log(isLoggedIn.value, 'isloggedin')
-    getUsersFollowers(user?.uid).then(userFollowers => {
-      getFollowersMessages(userFollowers)
-    })
-  }
+  if (user.value == null) return
+  getUsersFollowers(user.value.uid).then(userFollowers => {
+    getFollowersMessages(userFollowers)
+  })
+  
 
-  console.log(followersMessages.value, 'followersMessages')
+  console.log(followersMessages, 'followersMessages')
     
     return {
       followersMessages,
-      
     }
 }
-
-
-
 
 export const getUser = async id => {
   const snapshot = await usersCollection.where('userId', '==', id).get()

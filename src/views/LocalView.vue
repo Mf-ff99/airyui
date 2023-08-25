@@ -8,18 +8,16 @@ const { user, isLoggedIn } = useAuth()
 export default {
     setup() {
         const followingMessages = ref([])
+        const { followersMessages } = FollowingChat(user.value ? user.value.uid : null)
+        followingMessages.value = followersMessages.value
 
-        onMounted(() => {
-            if(isLoggedIn.value) {
-                const { followersMessages } = FollowingChat()
-                followingMessages.value = followersMessages
-                console.log(user.value)
-            }
-        })
+        console.log(followersMessages.value, 'fwiw this fucking SUCKS ASS')           
+        followingMessages.value = followersMessages
 
         return {
             followingMessages,
-            user
+            user,
+            followersMessages
         }
     },
     components: { Message }
@@ -27,8 +25,9 @@ export default {
 </script>
 
 <template>
-    <div v-if="followingMessages.length">
-        <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followingMessages" 
+    <div class="messageWrapper">
+        <div v-if="followersMessages.length">
+            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages" 
             :key="id"
             :id="id"
             :userId="userId" 
@@ -43,6 +42,7 @@ export default {
     <div v-else>
         no messages to be found :( try following someone who is active!
     </div>
+</div>
 
 </template>
 
