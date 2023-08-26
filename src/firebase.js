@@ -132,16 +132,12 @@ export function FollowingChat() {
     return followersMessages.value ? followersMessages.value : null
   }
 
-  if (user.value == null) return
-  getUsersFollowers(user.value.uid).then(userFollowers => {
-    getFollowersMessages(userFollowers)
-  })
-  
-
   console.log(followersMessages, 'followersMessages')
     
     return {
       followersMessages,
+      getUsersFollowers,
+      getFollowersMessages
     }
 }
 

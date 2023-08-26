@@ -3,16 +3,28 @@ import { FollowingChat, useAuth } from '@/firebase.js'
 import Message from '../components/Message.vue'
 import { onMounted, ref } from 'vue'
 
-const { user, isLoggedIn } = useAuth()
+const { user } = useAuth()
 
 export default {
     setup() {
         const followingMessages = ref([])
-        const { followersMessages } = FollowingChat(user.value ? user.value.uid : null)
-        followingMessages.value = followersMessages.value
+        const { followersMessages, getUsersFollowers, getFollowersMessages } = FollowingChat(user.value ? user.value.uid : null)
+        
+        onMounted(() => {
+            console.log(user.value.uid)
+            if(user.value.uid == null) return
+            getUsersFollowers(user?.value.uid).then(followers => {
+                followers.forEach(follower => {
+                    getFollowersMessages(follower.id).then(messages => {
+                        followingMessages.value = [...followingMessages.value, ...messages]
+                    })
+                })
+            })
+        })
+        // followingMessages.value = followersMessages.value
 
-        console.log(followersMessages.value, 'fwiw this fucking SUCKS ASS')           
-        followingMessages.value = followersMessages
+        // console.log(followersMessages.value, 'fwiw this fucking SUCKS ASS')           
+        // followingMessages.value = followersMessages
 
         return {
             followingMessages,
@@ -26,8 +38,8 @@ export default {
 
 <template>
     <div class="messageWrapper">
-        <div v-if="followersMessages.length">
-            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages" 
+        <div v-if="followingMessages.length">
+            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followingMessages" 
             :key="id"
             :id="id"
             :userId="userId" 
