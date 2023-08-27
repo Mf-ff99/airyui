@@ -11,11 +11,11 @@ export default {
         const { followersMessages, getUsersFollowers, getFollowersMessages } = FollowingChat(user.value ? user.value.uid : null)
         
         onMounted(() => {
-            console.log(user.value.uid)
-            if(user.value.uid == null) return
-            getUsersFollowers(user?.value.uid).then(followers => {
+            // console.log(user.value.uid)
+            if(!user.value) return
+            getUsersFollowers(user.value.uid).then(followers => {
                 followers.forEach(follower => {
-                    getFollowersMessages(follower.id).then(messages => {
+                    getFollowersMessages(follower).then(messages => {
                         followingMessages.value = [...followingMessages.value, ...messages]
                     })
                 })

@@ -127,8 +127,9 @@ export function FollowingChat() {
   }
 
   const getFollowersMessages = async userFollowers => {
-    const snapshot = await messagesCollection.where('userId', 'in', userFollowers).orderBy('createdAt', 'desc').limit(1000).get()
+    const snapshot = await messagesCollection.where('userId', '==', userFollowers).orderBy('createdAt', 'desc').limit(1000).get()
     followersMessages.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+    console.log(followersMessages.value, 'userFollowers')
     return followersMessages.value ? followersMessages.value : null
   }
 
