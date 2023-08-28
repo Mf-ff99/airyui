@@ -21,11 +21,7 @@ export default {
                 })
             })
         })
-        // followingMessages.value = followersMessages.value
-
-        // console.log(followersMessages.value, 'fwiw this fucking SUCKS ASS')           
-        // followingMessages.value = followersMessages
-
+        
         return {
             followingMessages,
             user,
