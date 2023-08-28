@@ -2,7 +2,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 
-import { ref, onUnmounted, computed } from 'vue'
+import { ref, onUnmounted, onMounted, computed } from 'vue'
 
 firebase.initializeApp({
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -20,10 +20,11 @@ const auth = firebase.auth()
 export function useAuth() {
     const user = ref(null)
     const unsubscribe = auth.onAuthStateChanged(_user => (user.value = _user))
-    onUnmounted(unsubscribe)
+    onMounted(unsubscribe)
 
+    
     const isLoggedIn = computed(() => user.value !== null)
-
+    
     const isFirstTimeLogin = computed(() => {
       if (user.value.metadata.creationTime == user.value.metadata.lastSignInTime) {
         return true
@@ -46,7 +47,8 @@ export function useAuth() {
           })
         }
       }
-
+      
+      // console.log(user.value ? user.value.uid : user , 'user')
     const signOut = () => {
         auth.signOut()
     }

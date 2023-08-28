@@ -37,6 +37,7 @@ export default {
 </script>
 
 <template>
+    {{ user ? user : 'noooo user here' }}
     <div class="messageWrapper">
         <div v-if="followingMessages.length">
             <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followingMessages" 
