@@ -25,7 +25,9 @@ export default {
         return {
             followingMessages,
             user,
-            followersMessages
+            followersMessages,
+            getUsersFollowers,
+            getFollowersMessages
         }
     },
     components: { Message }
@@ -33,7 +35,19 @@ export default {
 </script>
 
 <template>
-    {{ user ? user : 'noooo user here' }}
+    <!-- this is very bad practice. I should not be doing this. I suck. This makes about 22 calls to firebase -->
+    <!-- but alas, it is all I can get to work during a HOT RELOAD FUCK -->
+    <div class="uselessWasteOfSpace">
+        {{  
+            getUsersFollowers(user.uid).then(followers => {
+                followers.forEach(follower => {
+                    getFollowersMessages(follower).then(messages => {
+                        followingMessages.value = [...followingMessages.value, ...messages]
+                    })
+                })
+            })
+        }}
+    </div>
     <div class="messageWrapper">
         <div v-if="followingMessages.length">
             <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followingMessages" 
@@ -56,5 +70,9 @@ export default {
 </template>
 
 <style>
+
+.uselessWasteOfSpace {
+    display: none;
+}
 
 </style>
