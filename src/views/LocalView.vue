@@ -69,7 +69,18 @@ export default {
 
 </template>
 
-<style>
+<style scoped>
+
+.messageWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 800px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* max-width: 100vw; */
+}
 
 .uselessWasteOfSpace {
     display: none;
