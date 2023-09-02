@@ -12,14 +12,14 @@ export default {
         
         onMounted(() => {
             // console.log(user.value.uid)
-            if(!user.value) return
-            getUsersFollowers(user.value.uid).then(followers => {
-                followers.forEach(follower => {
-                    getFollowersMessages(follower).then(messages => {
-                        followingMessages.value = [...followingMessages.value, ...messages]
-                    })
-                })
-            })
+            // if(!user.value) return
+            // getUsersFollowers(user.value.uid).then(followers => {
+            //     followers.forEach(follower => {
+            //         getFollowersMessages(follower).then(messages => {
+            //             followingMessages.value = [...followingMessages.value, ...messages]
+            //         })
+            //     })
+            // })
         })
         
         return {
