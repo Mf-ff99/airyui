@@ -12,14 +12,14 @@ export default {
         
         onMounted(() => {
             // console.log(user.value.uid)
-            // if(!user.value) return
-            // getUsersFollowers(user.value.uid).then(followers => {
-            //     followers.forEach(follower => {
-            //         getFollowersMessages(follower).then(messages => {
-            //             followingMessages.value = [...followingMessages.value, ...messages]
-            //         })
-            //     })
-            // })
+            if(!user.value) return
+            getUsersFollowers(user.value.uid).then(followers => {
+                followers.forEach(follower => {
+                    getFollowersMessages(follower).then(messages => {
+                        followingMessages.value = [...followingMessages.value, ...messages]
+                    })
+                })
+            })
         })
         
         return {
@@ -38,7 +38,7 @@ export default {
     <!-- this is very bad practice. I should not be doing this. I suck. This makes about 22 calls to firebase -->
     <!-- but alas, it is all I can get to work during a HOT RELOAD FUCK -->
     <div class="uselessWasteOfSpace">
-        {{  
+        <!-- {{  
             getUsersFollowers(user.uid).then(followers => {
                 followers.forEach(follower => {
                     getFollowersMessages(follower).then(messages => {
@@ -46,7 +46,7 @@ export default {
                     })
                 })
             })
-        }}
+        }} -->
     </div>
     <div class="messageWrapper">
         <div v-if="followingMessages.length">
