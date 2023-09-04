@@ -65,7 +65,6 @@ export default {
     <div :class="'messageBodyWrapperRecipient'" v-if="createdAt" :id="[messageDeletedRef ? 'inActive' : '']">
         <div class="messageHeader">
             <!-- make the delete button a menu with delete and edit -->
-            <!-- {{ console.log(userDisplayName) }} -->
             <div v-if="!sender">
                 <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span>
                 <router-link class="isNotSender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
@@ -83,7 +82,6 @@ export default {
                 <slot />
                 
             </div>
-            <!-- <button v-if="sender" class="deleteButton" @click="deleteUserMessage(id)">Delete</button> -->
         </div>
     </div>
     <div v-else>Loading message...</div>
