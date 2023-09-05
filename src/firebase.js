@@ -116,30 +116,42 @@ export function useChat() {
 // i wish i never started on this stupid vue app
 // I now believe I need to simply cache user data in the browser
 
-const followersMessages = ref([])
-export function FollowingChat() {
+export function FollowingChat(userUid) {
+  const followersMessages = ref([])
+  const id = ref("")
+  id.value = userUid
+  console.log(id.value, 'id.value')
+
+  if (!id.value) return
 
   const getUsersFollowers = async userId => {
     const snapshot = await usersCollection.where('userId', '==', userId).get()
     const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
     const userFollowers = user[0].following
+    console.log(userFollowers, 'userFollowers')
     return userFollowers
   }
 
   const getFollowersMessages = async userFollowers => {
-    const snapshot = await messagesCollection.where('userId', '==', userFollowers).orderBy('createdAt', 'desc').limit(1000).get()
+    const snapshot = await messagesCollection.where('userId', '==', userFollowers.uid).orderBy('createdAt', 'desc').limit(1000).get()
     followersMessages.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
-    console.log(followersMessages.value, 'userFollowers')
     return followersMessages.value ? followersMessages.value : null
   }
 
+  getUsersFollowers(id.value).then (userFollowers => {
+    userFollowers.forEach(userFollower => {
+      
+      getFollowersMessages(userFollower).then(followersMessages => {
+        console.log(followersMessages, 'followersMessages in fb')
+      })
+    })
+  })
+  
   console.log(followersMessages, 'followersMessages')
     
-    return {
-      followersMessages,
-      getUsersFollowers,
-      getFollowersMessages
-    }
+  return {
+    followersMessages,
+  }
 }
 
 export const getUser = async id => {

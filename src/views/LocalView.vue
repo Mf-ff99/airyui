@@ -8,26 +8,23 @@ const { user } = useAuth()
 export default {
     setup() {
         const followingMessages = ref([])
-        const { followersMessages, getUsersFollowers, getFollowersMessages } = FollowingChat(user.value ? user.value.uid : null)
+
+        if (user.value) {
+            const { followersMessages } = FollowingChat(user.value ? user.value.uid : null)
+
+            followingMessages.value = followersMessages
+        }
         
         onMounted(() => {
             // console.log(user.value.uid)
             if(!user.value) return
-            getUsersFollowers(user.value.uid).then(followers => {
-                followers.forEach(follower => {
-                    getFollowersMessages(follower).then(messages => {
-                        followingMessages.value = [...followingMessages.value, ...messages]
-                    })
-                })
-            })
         })
+
+        console.log(followingMessages)
         
         return {
             followingMessages,
             user,
-            followersMessages,
-            getUsersFollowers,
-            getFollowersMessages
         }
     },
     components: { Message }
