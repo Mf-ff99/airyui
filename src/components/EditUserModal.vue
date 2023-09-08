@@ -16,8 +16,6 @@ const updateUser = (userId, userName, userStatus) => {
                 getUser(userId)
                 .then(user => {
                     open.value = false
-                    // userStatus.value = user.status
-                    // userDisplayName.value = user.displayName
                     })
                     .catch(error => console.error(error))
             })

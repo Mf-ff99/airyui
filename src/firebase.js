@@ -21,7 +21,6 @@ export function useAuth() {
     const user = ref(null)
     const unsubscribe = auth.onAuthStateChanged(_user => (user.value = _user))
     onMounted(unsubscribe)
-
     
     const isLoggedIn = computed(() => user.value !== null)
     
@@ -70,7 +69,6 @@ export function useChat() {
     const sender = ref([])
     const userMessages = ref([])
     
-    
     const unsubscribe = messagesQuery.onSnapshot(snapshot => {
       messages.value = snapshot.docs
       .map(doc => ({ id: doc.id, ...doc.data() }))
@@ -116,15 +114,16 @@ export function useChat() {
 // i wish i never started on this stupid vue app
 // I now believe I need to simply cache user data in the browser
 
-export function FollowingChat(userUid) {
-  const followersMessages = ref([])
+export function FollowingChat() {
+  console.log(user, 'user.value')
+  const followersMessages = ref(["fuck"])
   const id = ref("")
-  id.value = userUid
+
+  // if (!user.value.id) return
+  id.value = user.value.uid
   console.log(id.value, 'id.value')
 
-  if (!id.value) return
-
-  const getUsersFollowers = async userId => {
+  const getUsersFollowers = async (userId) => {
     const snapshot = await usersCollection.where('userId', '==', userId).get()
     const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
     const userFollowers = user[0].following
@@ -132,23 +131,21 @@ export function FollowingChat(userUid) {
     return userFollowers
   }
 
-  const getFollowersMessages = async userFollowers => {
-    const snapshot = await messagesCollection.where('userId', '==', userFollowers.uid).orderBy('createdAt', 'desc').limit(1000).get()
+  const getFollowersMessages = async userFollower => {
+    const snapshot = await messagesCollection.where('userId', '==', userFollower).orderBy('createdAt', 'desc').limit(1000).get()
     followersMessages.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+    console.log(followersMessages, 'FUCK')
     return followersMessages.value ? followersMessages.value : null
   }
 
-  getUsersFollowers(id.value).then (userFollowers => {
-    userFollowers.forEach(userFollower => {
-      
+  getUsersFollowers(id.value).then(userFollowers => {
+    userFollowers.forEach(userFollower => {      
       getFollowersMessages(userFollower).then(followersMessages => {
         console.log(followersMessages, 'followersMessages in fb')
       })
     })
   })
-  
-  console.log(followersMessages, 'followersMessages')
-    
+
   return {
     followersMessages,
   }

@@ -7,13 +7,11 @@ const { user } = useAuth()
 
 export default {
     setup() {
+        const { followersMessages } = FollowingChat()
         const followingMessages = ref([])
-
-        if (user.value) {
-            const { followersMessages } = FollowingChat(user.value ? user.value.uid : null)
-
-            followingMessages.value = followersMessages
-        }
+        
+        console.log(followersMessages, 'followersMessages')
+        followingMessages.value = followersMessages
         
         onMounted(() => {
             // console.log(user.value.uid)

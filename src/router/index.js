@@ -35,7 +35,6 @@ const router = createRouter({
     },
     {
       path: "/local",
-      name: "local", 
       component: () => import("../views/LocalView.vue"),
       meta: { requiresAuth: true },
     },
