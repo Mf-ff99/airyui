@@ -59,8 +59,11 @@ export default {
             {{ text }}
         </Message>
     </div>
-    <div v-else>
+    <!-- <div v-else>
         no messages to be found :( try following someone who is active!
+    </div> -->
+    <div v-else>
+        this feature is broken, because mf-ff99 is lacking a critical understanding of Vue's reactivity
     </div>
 </div>
 

@@ -1,39 +1,3 @@
-<template>
-  <header>
-    <div class="wrapper">
-      <div class="greetings">
-        <h2>
-          <a href="/dashboard">
-            a i r y ui
-          </a>
-        </h2>
-      </div>
-      <nav>
-        <div class="pcNavbar">
-          <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
-          <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
-          <RouterLink to="/dashboard" v-if="isLoggedIn">Global</RouterLink>
-          <RouterLink to="/local" v-if="isLoggedIn">Local</RouterLink>
-          <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
-          <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
-        </div>
-        <div class="mobileNavbar">
-          <div class="mobileMenuView" :id="!hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
-            <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
-            <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
-            <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
-            <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
-            <a @click="signUserOut" v-if="isLoggedIn">Log out</a>
-          </div>
-          <div class="hamburger" @click="hamburgerClicked">{{ !hamburgerClickedRef ? '<==' : '==>'}}</div>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <router-view :key="$route.path"/>
-</template>
-
 <script>
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
@@ -72,6 +36,42 @@ export default {
   }
 }
 </script>
+
+<template>
+  <header>
+    <div class="wrapper">
+      <div class="greetings">
+        <h2>
+          <a href="/dashboard">
+            a i r y ui
+          </a>
+        </h2>
+      </div>
+      <nav>
+        <div class="pcNavbar">
+          <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+          <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
+          <RouterLink to="/dashboard" v-if="isLoggedIn">Global</RouterLink>
+          <RouterLink to="/local" v-if="isLoggedIn">Local</RouterLink>
+          <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
+          <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
+        </div>
+        <div class="mobileNavbar">
+          <div class="mobileMenuView" :id="!hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
+            <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+            <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
+            <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
+            <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
+            <a @click="signUserOut" v-if="isLoggedIn">Log out</a>
+          </div>
+          <div class="hamburger" @click="hamburgerClicked">{{ !hamburgerClickedRef ? '<==' : '==>'}}</div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <router-view :key="$route.path"/>
+</template>
 
 <style>
 

@@ -42,10 +42,10 @@ export default {
                 .catch(e => console.error(e), userMessages.value = ['nothing left to show here'])
             });
 
-
             const loadNewMessages = ref(null)
             watch(
                 userMessages,
+                userProfile,
                 () => {
                     nextTick(() => {
                         loadNewMessages.value?.scrollIntoView({ behavior: 'smooth' })

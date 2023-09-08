@@ -163,13 +163,23 @@ export const getUser = async id => {
 export const editUserData = async (userId, newUserDisplayName, newUserStatus) => {
   // update user collection with newUserDisplayName and newUserStatus
   console.log(userId, newUserDisplayName, newUserStatus)
-  const snapshot = await usersCollection.where('userId', '==', userId).get()
-  const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
-  const userDocId = user[0].id
-  await usersCollection.doc(userDocId).update({
-    userDisplayName: newUserDisplayName,
-    userProfileStatus: newUserStatus
-  })
+  if (newUserDisplayName) {
+    const snapshot = await usersCollection.where('userId', '==', userId).get()
+    const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+    const userDocId = user[0].id
+    await usersCollection.doc(userDocId).update({
+      userDisplayName: newUserDisplayName,
+    })
+  }
+
+  if (newUserStatus) {
+    const snapshot = await usersCollection.where('userId', '==', userId).get()
+    const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+    const userDocId = user[0].id
+    await usersCollection.doc(userDocId).update({
+      userProfileStatus: newUserStatus
+    })
+  }
 }
 
 export const followUserById = async (userId, userToFollowId) => {
