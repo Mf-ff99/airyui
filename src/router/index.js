@@ -33,11 +33,11 @@ const router = createRouter({
       component: ProfileView,
       meta: { requiresAuth: true },
     },
-    {
-      path: "/local",
-      component: () => import("../views/LocalView.vue"),
-      meta: { requiresAuth: true },
-    },
+    // {
+    //   path: "/local",
+    //   component: () => import("../views/LocalView.vue"),
+    //   meta: { requiresAuth: true },
+    // },
   ]
 })
 
