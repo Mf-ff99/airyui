@@ -57,7 +57,11 @@ export default {
       <div class="chatHeader">
         <div class="scrollCheckboxWrapper">
           <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
-          <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll.value ? 'enable scroll' : 'disable scroll'  }}</label>
+          <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll ? 'enable scroll' : 'disable scroll'  }}</label>
+        </div>
+        <div class="scrollCheckboxWrapper">
+          <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
+          <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll ? 'following' : 'all users'  }}</label>
         </div>
       </div>
         <div class="messageWrapper">
