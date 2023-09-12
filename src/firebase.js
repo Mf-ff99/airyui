@@ -68,6 +68,7 @@ export function useChat() {
     const messages = ref([])
     const sender = ref([])
     const userMessages = ref([])
+    const followersMessages = ref([])
     
     const unsubscribe = messagesQuery.onSnapshot(snapshot => {
       messages.value = snapshot.docs
@@ -90,6 +91,21 @@ export function useChat() {
       })
     }
 
+    const getUsersFollowers = async (userId) => {
+      const snapshot = await usersCollection.where('userId', '==', userId).get()
+      const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+      const userFollowers = user[0].following
+      console.log(userFollowers, 'userFollowers')
+      return userFollowers
+    }
+
+    const getFollowersMessages = async userFollower => {
+      const snapshot = await messagesCollection.where('userId', '==', userFollower).orderBy('createdAt', 'desc').limit(1000).get()
+      followersMessages.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+      console.log(followersMessages, 'FUCK')
+      return followersMessages.value ? followersMessages.value : null
+    }
+
     const deleteMessage = messageId => {
         messagesCollection.doc(messageId).delete()
     }
@@ -106,6 +122,8 @@ export function useChat() {
       sendMessage, 
       deleteMessage,
       getUserMessages,
+      getUsersFollowers,
+      getFollowersMessages
     }
   }
 

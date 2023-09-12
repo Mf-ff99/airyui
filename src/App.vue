@@ -15,7 +15,9 @@ export default {
 
     const signUserOut = () => {
       signOut()
-      router.push('/')
+      .then(() => {
+        router.push('/')
+      })
     }
 
     const signUserIn = () => {
@@ -54,7 +56,7 @@ export default {
           <RouterLink to="/dashboard" v-if="isLoggedIn">Global</RouterLink>
           <!-- <RouterLink to="/local" v-if="isLoggedIn">Following</RouterLink> -->
           <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
-          <button @click="signUserOut" v-if="isLoggedIn">Log out</button>
+          <button @click="signUserOut" v-if="isLoggedIn" to="/">Log out</button>
         </div>
         <div class="mobileNavbar">
           <div class="mobileMenuView" :id="!hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
@@ -62,7 +64,7 @@ export default {
             <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
             <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
             <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
-            <a @click="signUserOut" v-if="isLoggedIn">Log out</a>
+            <a @click="signUserOut" v-if="isLoggedIn" to="/">Log out</a>
           </div>
           <div class="hamburger" @click="hamburgerClicked">{{ !hamburgerClickedRef ? '<==' : '==>'}}</div>
         </div>

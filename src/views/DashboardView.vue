@@ -7,12 +7,27 @@ const { user } = useAuth()
 
 export default {
     setup() {
-        const { messages, sendMessage } = useChat()
+        const { messages, sendMessage, getUsersFollowers, getFollowersMessages } = useChat()
         const sendClicked = ref(false)
         const disableScroll = ref(false)
+        const enableFollowing = ref(false)
+        const followersMessages = ref([])
 
         const onDisableScrollToggle = () => {
             disableScroll.value = !disableScroll.value
+        }
+
+        const onFollowingToggle = () => {
+            enableFollowing.value = !enableFollowing.value
+            if (enableFollowing.value) {
+              getUsersFollowers(user.value.uid).then(userFollowers => {
+                userFollowers.forEach(userFollower => {      
+                  getFollowersMessages(userFollower).then(followerMessages => {
+                    followersMessages.value = followerMessages
+                  })
+                })
+              })
+            }
         }
         
         // logic for scrolling to bottom when there are messages
@@ -44,7 +59,10 @@ export default {
             sendClicked,
             loadNewMessages,
             onDisableScrollToggle,
-            disableScroll
+            disableScroll,
+            enableFollowing,
+            onFollowingToggle,
+            followersMessages,
         }
     },
     components: { Message }
@@ -57,16 +75,29 @@ export default {
       <div class="chatHeader">
         <div class="scrollCheckboxWrapper">
           <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
-          <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll ? 'enable scroll' : 'disable scroll'  }}</label>
+          <label for="nav-toggle" class="nav-toggle-label">{{ 'disable scroll' }}</label>
         </div>
         <div class="scrollCheckboxWrapper">
-          <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
-          <label for="nav-toggle" class="nav-toggle-label">{{ disableScroll ? 'following' : 'all users'  }}</label>
+          <input type="checkbox" id="toggle-following" class="nav-toggle" @click="onFollowingToggle" />
+          <label for="toggle-following" class="nav-toggle-label">{{ 'show following' }}</label>
         </div>
       </div>
         <div class="messageWrapper">
-          <div class="messagesExistContainer" v-if="messages.length">
+          <div class="messagesExistContainer" v-if="messages.length && !enableFollowing">
             <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in messages" 
+                :key="id"
+                :id="id"
+                :userId="userId" 
+                :name="userName" 
+                :sender="userId == user?.uid"
+                :createdAt="createdAt"
+                :userDisplayName="userDisplayName"
+                >
+                {{ text }}
+            </Message>
+          </div>
+          <div class="messagesExistContainer" v-if="followersMessages.length && enableFollowing">
+            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages" 
                 :key="id"
                 :id="id"
                 :userId="userId" 
@@ -109,6 +140,7 @@ export default {
     min-height: 60px !important;
     margin-top: 10px;
   }
+
   #app {
     overflow-y: auto;
     overflow-x: auto;
@@ -133,7 +165,6 @@ export default {
   .submitForm {
     padding-top: 5px;
   }
-
 }
 
 ul.chatRoomSelector li {
@@ -142,7 +173,6 @@ ul.chatRoomSelector li {
   padding: 5px;
   margin-left: 5px;
   border-radius: 5px;
-  /* border: red 1px; */
   transition: .4s ease-in-out;
 }
 
@@ -264,7 +294,6 @@ textarea {
     color: #ffffff;
     cursor: pointer;
 }
-
 
 .messageWrapper {
     display: flex;
