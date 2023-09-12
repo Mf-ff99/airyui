@@ -6,8 +6,8 @@ import Message from '../components/Message.vue'
 import EditUserModal from '../components/EditUserModal.vue'
 
 export default {
-    
     setup() {
+        const { getUsersFollowers } = useChat()
         const userMessages = ref([])
         const userId = ref('')
         const route = useRoute()
@@ -23,10 +23,15 @@ export default {
             followUserById(user.value?.uid, userId)
         }
         
+        const isFollowed = getUsersFollowers(user.value?.uid).then(userFollowers => {
+            console.log(userFollowers, userId.value, 'userFollowers')
+            return userFollowers.includes(userId.value)
+        })
         onMounted(() => {
             getUser(userId.value)
                 .then(user => {
                     userProfile.value = user
+
                     })
                     .catch(error => console.error(error))
             
@@ -63,6 +68,7 @@ export default {
             componentKey,
             messages,
             followUser,
+            isFollowed,
         }
     },
     components: { EditUserModal, Message }
@@ -117,9 +123,13 @@ export default {
                 <div v-if="user?.uid == userId">
                     <EditUserModal :userId="user.uid"/>
                 </div>
+                <div v-if="isFollowed">
+                    <button @click="followUser(userId)">Unfollow</button>
+                </div>
                 <div v-else>
                     <button @click="followUser(userId)">Follow</button>
                 </div>
+               
             </div>
         </div>
     </div>
