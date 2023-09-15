@@ -96,6 +96,9 @@ export default {
                 {{ text }}
             </Message>
           </div>
+          <div v-if="!messages.length && enableFollowing">
+            Loading messages...
+          </div>
           <div class="messagesExistContainer" v-if="followersMessages.length && enableFollowing">
             <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages" 
                 :key="id"
@@ -109,7 +112,6 @@ export default {
                 {{ text }}
             </Message>
           </div>
-          <div v-else>Loading messages...</div>
           <div ref="loadNewMessages"></div>
         </div>
 
