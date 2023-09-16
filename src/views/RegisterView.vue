@@ -1,13 +1,3 @@
-<template>
-    <h1>register</h1>
-    <div class="register">
-        <p><input type="text" placeholder="email" v-model="email" /></p>
-        <p><input type="text" placeholder="password" v-model="password" /></p>
-        <p><button @click="register">submit</button></p>
-        <p><button @click="signInWithGoogle">sign in with google</button></p>
-    </div>
-</template>
-
 <script setup>
 import { ref } from "vue"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
@@ -33,8 +23,13 @@ const register = () => {
         )
 }
 
-const signInWithGoogle = () => {
-
-}
-
 </script>
+
+<template>
+    <h1>register</h1>
+    <div class="register">
+        <p><input type="text" placeholder="email" v-model="email" /></p>
+        <p><input type="text" placeholder="password" v-model="password" /></p>
+        <p><button @click="register">submit</button></p>
+    </div>
+</template>

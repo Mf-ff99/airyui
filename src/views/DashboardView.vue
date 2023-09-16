@@ -130,7 +130,6 @@ export default {
 
 @media screen and (max-width: 916px) {
   .messageWrapper {
-    /* max-width: 80vw; */
     max-height: 70vh;
     background-color: white !important;
   }
