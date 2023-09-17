@@ -27,6 +27,7 @@ export default {
             console.log(userFollowers, userId.value, 'userFollowers')
             return userFollowers.includes(userId.value)
         })
+        
         onMounted(() => {
             getUser(userId.value)
                 .then(user => {
@@ -123,11 +124,13 @@ export default {
                 <div v-if="user?.uid == userId">
                     <EditUserModal :userId="user.uid"/>
                 </div>
-                <div v-if="isFollowed">
-                    <button @click="followUser(userId)">Unfollow</button>
-                </div>
-                <div v-else>
-                    <button @click="followUser(userId)">Follow</button>
+                <div v-if="user?.uid != userId">
+                    <div v-if="isFollowed">
+                        <button @click="followUser(userId)">Unfollow</button>
+                    </div>
+                    <div v-if="!isFollowed">
+                        <button @click="followUser(userId)">Follow</button>
+                    </div>
                 </div>
                
             </div>

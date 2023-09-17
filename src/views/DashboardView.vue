@@ -154,12 +154,10 @@ export default {
   }
 
   .chatHeader {
-    /* max-width: 80vw; */
     margin-left: 0 auto;
   }
 
   .dashboardView {
-    /* max-width: 80vw; */
     margin-left: 0 auto;
   }
 
