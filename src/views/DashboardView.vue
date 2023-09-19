@@ -23,10 +23,11 @@ export default {
               getUsersFollowers(user.value.uid).then(userFollowers => {
                 userFollowers.forEach(userFollower => {      
                   getFollowersMessages(userFollower).then(followerMessages => {
-                    followersMessages.value = followerMessages
+                    followersMessages.value.push(followerMessages)
                   })
                 })
               })
+              console.log(followersMessages, 'followersMessages bb')
             }
         }
         
@@ -100,7 +101,7 @@ export default {
             Loading messages...
           </div>
           <div class="messagesExistContainer" v-if="followersMessages.length && enableFollowing">
-            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages" 
+            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages.flat()" 
                 :key="id"
                 :id="id"
                 :userId="userId" 

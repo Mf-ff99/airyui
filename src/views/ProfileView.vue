@@ -24,7 +24,6 @@ export default {
         }
         
         const isFollowed = getUsersFollowers(user.value?.uid).then(userFollowers => {
-            console.log(userFollowers, userId.value, 'userFollowers')
             return userFollowers.includes(userId.value)
         })
         
