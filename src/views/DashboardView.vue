@@ -27,7 +27,6 @@ export default {
                   })
                 })
               })
-              console.log(followersMessages, 'followersMessages bb')
             }
         }
         
