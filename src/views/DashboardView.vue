@@ -126,7 +126,7 @@ export default {
     </div>
 </template>
 
-<style>
+<style scoped>
 
 @media screen and (max-width: 916px) {
   .messageWrapper {
