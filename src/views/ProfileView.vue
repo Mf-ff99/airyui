@@ -168,6 +168,18 @@ export default {
     }
 }
 
+.profileStatus {
+    padding: 5px;
+    width: 200px;
+    word-wrap: normal;
+}
+
+.userNameWrapper {
+    padding: 5px;
+    width: 200px;
+    word-wrap: normal;
+}
+
 .userProfileHeader {
     display: flex;
     flex-direction: row;
