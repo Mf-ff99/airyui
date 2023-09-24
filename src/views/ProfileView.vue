@@ -80,7 +80,7 @@ export default {
     <div class="profileViewContainer">
         <div>
            
-           <div class="userMessages" v-if="userMessages.length >= 1">
+           <div class="userMessages" v-if="userMessages.length">
                 <span v-if="userMessages[0].userId == user?.uid">{{ userMessages.length > 0 ? 'You have' : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} aired out the following:</span>
                 <span v-else>{{ userMessages.length > 0 ? userMessages[0].userDisplayName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span>
                 <div>
@@ -139,8 +139,6 @@ export default {
 
 
 <style scoped>
-
-
 @media screen and (max-width: 800px) {
     .profileViewContainer {
         display: flex;
@@ -195,14 +193,6 @@ export default {
 
 .deleteMessageButton {
     cursor: pointer;
-}
-
-.messageWrapper div {
-    /* margin: 5px;
-    background-color: #eee;
-    border-radius: 5px;
-    padding: 2px;
-    min-width: fit-content; */
 }
 
 .messageWrapper {
