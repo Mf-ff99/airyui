@@ -76,7 +76,7 @@ export default {
 </script>
 
 <template>
-    <span>profile view</span>
+    <span v-if="userMessages.length">{{ userMessages[0].userDisplayName }}'s profile</span>
     <div class="profileViewContainer">
         <div>
            
