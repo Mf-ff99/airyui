@@ -49,6 +49,7 @@ export function useAuth() {
       
       // console.log(user.value ? user.value.uid : user , 'user')
     const signOut = () => {
+        unsubscribe() 
         auth.signOut()
     }
 

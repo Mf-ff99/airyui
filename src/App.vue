@@ -14,16 +14,15 @@ export default {
     }
 
     const signUserOut = () => {
-      signOut()
-      .then(() => {
-        router.push('/')
+      signOut().then(() => {
+        router.go('/')
       })
     }
 
     const signUserIn = () => {
-      signIn()
-      .then(() => {
-        router.push('/dashboard')
+      signIn().then(() => {
+        router.go('/dashboard')
+        console.log(router.currentRoute.value.path)
       })
     }
 
@@ -52,7 +51,7 @@ export default {
       <nav>
         <div class="pcNavbar">
           <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
-          <!-- <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> -->
+          <RouterLink to="/register" v-if="!isLoggedIn.value">Register</RouterLink>
           <RouterLink to="/dashboard" v-if="isLoggedIn">Global</RouterLink>
           <!-- <RouterLink to="/local" v-if="isLoggedIn">Following</RouterLink> -->
           <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
@@ -61,7 +60,7 @@ export default {
         <div class="mobileNavbar">
           <div class="mobileMenuView" :id="!hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
             <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
-            <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
+            <RouterLink to="/register" v-if="!isLoggedIn">Register With Google</RouterLink> 
             <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
             <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
             <a @click="signUserOut" v-if="isLoggedIn" to="/">Log out</a>
