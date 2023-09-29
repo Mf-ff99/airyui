@@ -46,23 +46,19 @@ export function useAuth() {
           })
         }
       }
-      
-      // console.log(user.value ? user.value.uid : user , 'user')
-    const signOut = () => {
-        unsubscribe() 
-        auth.signOut()
+      const signOut = () => {
+      unsubscribe() 
+      auth.signOut()
     }
 
     return { user, isLoggedIn, signIn, signOut }
 }
 
 // use firestore hook to get data
-
 const firestore = firebase.firestore()
 const messagesCollection = firestore.collection('messages')
 const messagesQuery = messagesCollection.orderBy('createdAt', 'desc').limit(100)
 const usersCollection = firestore.collection('users')
-// const usersQuery = usersCollection.orderBy('createdAt', 'desc').limit(1)
 const { user, isLoggedIn } = useAuth()
 
 export function useChat() {
