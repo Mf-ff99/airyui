@@ -123,12 +123,7 @@ export function useChat() {
       getFollowersMessages
     }
   }
-
-// function FollowingChat should get all of the user's follower's messages, and sort them by date. 
-// This has turned out to be an enormous problem for me, and I am sure it is due to something very dumb.
-// i wish i never started on this stupid vue app
-// I now believe I need to simply cache user data in the browser
-
+  
 export function FollowingChat() {
   console.log(user, 'user.value')
   const followersMessages = ref(["fuck"])
