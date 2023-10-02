@@ -46,25 +46,32 @@ const getCurrentUser = () => {
     const removeListener = onAuthStateChanged(
       getAuth(),
       (user) => {
-        removeListener()
-        resolve(user)
+        removeListener();
+        resolve(user);
       },
       reject,
-    )
-  })
-}
+    );
+  });
+};
 
-router.beforeEach( async (to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (getCurrentUser()) {
-      next()
-  } else {
-    alert("You are not logged in")
-    next("/")
+    try {
+      const user = await getCurrentUser();
+      if (user) {
+        next();
+      } else {
+        alert("You are not logged in");
+        next("/");
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle any errors that occur while checking the user's authentication status
+      next("/");
     }
   } else {
-    next()
+    next();
   }
-})
+});
 
 export default router

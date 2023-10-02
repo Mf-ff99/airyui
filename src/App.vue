@@ -14,15 +14,13 @@ export default {
     }
 
     const signUserOut = () => {
-      signOut().then(() => {
-        router.go('/')
-      })
+      signOut()
+      router.push('/')
     }
 
     const signUserIn = () => {
       signIn().then(() => {
-        router.go('/dashboard')
-        console.log(router.currentRoute.value.path)
+        router.push('/dashboard')
       })
     }
 

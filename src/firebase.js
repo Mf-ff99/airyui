@@ -16,11 +16,18 @@ firebase.initializeApp({
 
 const auth = firebase.auth()
 
+// firestore utility hooks
+const firestore = firebase.firestore()
+const messagesCollection = firestore.collection('messages')
+const messagesQuery = messagesCollection.orderBy('createdAt', 'desc').limit(100)
+const usersCollection = firestore.collection('users')
+const { user, isLoggedIn } = useAuth()
+
 // use auth hook to sign in and out
 export function useAuth() {
     const user = ref(null)
     const unsubscribe = auth.onAuthStateChanged(_user => (user.value = _user))
-    onMounted(unsubscribe)
+    onUnmounted(unsubscribe)
     
     const isLoggedIn = computed(() => user.value !== null)
     
@@ -30,36 +37,30 @@ export function useAuth() {
       } else { return false } })
 
     const signIn = async () => {
-        const googleProvider = new firebase.auth.GoogleAuthProvider()
-        await auth.signInWithPopup(googleProvider)
-        if (isFirstTimeLogin.value) {
-          const { uid } = user.value
-          await firestore.collection('users').doc(uid).set({
-            userId: uid,
-            userProfileStatus: 'hey, im the default status! look at me, im a noob!! i don\'t know how to change my default status!',
-            messagesSent: 0,
-            userRole: 'user',
-            userAvatar: 'https://picsum.photos/200',
-            userDisplayName: 'anon',
-            following: [],
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          })
-        }
+      const googleProvider = new firebase.auth.GoogleAuthProvider()
+      await auth.signInWithPopup(googleProvider)
+      if (isFirstTimeLogin.value) {
+        const { uid } = user.value
+        await firestore.collection('users').doc(uid).set({
+          userId: uid,
+          userProfileStatus: 'hey, im the default status! look at me, im a noob!! i don\'t know how to change my default status!',
+          messagesSent: 0,
+          userRole: 'user',
+          userAvatar: 'https://picsum.photos/200',
+          userDisplayName: 'anon',
+          following: [],
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        console.log('SINGED IN')
       }
-      const signOut = () => {
-      unsubscribe() 
-      auth.signOut()
     }
+    
+  const signOut = () => {
+    auth.signOut()
+  }
 
     return { user, isLoggedIn, signIn, signOut }
 }
-
-// use firestore hook to get data
-const firestore = firebase.firestore()
-const messagesCollection = firestore.collection('messages')
-const messagesQuery = messagesCollection.orderBy('createdAt', 'desc').limit(100)
-const usersCollection = firestore.collection('users')
-const { user, isLoggedIn } = useAuth()
 
 export function useChat() {
     const messages = ref([])
@@ -129,7 +130,6 @@ export function FollowingChat() {
   const followersMessages = ref(["fuck"])
   const id = ref("")
 
-  // if (!user.value.id) return
   id.value = user.value.uid
   console.log(id.value, 'id.value')
 
@@ -169,7 +169,6 @@ export const getUser = async id => {
 
 export const editUserData = async (userId, newUserDisplayName, newUserStatus) => {
   // update user collection with newUserDisplayName and newUserStatus
-  console.log(userId, newUserDisplayName, newUserStatus)
   if (newUserDisplayName) {
     const snapshot = await usersCollection.where('userId', '==', userId).get()
     const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
@@ -190,8 +189,7 @@ export const editUserData = async (userId, newUserDisplayName, newUserStatus) =>
 }
 
 export const followUserById = async (userId, userToFollowId) => {
-  // update user collection with newUserDisplayName and newUserStatus
-  console.log(userId, userToFollowId)
+  // follow user with a userId by adding userToFollowId to the following array
   const snapshot = await usersCollection.where('userId', '==', userId).get()
   const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
   const userDocId = user[0].id

@@ -30,7 +30,7 @@ export default {
             }
         }
         
-        // logic for scrolling to bottom when there are messages
+        // logic for scrolling to page bottom when there are messages
         const loadNewMessages = ref(disableScroll.value)
         watch(
             messages,
