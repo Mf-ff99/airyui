@@ -1,5 +1,5 @@
 <script>
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuth, getUser, useChat, followUserById } from '@/firebase.js'
 import Message from '../components/Message.vue'
@@ -120,7 +120,7 @@ export default {
                 <div>
                     <span>{{ user?.createdAt ? new Date(userProfile.createdAt.seconds * 1000).toLocaleString() : '' }}</span>
                 </div>
-                <div v-if="user?.uid == userId">
+                <div v-if="user?.uid == userId" class="modal">
                     <EditUserModal :userId="user.uid"/>
                 </div>
                 <div v-if="user?.uid != userId">

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { editUserData, getUser } from '@/firebase.js'
 
 defineProps(['userId'])
@@ -8,6 +8,24 @@ const open = ref(false)
 const userStatus = ref('')
 const userDisplayName = ref('')
 // const userProfileImage = ref('')
+
+ // Close Modal with click outside of Modal logic
+ const closeModalOnClickOutside = (event) => {
+    // Check if the click is outside the modal
+    if (!event.target.closest('.modal')) {
+        // If it is, close the modal
+        open.value = false;
+    }
+};
+
+onMounted(() => {
+    // Add a click event listener to the document
+    document.addEventListener('click', closeModalOnClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('click', closeModalOnClickOutside);
+});
 
 const updateUser = (userId, userName, userStatus) => {
             // console.log(userId, userName, userStatus)
