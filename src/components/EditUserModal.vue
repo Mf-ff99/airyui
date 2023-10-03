@@ -18,15 +18,6 @@ const userDisplayName = ref('')
     }
 };
 
-onMounted(() => {
-    // Add a click event listener to the document
-    document.addEventListener('click', closeModalOnClickOutside);
-});
-
-onUnmounted(() => {
-    document.removeEventListener('click', closeModalOnClickOutside);
-});
-
 const updateUser = (userId, userName, userStatus) => {
             // console.log(userId, userName, userStatus)
             editUserData(userId, userName, userStatus)
@@ -38,9 +29,16 @@ const updateUser = (userId, userName, userStatus) => {
                     .catch(error => console.error(error))
             })
             .catch(error => console.error(error))
-        }
+}
 
-    
+onMounted(() => {
+    // Add a click event listener to the document
+    document.addEventListener('click', closeModalOnClickOutside);
+})
+
+onUnmounted(() => {
+    document.removeEventListener('click', closeModalOnClickOutside);
+})
 </script>
 
 <template>
