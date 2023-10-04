@@ -216,7 +216,6 @@ div.messsage {
 }
 .deleteButton:hover {
     background-color: #eee;
-    /* color: #ffffff; */
     cursor: pointer;
 }
 
