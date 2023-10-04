@@ -49,7 +49,7 @@ export default {
       <nav>
         <div class="pcNavbar">
           <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
-          <RouterLink to="/register" v-if="!isLoggedIn.value">Register</RouterLink>
+          <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink>
           <RouterLink to="/dashboard" v-if="isLoggedIn">Global</RouterLink>
           <!-- <RouterLink to="/local" v-if="isLoggedIn">Following</RouterLink> -->
           <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
@@ -58,7 +58,7 @@ export default {
         <div class="mobileNavbar">
           <div class="mobileMenuView" :id="!hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
             <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
-            <RouterLink to="/register" v-if="!isLoggedIn">Register With Google</RouterLink> 
+            <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
             <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
             <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
             <a @click="signUserOut" v-if="isLoggedIn" to="/">Log out</a>
@@ -114,32 +114,14 @@ a h2:hover {
   }
 
   #hiddenMobileMenu {
-    /* display: none; */
     right: -500px;
   }
 
   .mobileNavbar {
-    /* position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: -500px;
-    background-color:  white;
-    height: 50%;
-    width: 60%;
-    right: 0;
-    padding-top: 50px;
-    z-index: 1;
-    */
     transition: all .5s ease-out; 
   }
 
   .mobileMenuView {
-    /* border-bottom: .5px solid rgb(182, 181, 181);
-    padding: 24px 0;
-    text-align: center;
-    transition: all .2s ease-out;
-    z-index: 2;
-    position: absolute; */
     position: fixed;
     display: flex;
     flex-direction: column;
