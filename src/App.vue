@@ -73,12 +73,28 @@ export default {
 </template>
 
 <style>
+/* mobile first vanilla css */
+@media screen and (min-width: 800px) {
+  #app {
+    margin-right: 30%;
+    margin-left: 30%;
+  }
 
-a h2:hover {
-  background-color: none;
+  .mobileNavbar {
+    display: none !important;
+  }
+
+  .displayedMobileMenu {
+    display: none;
+  }
+
+  #hiddenMobileMenu {
+    display: none;
+  }
+
 }
 
-@media screen and (max-width: 916px) {
+@media screen and (max-width: 800px) {
   #app {
     margin-left: 0%;
     max-height: 100%;
@@ -155,8 +171,6 @@ a h2:hover {
     justify-content: center;
     width: 40vw;
     min-width: 100px !important;
-    /* overflow-x: hidden;
-    overflow-y: hidden; */
   }
 
   .submitForm {
@@ -175,26 +189,6 @@ a h2:hover {
   }
 }
 
-@media screen and (min-width: 916px) {
-
-  #app {
-    margin-right: 30%;
-    margin-left: 30%;
-  }
-
-  .mobileNavbar {
-    display: none !important;
-  }
-
-  .displayedMobileMenu {
-    display: none;
-  }
-
-  #hiddenMobileMenu {
-    display: none;
-  }
-
-}
 /* color scheme for dark/light mode */
 @media (prefers-color-scheme: dark) {
   #app {
@@ -245,12 +239,7 @@ a h2:hover {
 
 }
 
-#app {
-  background-color: white;
-  color: black;
-}
-
-
+/* boilerplate */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -292,82 +281,6 @@ a h2:hover {
 
 .linkToProfile:hover {
   cursor: pointer;
-}
-
-
-.wrapper {
-  display: flex;
-  flex-direction: row;
-  min-width: 500px;
-  max-width: 1000px;
-}
-
-.wrapper a {
-  padding: 5px;
-}
-
-header {
-  margin-top: 0;
-  padding: 10px;
-}
-
-nav {
-  padding: 5px;
-  min-width: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-a {
-  text-decoration: none;
-  color: #000000;
-  transition: .4s;
-  border-radius: 5px;
-  margin: 0 5px; 
-  padding: 5px;
-}
-
-a:hover {
-  color: #eee !important;
-  cursor: pointer;
-  background-color: #333333;
-  transition: .4s;
-}
-
-nav button {
-  padding: 5px;
-  border: none;
-  color: black;
-  border-radius: 5px;
-  background-color: white;
-}
-
-nav button:hover {
-  cursor: pointer;
-}
-
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
 }
 
 </style>

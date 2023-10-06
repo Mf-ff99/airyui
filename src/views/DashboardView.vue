@@ -1,3 +1,5 @@
+<!-- this application should only allow people to share twice a day -->
+<!-- the entire screen is the application, with a nice, smooth, sliding-in/happy-bounce -->
 <script>
 import { ref, watch, nextTick } from 'vue'
 import { useChat, useAuth } from '@/firebase'
