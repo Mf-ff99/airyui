@@ -127,8 +127,6 @@ export default {
 .messageHeader {
     display: flex;
     align-items: flex-start;
-    /* justify-content: space-between; */
-    /* width: 100%; */
     margin-bottom: 0.5rem;
     transition: 4s ease-in-out;
 }
