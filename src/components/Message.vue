@@ -88,135 +88,13 @@ export default {
 </template>
 
 <style scoped>
-
+/* mobile first css */
 @media screen and (max-width: 800px) {
-    .messageFooter {
-        width: fit-content !important;
-        padding-left: 1px;
-    }
+
 }
 
-#inActive {
-    display: none;
-}
+@media screen and (min-width: 800px) {
 
-.isSender:hover, .isNotSender:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.messageFooter {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 0.5rem;
-}
-
-.messageBodyWrapperRecipient {
-    border-top: 5px black;
-    border-left: 1px black;
-    display: flex;
-}
-
-#senderView {
-    flex-direction: row-reverse;
-}
-
-.messageHeader {
-    display: flex;
-    align-items: flex-start;
-    /* justify-content: space-between; */
-    /* width: 100%; */
-    margin-bottom: 0.5rem;
-    transition: 4s ease-in-out;
-}
-
-.messageCreateDateHidden {
-    display: none;
-    
-}
-
-
-
-.messageHeader a {
-    text-decoration: none;
-    color: #333333;
-}
-
-.messageCreatedDate {
-    font-size: 12px;
-    padding: 2px;
-}
-
-div.messsage {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    min-width: 400px;
-}
-.messageBodyWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    min-width: 800px;
-    max-width: 100%;
-    background-color: #eee;
-    border-radius: 0.5rem;
-    padding: 5px 5px;
-    margin-right: 10px;
-    border-bottom: 1px solid #333333;
-}
-
-.sender {
-    margin-right: 0.5rem;
-    font-size: 12px;
-    padding: 2px;
-}
-
-.sender:hover {
-    background-color: #333333;
-    color: white;
-    cursor: pointer;
-    transition-duration: .4s;
-    border-radius: 5px;
-}
-
-.message {
-    background-color: #eee;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.deleteButton {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    line-height: 1;
-    text-decoration: none;
-    color: #333333;
-    font-size: 12px;
-    border-radius: 2px;
-    padding: 4px;
-    /* width: 20px;
-    height: 20px; */
-    border: 1px solid #333333;
-    padding-right: 2px;
-    /* position: relative; */
-    transition: 0.3s;
-    background-color: #ffffff00;
-    -webkit-transition-duration: .4s;
-    margin-right: 25px;
-}
-.deleteButton:hover {
-    background-color: #eee;
-    cursor: pointer;
 }
 
 </style>

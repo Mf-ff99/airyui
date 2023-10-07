@@ -61,17 +61,12 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.modal {
-  position: fixed;
-  z-index: 999;
-  top: 20%;
-  left: 50%;
-  width: 300px;
-  margin-left: -150px;
-  background-color: white;
-  color: black;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 3px;
+/* mobile first css */
+@media screen and (max-width: 800px) {
+
+}
+
+@media screen and (min-width: 800px) {
+
 }
 </style>
