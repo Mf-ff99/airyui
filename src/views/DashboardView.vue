@@ -131,7 +131,10 @@ export default {
 <style scoped>
 /* mobile first css */
 @media screen and (max-width: 800px) {
-
+  .messageWrapper {
+    overflow-y: scroll;
+    max-height: 87vh;
+  }
 }
 
 @media screen and (min-width: 800px) {

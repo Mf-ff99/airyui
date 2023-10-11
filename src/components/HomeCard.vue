@@ -47,7 +47,7 @@
     height: 100%;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-    overflow: hidden;
+    /* overflow: hidden; */
     padding: 5px;
     color: #6D6875;
     margin: 20px 5px 10px 10px;

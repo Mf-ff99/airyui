@@ -98,10 +98,10 @@ export default {
   #app {
     margin-left: 0%;
     max-height: 100%;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    /* overflow-y: hidden;
+    overflow-x: hidden; */
     padding: 5px;
-    position: fixed;
+    /* position: fixed; */
     min-height: 100vh;
   }
 

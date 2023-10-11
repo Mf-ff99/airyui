@@ -25,8 +25,8 @@ body {
 }
 
 #app {
-  overflow-x: hidden !important;
-  overflow-y: hidden !important;
+  /* overflow-x: hidden !important;
+  overflow-y: hidden !important; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 0 2rem;
