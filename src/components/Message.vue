@@ -88,18 +88,14 @@ export default {
 </template>
 
 <style scoped>
-
+/* mobile first css */
 @media screen and (max-width: 800px) {
-    .messageFooter {
-        width: fit-content !important;
-        padding-left: 1px;
-    }
+
 }
 
-#inActive {
-    display: none;
-}
+@media screen and (min-width: 800px) {
 
+<<<<<<< HEAD
 .isSender:hover, .isNotSender:hover {
     cursor: pointer;
     text-decoration: underline;
@@ -215,6 +211,8 @@ div.messsage {
 .deleteButton:hover {
     background-color: #eee;
     cursor: pointer;
+=======
+>>>>>>> 97ebaaaa85757efef9464daf2e1cf075b8933ec1
 }
 
 </style>

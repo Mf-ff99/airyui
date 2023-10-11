@@ -139,91 +139,14 @@ export default {
 
 
 <style scoped>
+/* mobile first css */
 @media screen and (max-width: 800px) {
-    .profileViewContainer {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .userMessages {
-        max-height: 500px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        max-width: 95vw;
-    }
-
-    .messageWrapper {
-        padding-top: 150px;
-    }
 
 }
 
 @media screen and (min-width: 800px) {
-    
-    .profileViewContainer {
-        display: flex;
-        flex-direction: row;
-    }
+
 }
 
-.profileStatus {
-    padding: 5px;
-    width: 200px;
-    word-wrap: normal;
-}
-
-.userNameWrapper {
-    padding: 5px;
-    width: 200px;
-    word-wrap: normal;
-}
-
-.userProfileHeader {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.profileImage {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-}
-
-.deleteMessageButton {
-    cursor: pointer;
-}
-
-.messageWrapper {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    max-height: 800px;
-    min-width: 500px;
-}
-.userMessages {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 10px;
-    height: 100%;
-    border-bottom: 1px solid #eee;
-    box-shadow: outset 0px 0px 5px 0px rgba(0,0,0,0.75);
-}
-
-.userProfileMessages {
-    padding: 5px;
-    margin: 5px;
-    background-color: #eee;
-}
-
-.messageHeader {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 11px;
-}
 
 </style>
