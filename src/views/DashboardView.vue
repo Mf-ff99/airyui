@@ -86,7 +86,7 @@ export default {
       </div>
         <div class="messageWrapper">
           <div class="messagesExistContainer" v-if="messages.length && !enableFollowing">
-            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in messages" 
+            <Message :class="[userId == user.uid ? 'signedInUserCreatedMessage' : 'otherUserCreatedMessage']" v-for="{ id, text, userName, userId, createdAt, userDisplayName } in messages" 
                 :key="id"
                 :id="id"
                 :userId="userId" 
@@ -131,6 +131,20 @@ export default {
 <style scoped>
 /* mobile first css */
 @media screen and (max-width: 800px) {
+
+  .signedInUserCreatedMessage {
+    right: 0px !important;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .otherUserCreatedMessage {
+    left: 0px !important;
+    position: relative;
+  }
   .messageWrapper {
     overflow-y: scroll;
     max-height: 78vh;
@@ -162,6 +176,7 @@ export default {
     width: 70vw;
     height: 9vh;
     border: none;
+    resize: none; 
   }
 
   .submitForm form {
@@ -177,7 +192,6 @@ export default {
 }
 
 /* styles applied to both mobile and desktop */
-
 .submit-button {
             width: 100px;
             height: 50px;
@@ -198,7 +212,6 @@ export default {
                 width: 40px;
             }
         }
-
         /* Style for the loading state */
         .loading {
             background-color: #ccc;

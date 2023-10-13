@@ -93,6 +93,10 @@ export default {
     .messageWrapper {
         /* overflow-x: scroll; */
     }
+
+    .messageCreateDateHidden {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 800px) {
