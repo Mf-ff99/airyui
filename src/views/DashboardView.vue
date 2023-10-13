@@ -121,7 +121,7 @@ export default {
             <div class="submitForm">
                 <form @submit.prevent="send">
                     <textarea v-model="message" type="text" placeholder="Type a message" @keyup.enter="send" required />
-                    <button type="submit" class="sendButton">{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</button>
+                    <button type="submit" class="btn-85"><span>{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</span></button>
                 </form>
             </div>
         </div>
@@ -133,11 +133,36 @@ export default {
 @media screen and (max-width: 800px) {
   .messageWrapper {
     overflow-y: scroll;
-    max-height: 87vh;
+    max-height: 75vh;
+  }
+
+  .submitForm {
+    position: fixed;
+    bottom: 0;
+    margin-left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: .1rem;
+    height: 10vh;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1.5rem;
+    max-height: 10vh;
+  }
+
+  .submitForm form textarea {
+    /* bottom: 0; */
+    width: 80vw;
+    height: 8vh;
+    border: none;
   }
 }
 
 @media screen and (min-width: 800px) {
 
 }
+
+/* styles applied to both mobile and desktop */
+
 </style>
