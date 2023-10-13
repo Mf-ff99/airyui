@@ -121,7 +121,7 @@ export default {
             <div class="submitForm">
                 <form @submit.prevent="send">
                     <textarea v-model="message" type="text" placeholder="Type a message" @keyup.enter="send" required />
-                    <button type="submit" class="btn-85"><span>{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</span></button>
+                    <button type="submit" class="submit-button"><span>{{ sendClicked.valueOf ? 'Send' : 'Sent!'}}</span></button>
                 </form>
             </div>
         </div>
@@ -133,11 +133,11 @@ export default {
 @media screen and (max-width: 800px) {
   .messageWrapper {
     overflow-y: scroll;
-    max-height: 75vh;
+    max-height: 78vh;
   }
 
   .submitForm {
-    position: fixed;
+    /* position: absolute; */
     bottom: 0;
     margin-left: 0;
     width: 100%;
@@ -146,16 +146,29 @@ export default {
     height: 10vh;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
     font-size: 1.5rem;
     max-height: 10vh;
+    /* border-top: 2px solid #415468; */
+    border-top: 4px solid rgba(65,84,104, .4);
+    border-radius: 10px;
   }
 
   .submitForm form textarea {
-    /* bottom: 0; */
-    width: 80vw;
-    height: 8vh;
+    left: 0;
+    bottom: 0;
+    width: 70vw;
+    height: 9vh;
     border: none;
+  }
+
+  .submitForm form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -164,5 +177,32 @@ export default {
 }
 
 /* styles applied to both mobile and desktop */
+
+.submit-button {
+            width: 100px;
+            height: 50px;
+            background-color: #415468;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        /* Loading animation using keyframes */
+        @keyframes slide {
+            0% {
+                width: 100px;
+            }
+            100% {
+                width: 40px;
+            }
+        }
+
+        /* Style for the loading state */
+        .loading {
+            background-color: #ccc;
+            animation: slide 1s linear infinite;
+        }
 
 </style>
