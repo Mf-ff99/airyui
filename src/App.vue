@@ -106,9 +106,20 @@ export default {
   }
 
   header {
-    padding: 5px !important;
+    padding: 10px !important;
+    min-width: 97vw;
+    overflow-x: hidden;
+  }
+
+  .wrapper {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wrapper .mobileNavbar {
+    margin-bottom: 20px;
   }
 
   header div.wrapper {
@@ -155,6 +166,7 @@ export default {
     border-left: solid black;
     border-top: solid black;
     border-bottom: solid black;
+    z-index: 1;
   }
 
   header {
