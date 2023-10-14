@@ -107,6 +107,8 @@ export default {
 
   header {
     padding: 5px !important;
+    display: flex;
+    flex-direction: row;
   }
 
   header div.wrapper {
@@ -235,8 +237,12 @@ export default {
   div.messageCreatedDate {
     color: white !important;
   }
+}
 
-
+h2 a {
+  color: #171D1C;
+  text-decoration: none;
+  font-style: bold;
 }
 
 /* boilerplate */

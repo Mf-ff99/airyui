@@ -133,12 +133,35 @@ export default {
 @media screen and (max-width: 800px) {
 
   .signedInUserCreatedMessage {
-    right: 0px !important;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    background-color: #BBBAC6;
+    color: black;
+    width: fit-content;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding: 5px 5px 0px 10px;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
+  }
+
+  .otherUserCreatedMessage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #E2E2E2;
+    color: black;
+    width: fit-content;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding: 5px 5px 0px 10px;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
   }
 
   .otherUserCreatedMessage {
