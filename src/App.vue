@@ -74,35 +74,16 @@ export default {
 
 <style>
 /* mobile first vanilla css */
-@media screen and (min-width: 800px) {
-  #app {
-    margin-right: 30%;
-    margin-left: 30%;
-  }
-
-  .mobileNavbar {
-    display: none !important;
-  }
-
-  .displayedMobileMenu {
-    display: none;
-  }
-
-  #hiddenMobileMenu {
-    display: none;
-  }
-
-}
-
 @media screen and (max-width: 800px) {
   #app {
-    margin-left: 0%;
+    /* margin-left: 0%; */
     max-height: 100%;
-    /* overflow-y: hidden;
-    overflow-x: hidden; */
-    padding: 5px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 4px;
     /* position: fixed; */
     min-height: 100vh;
+    max-width: 100%;
   }
 
   header {
@@ -180,10 +161,10 @@ export default {
   }
 
   nav {
-    align-items: center;
+    align-items: flex-end;
     flex-direction: column;
-    justify-content: center;
-    width: 40vw;
+    justify-content: flex-end;
+    /* width: 40vw; */
     min-width: 100px !important;
   }
 
@@ -201,6 +182,26 @@ export default {
   .pcNavbar {
     display: none;
   }
+}
+
+@media screen and (min-width: 800px) {
+  #app {
+    margin-right: 30%;
+    margin-left: 30%;
+  }
+
+  .mobileNavbar {
+    display: none !important;
+  }
+
+  .displayedMobileMenu {
+    display: none;
+  }
+
+  #hiddenMobileMenu {
+    display: none;
+  }
+
 }
 
 /* color scheme for dark/light mode */
