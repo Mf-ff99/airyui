@@ -76,12 +76,10 @@ export default {
 /* mobile first vanilla css */
 @media screen and (max-width: 800px) {
   #app {
-    /* margin-left: 0%; */
     max-height: 100%;
     overflow-y: hidden;
     overflow-x: hidden;
     padding: 4px;
-    /* position: fixed; */
     min-height: 100vh;
     max-width: 100%;
   }
