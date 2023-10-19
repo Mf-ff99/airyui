@@ -170,6 +170,18 @@ export const getUser = async id => {
 export const editUserData = async (userId, newUserDisplayName, newUserStatus) => {
   // update user collection with newUserDisplayName and newUserStatus
   if (newUserDisplayName) {
+    // let userDisplayNameExists = 0
+    // let allUsers = await usersCollection.get()
+    // allUsers = allUsers.docs.map(doc => ({ id: doc.id, ...doc.data()}))
+    // allUsers.map(user => {
+    //   const snapshot = usersCollection.where('userId', '==', userId).get()
+    //   if (user.name == snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))[0].userDisplayName) {
+    //     console.log('user already exists')
+    //     userDisplayNameExists = 1
+    //     return
+    //   }
+    // })
+
     const snapshot = await usersCollection.where('userId', '==', userId).get()
     const user = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}))
     const userDocId = user[0].id

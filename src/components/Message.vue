@@ -66,7 +66,7 @@ export default {
         <div class="messageHeader">
             <div v-if="!sender">
                 <!-- <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span> -->
-                <router-link class="isNotSender" :to="'/profile/' + userId">{{ userDisplayName? userDisplayName : '[deleted]' }}</router-link>
+                <router-link class="isNotSender" :to="'/profile/' + userId">@{{ userDisplayName? userDisplayName : 'deleted' }}</router-link>
             </div>
             <div v-if="sender">
                 <!-- <span class="isSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span> -->
