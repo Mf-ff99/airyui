@@ -14,9 +14,14 @@ export default {
         const disableScroll = ref(false)
         const enableFollowing = ref(false)
         const followersMessages = ref([])
+        const showDropdown = ref(false)
 
         const onDisableScrollToggle = () => {
             disableScroll.value = !disableScroll.value
+        }
+
+        const handleDropdownClick = () => {
+          showDropdown.value = !showDropdown.value
         }
 
         const onFollowingToggle = () => {
@@ -65,6 +70,8 @@ export default {
             enableFollowing,
             onFollowingToggle,
             followersMessages,
+            handleDropdownClick,
+            showDropdown,
         }
     },
     components: { Message }
@@ -75,13 +82,18 @@ export default {
 <template>
     <div class="dashboardView">
       <div class="chatHeader">
-        <div class="scrollCheckboxWrapper">
-          <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
-          <label for="nav-toggle" class="nav-toggle-label">{{ 'disable scroll' }}</label>
-        </div>
-        <div class="scrollCheckboxWrapper">
-          <input type="checkbox" id="toggle-following" class="nav-toggle" @click="onFollowingToggle" />
-          <label for="toggle-following" class="nav-toggle-label">{{ 'show following' }}</label>
+        <div class="dropdown">
+          <button @click="handleDropdownClick()" class="dropbtn">feed settings</button>
+          <div class="scrollCheckboxWrapper" v-if="showDropdown">
+            <div>
+              <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
+              <label for="nav-toggle" class="nav-toggle-label">{{ 'disable scroll' }}</label>
+              <div class="scrollCheckboxWrapper">
+                <input type="checkbox" id="toggle-following" class="nav-toggle" @click="onFollowingToggle" />
+                <label for="toggle-following" class="nav-toggle-label">{{ 'show following' }}</label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
         <div class="messageWrapper">
@@ -131,6 +143,10 @@ export default {
 <style scoped>
 /* mobile first css */
 @media screen and (max-width: 800px) {
+  .messageWrapper {
+    border-top: 1px solid rgba(65,84,104, .1);
+    box-shadow: #415468;
+  }
 
   .messageBodyWrapperRecipient {
     display: flex;
@@ -204,7 +220,7 @@ export default {
     font-size: 1.5rem;
     max-height: 10vh;
     /* border-top: 2px solid #415468; */
-    border-top: 4px solid rgba(65,84,104, .4);
+    border-top: 4px solid rgba(65,84,104, .1);
     border-radius: 10px;
   }
 
