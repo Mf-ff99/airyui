@@ -64,12 +64,9 @@ export default {
 <template>
     <div :class="'messageBodyWrapperRecipient'" v-if="createdAt" :id="[messageDeletedRef ? 'inActive' : '']">
         <div class="messageHeader">
-            <div v-if="!sender">
+            <div>
                 <!-- <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span> -->
                 <router-link class="" :to="'/profile/' + userId">@{{ userDisplayName? userDisplayName : 'anon' }}</router-link>
-            </div>
-            <div v-if="sender">
-                <!-- <span class="isSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span> -->
             </div>
             <div :class="senderMessageInfoClicked ? 'messageCreatedDate' : 'messageCreateDateHidden'">
                 <button v-if="user?.uid == userId" class="deleteButton" @click="deleteUserMessage(id)">Delete</button>

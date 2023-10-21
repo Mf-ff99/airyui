@@ -132,24 +132,18 @@ export default {
 /* mobile first css */
 @media screen and (max-width: 800px) {
 
-  .signedInUserCreatedMessage {
-    /* padding: 12px 18px;
-    border-radius: 20px;
+  .messageBodyWrapperRecipient {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    border-radius: 5px;
     margin-bottom: 10px;
-    position: relative;
-    max-width: 100%;
-    clear: both;
-    font-size: 14px;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    background-color: #fff;
-    border: 1px solid #e1e1e1;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    color: #333;
-    opacity: 1;
-    transform: translateX(0);
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: slide-up 0.3s ease;
+  }
+
+  .signedInUserCreatedMessage {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -165,23 +159,6 @@ export default {
   }
 
   .otherUserCreatedMessage {
-    /* padding: 12px 18px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    position: relative;
-    max-width: 100%;
-    clear: both;
-    font-size: 14px;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    background-color: #fff;
-    border: 1px solid #e1e1e1;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    color: #333;
-    opacity: 1;
-    transform: translateX(0);
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
