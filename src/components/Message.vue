@@ -66,7 +66,7 @@ export default {
         <div class="messageHeader">
             <div v-if="!sender">
                 <!-- <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span> -->
-                <router-link class="isNotSender" :to="'/profile/' + userId">@{{ userDisplayName? userDisplayName : 'deleted' }}</router-link>
+                <router-link class="" :to="'/profile/' + userId">@{{ userDisplayName? userDisplayName : 'anon' }}</router-link>
             </div>
             <div v-if="sender">
                 <!-- <span class="isSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span> -->
@@ -83,7 +83,7 @@ export default {
             </div>
         </div>
     </div>
-    <div v-else>Loading message...</div>
+    <div v-else class="loadingMessage"></div>
 
 </template>
 
@@ -97,6 +97,10 @@ export default {
     .messageCreateDateHidden {
         display: none;
     }
+
+    .loadingMessage {
+
+  }
 }
 
 @media screen and (min-width: 800px) {

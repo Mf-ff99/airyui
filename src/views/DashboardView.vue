@@ -98,7 +98,7 @@ export default {
                 {{ text }}
             </Message>
           </div>
-          <div v-if="!messages.length && enableFollowing">
+          <div v-if="!messages.length && enableFollowing" class="loadingFill">
             Loading messages...
           </div>
           <div class="messagesExistContainer" v-if="followersMessages.length && enableFollowing">
@@ -133,41 +133,79 @@ export default {
 @media screen and (max-width: 800px) {
 
   .signedInUserCreatedMessage {
+    /* padding: 12px 18px;
+    border-radius: 20px;
+    margin-bottom: 10px;
     position: relative;
+    max-width: 100%;
+    clear: both;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    color: #333;
+    opacity: 1;
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: flex-start;
-    background-color: #BBBAC6;
-    color: black;
-    width: fit-content;
-    padding-right: 20px;
-    padding-left: 10px;
-    padding: 5px 5px 0px 10px;
+    padding: 10px;
     border-radius: 5px;
-    margin: 5px 0 5px 0;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: slide-up 0.5s ease-out;
+  }
+
+  .signedInUserCreatedMessage.new {
+  animation: fadeIn 0.5s ease-in-out;
   }
 
   .otherUserCreatedMessage {
+    /* padding: 12px 18px;
+    border-radius: 20px;
+    margin-bottom: 10px;
     position: relative;
+    max-width: 100%;
+    clear: both;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    color: #333;
+    opacity: 1;
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: flex-start;
-    background-color: #E2E2E2;
-    color: black;
-    width: fit-content;
-    padding-right: 20px;
-    padding-left: 10px;
-    padding: 5px 5px 0px 10px;
+    padding: 10px;
     border-radius: 5px;
-    margin: 5px 0 5px 0;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: slide-up 0.5s ease-out;
   }
 
-  .otherUserCreatedMessage {
-    left: 0px !important;
-    position: relative;
+  .otherUserCreatedMessage.new {
+    animation: fadeIn 0.5s ease-in-out;
   }
+
+  @keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+ }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+ }
+}
   .messageWrapper {
     overflow-y: scroll;
     max-height: 78vh;
