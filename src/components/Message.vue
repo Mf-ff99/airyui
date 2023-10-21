@@ -101,10 +101,29 @@ export default {
     .loadingMessage {
 
   }
+
+  a {
+    font-size: 12px;
+  }
 }
 
 @media screen and (min-width: 800px) {
+    a {
+        font-size: 15px;
+    }
+}
 
+/* mobile and desktop styles */
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: .5s ease-in-out;
 }
 
 </style>

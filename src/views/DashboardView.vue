@@ -157,11 +157,11 @@ export default {
     border-radius: 5px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    animation: slide-up 0.5s ease-out;
+    animation: slide-up 0.3s ease;
   }
 
   .signedInUserCreatedMessage.new {
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.1s ease-in-out;
   }
 
   .otherUserCreatedMessage {
@@ -189,17 +189,17 @@ export default {
     border-radius: 5px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    animation: slide-up 0.5s ease-out;
+    animation: slide-up 0.1s ease;
   }
 
   .otherUserCreatedMessage.new {
-    animation: fadeIn 0.5s ease-in-out;
+    /* animation: fadeIn 0.5s ease-in-out; */
   }
 
   @keyframes slide-up {
   0% {
     transform: translateY(100%);
-    opacity: 0;
+    opacity: 1;
  }
   100% {
     transform: translateY(0);
