@@ -68,8 +68,8 @@ export default {
                 <!-- <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span> -->
                 <router-link class="" :to="'/profile/' + userId">@{{ userDisplayName? userDisplayName : 'anon' }}</router-link>
             </div>
-            <div :class="senderMessageInfoClicked ? 'messageCreatedDate' : 'messageCreateDateHidden'">
-                <button v-if="user?.uid == userId" class="deleteButton" @click="deleteUserMessage(id)">Delete</button>
+            <div class="messageCreatedDate">
+                <button v-if="user?.uid == userId" class="deleteButton" @click="deleteUserMessage(id)">X</button>
                 {{ createdAt? new Date(createdAt.seconds * 1000).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) : '' }}
             </div> 
         </div>
@@ -93,6 +93,24 @@ export default {
 
     .messageCreateDateHidden {
         display: none;
+    }
+
+    .messageHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: space-between;
+        padding: 0 10px;
+        font-size: 12px;
+        width: 93vw;
+    }
+
+    .messageHeader button {
+        font-size: 12px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        background: none;
+        color: red;
     }
 
     .loadingMessage {

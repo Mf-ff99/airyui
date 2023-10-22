@@ -1,9 +1,10 @@
 <!-- this application should only allow people to share twice a day -->
 <!-- the entire screen is the application, with a nice, smooth, sliding-in/happy-bounce -->
 <script>
-import { ref, watch, nextTick } from 'vue'
+import { ref, watch, nextTick, Transition } from 'vue'
 import { useChat, useAuth } from '@/firebase'
 import Message from '../components/Message.vue'
+import settingsCog from '@/assets/gear.svg'
 
 const { user } = useAuth()
 
@@ -72,9 +73,10 @@ export default {
             followersMessages,
             handleDropdownClick,
             showDropdown,
+            settingsCog,
         }
     },
-    components: { Message }
+    components: { Message, Transition }
 }
 
 </script>
@@ -83,17 +85,21 @@ export default {
     <div class="dashboardView">
       <div class="chatHeader">
         <div class="dropdown">
-          <button @click="handleDropdownClick()" class="dropbtn">feed settings</button>
-          <div class="scrollCheckboxWrapper" v-if="showDropdown">
-            <div>
-              <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
-              <label for="nav-toggle" class="nav-toggle-label">{{ 'disable scroll' }}</label>
-              <div class="scrollCheckboxWrapper">
-                <input type="checkbox" id="toggle-following" class="nav-toggle" @click="onFollowingToggle" />
-                <label for="toggle-following" class="nav-toggle-label">{{ 'show following' }}</label>
+          <button @click="handleDropdownClick()" class="dropbtn">
+            <img :src="settingsCog" alt="settings cog" />
+          </button>
+          <Transition name="bounce">
+            <div class="scrollCheckboxWrapper" v-if="showDropdown">
+              <div>
+                <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
+                <label for="nav-toggle" class="nav-toggle-label">{{ ' disable scroll' }}</label>
+                <div class="scrollCheckboxWrapper">
+                  <input type="checkbox" id="toggle-following" class="nav-toggle" @click="onFollowingToggle" />
+                  <label for="toggle-following" class="nav-toggle-label">{{ ' show following' }}</label>
+                </div>
               </div>
             </div>
-          </div>
+          </Transition>
         </div>
       </div>
         <div class="messageWrapper">
@@ -143,6 +149,47 @@ export default {
 <style scoped>
 /* mobile first css */
 @media screen and (max-width: 800px) {
+
+  .bounce-enter-active {
+    animation: bounce-in 0.5s;
+  }
+  .bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.18);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .dropbtn {
+    background-color: #fff;
+    /* color: #415468; */
+    padding: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    /* transform: rotate(800deg); */
+  }
+  
+  .dropbtn img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .dropdown {
+    position: absolute;
+    display: inline-block;
+    transition: all 0.2s ease;
+    background-color: white;
+  }
   .messageWrapper {
     border-top: 1px solid rgba(65,84,104, .1);
     box-shadow: #415468;
