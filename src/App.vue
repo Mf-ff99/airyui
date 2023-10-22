@@ -136,16 +136,19 @@ export default {
     align-items: center;
     top: 50px;
     background-color:  white;
-    height: 200px;
-    width: 60%;
+    height: 100px;
+    width: 30%;
     right: 0;
-    padding-top: 50px;
+    margin-top: 5px;
     transition: all .5s ease-in-out;
-    border-radius: 7px;
-    border-left: solid black;
-    border-top: solid black;
-    border-bottom: solid black;
+    border-radius: 5px;
+    border: 1px solid #eee;
     z-index: 1;
+    padding-top: 10px;
+  }
+
+  .mobileMenuView a {
+    font-size: 14px;
   }
 
   header {

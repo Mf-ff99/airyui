@@ -76,13 +76,38 @@ export default {
 </script>
 
 <template>
-    <span v-if="userMessages.length">{{ userMessages[0].userDisplayName }}'s profile</span>
+    <div>
+            <div class="userProfile">
+                <div v-if="user?.uid == userId" class="modal">
+                    <EditUserModal :userId="user.uid"/>
+                </div>
+                <div class="userProfileHeader">
+                    <div class="userNameWrapper">
+                        <span>@{{ userProfile[0]?.userDisplayName }}</span>
+                    </div>
+                    <img class="profileImage" :src="`${userProfile[0]?.userAvatar}`" />    
+                </div>
+                <div>
+                    <span class="userStatus">{{ userProfile?.length ? userProfile[0].userProfileStatus : ''}}</span>
+                </div>
+                <div>
+                    <span>{{ user.createdAt ? new Date(userProfile.createdAt.seconds * 1000).toLocaleString() : '' }}</span>
+                </div>
+                <div v-if="user?.uid != userId">
+                    <div v-if="isFollowed">
+                        <button @click="followUser(userId)">Unfollow</button>
+                    </div>
+                    <div v-if="!isFollowed">
+                        <button @click="followUser(userId)">Follow</button>
+                    </div>
+                </div>
+               
+            </div>
     <div class="profileViewContainer">
         <div>
-           
            <div class="userMessages" v-if="userMessages.length">
-                <span v-if="userMessages[0].userId == user?.uid">{{ userMessages.length > 0 ? 'You have' : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} aired out the following:</span>
-                <span v-else>{{ userMessages.length > 0 ? userMessages[0].userDisplayName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span>
+                <!-- <span v-if="userMessages[0].userId == user?.uid">{{ userMessages.length > 0 ? 'You have' : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} aired out the following:</span>
+                <span v-else>{{ userMessages.length > 0 ? userMessages[0].userDisplayName : 'ERROR, DON\'T LOOK NOW, THERE\'S AN ERROR' }} has aired out the following:</span> -->
                 <div>
                     <div class="messageWrapper">         
                 <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in userMessages" 
@@ -104,35 +129,7 @@ export default {
             </div> 
             <div ref="loadNewMessages"></div>
         </div>
-        <div>
-            <div class="userProfile">
-                <div class="userProfileHeader">
-                    <div class="profileStatus">
-                        <p>Status</p>
-                        <span>{{ userProfile?.length ? userProfile[0].userProfileStatus : ''}}</span>
-                    </div>
-                    <img class="profileImage" :src="`${userProfile[0]?.userAvatar}`" />
-                </div>
-                <div class="userNameWrapper">
-                    <p>Username</p>
-                    <span>{{ userProfile[0]?.userDisplayName }}</span>
-                </div>
-                <div>
-                    <span>{{ user?.createdAt ? new Date(userProfile.createdAt.seconds * 1000).toLocaleString() : '' }}</span>
-                </div>
-                <div v-if="user?.uid == userId" class="modal">
-                    <EditUserModal :userId="user.uid"/>
-                </div>
-                <div v-if="user?.uid != userId">
-                    <div v-if="isFollowed">
-                        <button @click="followUser(userId)">Unfollow</button>
-                    </div>
-                    <div v-if="!isFollowed">
-                        <button @click="followUser(userId)">Follow</button>
-                    </div>
-                </div>
-               
-            </div>
+        
         </div>
     </div>
 </template>
@@ -141,6 +138,55 @@ export default {
 <style scoped>
 /* mobile first css */
 @media screen and (max-width: 800px) {
+
+    .messageBodyWrapperRecipient {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(160, 120, 253, 0.452);
+        animation: slide-up 0.3s ease;
+        max-width: 100vw;
+        padding-right: 5px;
+    }
+
+    .userProfile {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        border-bottom: 1px solid rgba(160, 120, 253, 0.452);
+    }
+
+    .userProfileHeader {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        align-items: flex-start;
+        width: 100%;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.452);
+    }
+
+    span.userStatus {
+        margin-left: 25px;
+    }
+    .userProfileHeader:first-child {
+        padding: 5px;
+    }
+
+    .userProfile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        margin-right: 5px;
+    }
+
+    .profileViewContainer {
+        margin-top: 10px;
+    }
 
 }
 
