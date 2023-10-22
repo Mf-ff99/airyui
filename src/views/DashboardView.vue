@@ -6,7 +6,7 @@ import { useChat, useAuth } from '@/firebase'
 import Message from '../components/Message.vue'
 import settingsCog from '@/assets/gear.svg'
 
-const { user } = useAuth()
+const { user, isLoggedIn } = useAuth()
 
 export default {
     setup() {
@@ -18,6 +18,7 @@ export default {
         const showDropdown = ref(false)
         const settingsCogSpinner = ref(false)
         const loadNewMessages = ref(disableScroll.value)
+        const hamburgerClickedRef = ref(false)
 
         const onDisableScrollToggle = () => {
             disableScroll.value = !disableScroll.value
@@ -31,6 +32,11 @@ export default {
           showDropdown.value = !showDropdown.value
           spinSettingsCog()
         }
+
+        const hamburgerClicked = () => {
+          hamburgerClickedRef.value = !hamburgerClickedRef.value
+        }
+
 
         const onFollowingToggle = () => {
             enableFollowing.value = !enableFollowing.value
@@ -83,6 +89,9 @@ export default {
             settingsCog,
             spinSettingsCog,
             settingsCogSpinner,
+            hamburgerClicked,
+            hamburgerClickedRef,
+            isLoggedIn,
           }
     },
     components: { Message, Transition }
@@ -99,7 +108,14 @@ export default {
           </button>
           <Transition name="bounce">
             <div class="scrollCheckboxWrapper" v-if="showDropdown">
-              <div>
+              <div class="mobileNavOptions">
+                <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+                <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
+                <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
+                <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
+                <a @click="signUserOut" v-if="isLoggedIn" to="/">Log out</a>
+              </div>
+              <div class="chatSettings">
                 <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
                 <label for="nav-toggle" class="nav-toggle-label">{{ ' disable scroll' }}</label>
                 <div class="scrollCheckboxWrapper">
@@ -109,6 +125,23 @@ export default {
               </div>
             </div>
           </Transition>
+        </div>
+        <div class="mobileNav">
+          <div :class="hamburgerClickedRef ? 'mobileMenuView' : 'mobileMenuHidden'" v-if="hamburgerClickedRef">
+            <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+            <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
+            <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
+            <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
+            <a @click="signUserOut" v-if="isLoggedIn" to="/">Log out</a>
+          </div>
+          <!-- <svg @click="hamburgerClicked()" id="hamburger" :class="!hamburgerClickedRef ? 'hamburger' : 'closeHamburger'" viewbox="0 0 60 40">
+            <g stroke="rgba(75, 53, 126, 0.452)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path id="top-line" d="M10,10 L50,10 Z"></path>
+              <path id="middle-line" d="M10,20 L50,20 Z"></path>
+              <path id="bottom-line" d="M10,30 L50,30 Z"></path>
+            </g>
+			    </svg> -->
+          <!-- <div class="mobileNavHamburger">{{ !hamburgerClickedRef ? '' : ''}}</div> -->
         </div>
       </div>
         <div class="messageWrapper">
@@ -158,6 +191,48 @@ export default {
 <style scoped>
 /* mobile first css */
 @media screen and (max-width: 800px) {
+
+  .mobileNavOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .mobileNavOptions a {
+    margin-bottom: 3px;
+  }
+
+
+  .mobileNav {
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    /* margin-left: 0vw; */
+  }
+
+  .mobileMenuView {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 50px;
+    background-color:  white;
+    height: 100px;
+    width: 30%;
+    right: 0;
+    margin-top: 35px;
+    transition: all .5s ease-in-out;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    z-index: 1;
+    padding-top: 10px;
+    animation: bounce-in 0.5s;
+  }
+
+  .mobileMenuHidden {
+    right: -500px;
+  }
 
   .dashboardView {
     /* height: 50vh; */
@@ -216,21 +291,6 @@ export default {
     background-color: white;
     padding: 2px 0px 0px 2px;
   }
-
-  /* .dropdown::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: none;
-    animation: trace-border 3s infinite;
- } */
-
- @keyframes trace-border {
-  /* trace the border from top-left to top-right, then from top-right to bottom right, then from bottom right to bottom left, then from bottom left to top left */
- }
   .messageWrapper {
     border-top: 1px solid rgba(65,84,104, .1);
     box-shadow: #415468;
@@ -240,9 +300,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* padding: 10px; */
-    /* border-radius: 5px; */
-    /* margin-bottom: 10px; */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     /* animation: slide-up 0.3s ease; */
   }

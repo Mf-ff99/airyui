@@ -55,7 +55,7 @@ export default {
           <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
           <button @click="signUserOut" v-if="isLoggedIn" to="/">Log out</button>
         </div>
-        <div class="mobileNavbar">
+        <!-- <div class="mobileNavbar">
           <div class="mobileMenuView" :id="!hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
             <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
             <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
@@ -64,7 +64,7 @@ export default {
             <a @click="signUserOut" v-if="isLoggedIn" to="/">Log out</a>
           </div>
           <div class="hamburger" @click="hamburgerClicked">{{ !hamburgerClickedRef ? '<==' : '==>'}}</div>
-        </div>
+        </div> -->
       </nav>
     </div>
   </header>
@@ -110,47 +110,6 @@ export default {
     position: fixed;
   }
 
-  .hamburger{
-    width: 20px;
-    height: 2px;
-    background-color: white;
-    border-radius: 5px;
-    z-index: 10;
-    transition: all .5s ease;
-    cursor: pointer;
-    position: relative;
-  }
-
-  #hiddenMobileMenu {
-    right: -500px;
-  }
-
-  .mobileNavbar {
-    transition: all .5s ease-out; 
-  }
-
-  .mobileMenuView {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    top: 50px;
-    background-color:  white;
-    height: 100px;
-    width: 30%;
-    right: 0;
-    margin-top: 5px;
-    transition: all .5s ease-in-out;
-    border-radius: 5px;
-    border: 1px solid #eee;
-    z-index: 1;
-    padding-top: 10px;
-  }
-
-  .mobileMenuView a {
-    font-size: 14px;
-  }
-
   header {
     width: 80vw;
   }
@@ -165,7 +124,6 @@ export default {
     align-items: flex-end;
     flex-direction: column;
     justify-content: flex-end;
-    /* width: 40vw; */
     min-width: 100px !important;
   }
 
