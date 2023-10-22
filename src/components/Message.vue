@@ -101,7 +101,7 @@ export default {
         align-items: space-between;
         padding: 0 10px;
         font-size: 12px;
-        width: 93vw;
+        width: 100%;
     }
 
     .messageHeader button {

@@ -16,13 +16,19 @@ export default {
         const enableFollowing = ref(false)
         const followersMessages = ref([])
         const showDropdown = ref(false)
+        const settingsCogSpinner = ref(false)
 
         const onDisableScrollToggle = () => {
             disableScroll.value = !disableScroll.value
         }
 
+        const spinSettingsCog = () => {
+          settingsCogSpinner.value = !settingsCogSpinner.value
+        }
+
         const handleDropdownClick = () => {
           showDropdown.value = !showDropdown.value
+          spinSettingsCog()
         }
 
         const onFollowingToggle = () => {
@@ -74,7 +80,9 @@ export default {
             handleDropdownClick,
             showDropdown,
             settingsCog,
-        }
+            spinSettingsCog,
+            settingsCogSpinner,
+          }
     },
     components: { Message, Transition }
 }
@@ -86,7 +94,7 @@ export default {
       <div class="chatHeader">
         <div class="dropdown">
           <button @click="handleDropdownClick()" class="dropbtn">
-            <img :src="settingsCog" alt="settings cog" />
+            <img :class="{ spin: settingsCogSpinner }" :src="settingsCog" alt="settings cog" />
           </button>
           <Transition name="bounce">
             <div class="scrollCheckboxWrapper" v-if="showDropdown">
@@ -150,12 +158,29 @@ export default {
 /* mobile first css */
 @media screen and (max-width: 800px) {
 
+  .dashboardView {
+    /* height: 50vh; */
+  }
+
   .bounce-enter-active {
     animation: bounce-in 0.5s;
   }
   .bounce-leave-active {
     animation: bounce-in 0.5s reverse;
   }
+
+  .spin {
+ animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+ }
+  100% {
+    transform: rotate(360deg);
+ }
+}
 
   @keyframes bounce-in {
     0% {
@@ -170,26 +195,41 @@ export default {
   }
 
   .dropbtn {
-    background-color: #fff;
-    /* color: #415468; */
+    background-color: white;
     padding: 5px;
     font-size: 12px;
     cursor: pointer;
     border: none;
-    /* transform: rotate(800deg); */
   }
   
   .dropbtn img {
     width: 25px;
     height: 25px;
   }
-
+  
   .dropdown {
+    font-weight: bold;
     position: absolute;
     display: inline-block;
     transition: all 0.2s ease;
     background-color: white;
+    padding: 2px 0px 0px 2px;
   }
+
+  /* .dropdown::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: none;
+    animation: trace-border 3s infinite;
+ } */
+
+ @keyframes trace-border {
+  /* trace the border from top-left to top-right, then from top-right to bottom right, then from bottom right to bottom left, then from bottom left to top left */
+ }
   .messageWrapper {
     border-top: 1px solid rgba(65,84,104, .1);
     box-shadow: #415468;
@@ -213,8 +253,11 @@ export default {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(160, 120, 253, 0.452);
     animation: slide-up 0.3s ease;
+    margin-left: 70px;
+    max-width: 100vw;
+    padding-right: 5px;
   }
 
   .signedInUserCreatedMessage.new {
@@ -228,8 +271,11 @@ export default {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(97, 121, 255, 0.18);
     animation: slide-up 0.1s ease;
+    margin-left: -70px;
+    max-width: 100vw;
+    padding-left: 70px;
   }
 
   .otherUserCreatedMessage.new {
@@ -248,11 +294,10 @@ export default {
 }
   .messageWrapper {
     overflow-y: scroll;
-    max-height: 78vh;
+    max-height: 83vh;
   }
 
   .submitForm {
-    /* position: absolute; */
     bottom: 0;
     margin-left: 0;
     width: 100%;
@@ -266,7 +311,6 @@ export default {
     flex-direction: row;
     font-size: 1.5rem;
     max-height: 10vh;
-    /* border-top: 2px solid #415468; */
     border-top: 4px solid rgba(65,84,104, .1);
     border-radius: 10px;
   }
