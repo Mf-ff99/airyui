@@ -17,6 +17,7 @@ export default {
         const followersMessages = ref([])
         const showDropdown = ref(false)
         const settingsCogSpinner = ref(false)
+        const loadNewMessages = ref(disableScroll.value)
 
         const onDisableScrollToggle = () => {
             disableScroll.value = !disableScroll.value
@@ -42,16 +43,16 @@ export default {
                 })
               })
             }
+            if (followersMessages.value) loadNewMessages?.value?.scrollIntoView({ behavior: 'smooth' })
         }
         
         // logic for scrolling to page bottom when there are messages
-        const loadNewMessages = ref(disableScroll.value)
         watch(
             messages,
             () => {
                 nextTick(() => {
                   if (disableScroll.value) return
-                    loadNewMessages?.value?.scrollIntoView({ behavior: 'smooth' })
+                  loadNewMessages?.value?.scrollIntoView({ behavior: 'smooth' })
                 })
             },
             { deep: true }
@@ -128,7 +129,7 @@ export default {
             Loading messages...
           </div>
           <div class="messagesExistContainer" v-if="followersMessages.length && enableFollowing">
-            <Message v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages.flat()" 
+            <Message class="otherUserCreatedMessages" v-for="{ id, text, userName, userId, createdAt, userDisplayName } in followersMessages.flat().reverse()" 
                 :key="id"
                 :id="id"
                 :userId="userId" 
@@ -239,11 +240,11 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
+    /* padding: 10px; */
+    /* border-radius: 5px; */
+    /* margin-bottom: 10px; */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    animation: slide-up 0.3s ease;
+    /* animation: slide-up 0.3s ease; */
   }
 
   .signedInUserCreatedMessage {
@@ -264,7 +265,7 @@ export default {
   animation: fadeIn 0.1s ease-in-out;
   }
 
-  .otherUserCreatedMessage {
+  .otherUserCreatedMessage, .otherUserCreatedMessages {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
