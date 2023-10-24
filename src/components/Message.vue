@@ -65,7 +65,6 @@ export default {
     <div :class="'messageBodyWrapperRecipient'" v-if="createdAt" :id="[messageDeletedRef ? 'inActive' : '']">
         <div class="messageHeader">
             <div>
-                <!-- <span class="isNotSender" @click="toggleDisplaySenderMessageInfo">{{ senderMessageInfoClicked ? '<' : '>' }}</span> -->
                 <router-link class="" :to="'/profile/' + userId">@{{ userDisplayName? userDisplayName : 'anon' }}</router-link>
             </div>
             <div class="messageCreatedDate">
@@ -76,7 +75,6 @@ export default {
         <div class="messageFooter" :id="sender ? 'senderView' : 'messageFooter'">
             <div class="message">
                 <slot />
-                
             </div>
         </div>
     </div>
@@ -86,7 +84,7 @@ export default {
 /* mobile first css */
 @media screen and (max-width: 800px) {
     .messageWrapper {
-        /* overflow-x: scroll; */
+
     }
 
     .messageCreateDateHidden {
