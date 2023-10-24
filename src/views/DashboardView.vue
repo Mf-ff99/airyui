@@ -1,12 +1,13 @@
 <!-- this application should only allow people to share twice a day -->
 <!-- the entire screen is the application, with a nice, smooth, sliding-in/happy-bounce -->
 <script>
+import { useRouter } from 'vue-router'
 import { ref, watch, nextTick, Transition } from 'vue'
 import { useChat, useAuth } from '@/firebase'
 import Message from '../components/Message.vue'
 import settingsCog from '@/assets/gear.svg'
 
-const { user, isLoggedIn } = useAuth()
+const { user, isLoggedIn, signOut } = useAuth()
 
 export default {
     setup() {
@@ -19,9 +20,15 @@ export default {
         const settingsCogSpinner = ref(false)
         const loadNewMessages = ref(disableScroll.value)
         const hamburgerClickedRef = ref(false)
+        const router = useRouter()
 
         const onDisableScrollToggle = () => {
             disableScroll.value = !disableScroll.value
+        }
+
+        const signUserOut = () => {
+          signOut()
+          router.push('/')
         }
 
         const spinSettingsCog = () => {
@@ -92,6 +99,7 @@ export default {
             hamburgerClicked,
             hamburgerClickedRef,
             isLoggedIn,
+            signUserOut,
           }
     },
     components: { Message, Transition }
@@ -113,7 +121,7 @@ export default {
                 <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
                 <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
                 <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
-                <a @click="signUserOut" v-if="isLoggedIn" to="/">Log out</a>
+                <button @click="signUserOut()" v-if="isLoggedIn" to="/">Log out</button>
               </div>
               <div class="chatSettings">
                 <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
@@ -132,20 +140,12 @@ export default {
             <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
             <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
             <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
-            <a @click="signUserOut" v-if="isLoggedIn" to="/">Log out</a>
+            <button @click="signUserOut()" v-if="isLoggedIn" to="/">Log out</button>
           </div>
-          <!-- <svg @click="hamburgerClicked()" id="hamburger" :class="!hamburgerClickedRef ? 'hamburger' : 'closeHamburger'" viewbox="0 0 60 40">
-            <g stroke="rgba(75, 53, 126, 0.452)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path id="top-line" d="M10,10 L50,10 Z"></path>
-              <path id="middle-line" d="M10,20 L50,20 Z"></path>
-              <path id="bottom-line" d="M10,30 L50,30 Z"></path>
-            </g>
-			    </svg> -->
-          <!-- <div class="mobileNavHamburger">{{ !hamburgerClickedRef ? '' : ''}}</div> -->
         </div>
       </div>
-        <div class="messageWrapper">
-          <div class="messagesExistContainer" v-if="messages.length && !enableFollowing">
+      <div class="messageWrapper">
+        <div class="messagesExistContainer" v-if="messages.length && !enableFollowing">
             <Message :class="[userId == user.uid ? 'signedInUserCreatedMessage' : 'otherUserCreatedMessage']" v-for="{ id, text, userName, userId, createdAt, userDisplayName } in messages" 
                 :key="id"
                 :id="id"
@@ -156,7 +156,7 @@ export default {
                 :userDisplayName="userDisplayName"
                 >
                 {{ text }}
-            </Message>
+              </Message>
           </div>
           <div v-if="!messages.length && enableFollowing" class="loadingFill">
             Loading messages...
@@ -176,7 +176,7 @@ export default {
           </div>
           <div ref="loadNewMessages"></div>
         </div>
-
+        
         <div>
             <div class="submitForm">
                 <form @submit.prevent="send">
@@ -312,7 +312,7 @@ export default {
     border-radius: 5px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(160, 120, 253, 0.452);
-    animation: slide-up 0.3s ease;
+    animation: slide-left 0.4s ease;
     margin-left: 70px;
     max-width: 100vw;
     padding-right: 5px;
@@ -330,7 +330,7 @@ export default {
     border-radius: 5px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(97, 121, 255, 0.18);
-    animation: slide-up 0.1s ease;
+    animation: slide-right .4s ease;
     margin-left: -70px;
     max-width: 100vw;
     padding-left: 70px;
@@ -340,16 +340,27 @@ export default {
     /* animation: fadeIn 0.5s ease-in-out; */
   }
 
-  @keyframes slide-up {
-  0% {
-    transform: translateY(100%);
-    opacity: 1;
- }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
- }
-}
+  @keyframes slide-left {
+      0% {
+        transform: translateX(100%);
+        opacity: 1;
+    }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+  }
+  @keyframes slide-right {
+   /* card slides out of left side of screen */
+      0% {
+        transform: translateX(-100%);
+        opacity: 1;
+    }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+  }
   .messageWrapper {
     overflow-y: scroll;
     max-height: 83vh;

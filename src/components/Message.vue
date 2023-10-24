@@ -80,8 +80,6 @@ export default {
             </div>
         </div>
     </div>
-    <div v-else class="loadingMessage"></div>
-
 </template>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <script>
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { useAuth} from "@/firebase"
+import { useAuth } from "@/firebase"
 
 export default {
   setup() {
@@ -47,13 +47,13 @@ export default {
         </h2>
       </div>
       <nav>
-        <div class="pcNavbar">
+        <div class="splash" v-if="!isLoggedIn">
           <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
           <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink>
-          <RouterLink to="/dashboard" v-if="isLoggedIn">Global</RouterLink>
+          <!-- <RouterLink to="/dashboard" v-if="isLoggedIn">Global</RouterLink> -->
           <!-- <RouterLink to="/local" v-if="isLoggedIn">Following</RouterLink> -->
-          <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
-          <button @click="signUserOut" v-if="isLoggedIn" to="/">Log out</button>
+          <!-- <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink> -->
+          <!-- <button @click="signUserOut" v-if="isLoggedIn" to="/">Log out</button> -->
         </div>
         <!-- <div class="mobileNavbar">
           <div class="mobileMenuView" :id="!hamburgerClickedRef ? 'hiddenMobileMenu' : 'displayedMobileMenu'">
@@ -75,6 +75,18 @@ export default {
 <style>
 /* mobile first vanilla css */
 @media screen and (max-width: 800px) {
+  .splash {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 100px;
+  }
+
+  .splash a {
+    font-size: 14px;
+  }
+
   #app {
     max-height: 100%;
     overflow-y: hidden;
