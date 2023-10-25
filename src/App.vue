@@ -1,17 +1,29 @@
 <script>
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, Transition } from 'vue'
 import { useAuth } from "@/firebase"
+import settingsCog from '@/assets/gear.svg'
 
 export default {
   setup() {
     const { user, isLoggedIn, signOut, signIn } = useAuth()
     const router = useRouter()
     const hamburgerClickedRef = ref(false)
+    const showDropdown = ref(false)
+    const settingsCogSpinner = ref(false)
 
     const hamburgerClicked = () => {
       hamburgerClickedRef.value = !hamburgerClickedRef.value
     }
+
+    const activateDropdown = () => {
+          settingsCogSpinner.value = !settingsCogSpinner.value
+        }
+
+    const handleDropdownClick = () => {
+          showDropdown.value = !showDropdown.value
+          activateDropdown()
+        }
 
     const signUserOut = () => {
       signOut()
@@ -30,9 +42,16 @@ export default {
       signUserOut, 
       signUserIn,
       hamburgerClicked,
-      hamburgerClickedRef
+      hamburgerClickedRef,
+      settingsCog,
+      handleDropdownClick,
+      settingsCogSpinner,
+      showDropdown
     }
-  }
+  },
+  components: {
+    Transition
+  },
 }
 </script>
 
@@ -65,6 +84,30 @@ export default {
           </div>
           <div class="hamburger" @click="hamburgerClicked">{{ !hamburgerClickedRef ? '<==' : '==>'}}</div>
         </div> -->
+        <div class="dropdown">
+          <button @click="handleDropdownClick()" class="dropbtn">
+            <img :class="{ spin: settingsCogSpinner }" :src="settingsCog" alt="settings cog" />
+          </button>
+          <Transition name="bounce">
+            <div class="scrollCheckboxWrapper" v-if="showDropdown">
+              <div class="mobileNavOptions">
+                <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+                <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
+                <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
+                <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
+                <button @click="signUserOut()" v-if="isLoggedIn" to="/">Log out</button>
+              </div>
+              <div class="chatSettings">
+                <input type="checkbox" id="nav-toggle" class="nav-toggle" @click="onDisableScrollToggle" />
+                <label for="nav-toggle" class="nav-toggle-label">{{ ' disable scroll' }}</label>
+                <div class="scrollCheckboxWrapper">
+                  <input type="checkbox" id="toggle-following" class="nav-toggle" @click="onFollowingToggle" />
+                  <label for="toggle-following" class="nav-toggle-label">{{ ' show following' }}</label>
+                </div>
+              </div>
+            </div>
+          </Transition>
+        </div>
       </nav>
     </div>
   </header>
@@ -75,6 +118,97 @@ export default {
 <style>
 /* mobile first vanilla css */
 @media screen and (max-width: 800px) {
+
+  .dropbtn {
+    background-color: white;
+    padding: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    top: 0;
+  }
+  
+  .dropbtn img {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .dropdown {
+    font-weight: bold;
+    position: absolute;
+    display: inline-block;
+    transition: all 0.2s ease-in-out;
+    background-color: white;
+    padding: 2px 0px 0px 2px;
+    background-color:  rgba(255, 255, 255, 0.8);
+    top: 10px;
+    right: 0px;
+    min-width: 150px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .mobileNavOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .mobileNavOptions a, button {
+    margin-bottom: 3px;
+  }
+
+
+  .mobileNav {
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+  }
+
+  .mobileMenuView {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 30px;
+    height: 100px;
+    width: 30%;
+    right: 0;
+    margin-top: 35px;
+    transition: all .5s ease-in-out;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    z-index: 1;
+    padding-top: 10px;
+    animation: bounce-in 0.5s;
+  }
+
+  .mobileMenuHidden {
+    right: -500px;
+  }
+
+  .dashboardView {
+    /* height: 50vh; */
+  }
+
+  .bounce-enter-active {
+    animation: bounce-in 0.5s;
+  }
+  .bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
   .splash {
     display: flex;
     flex-direction: column;

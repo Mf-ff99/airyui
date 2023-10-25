@@ -110,14 +110,14 @@ export default {
 <template>
     <div class="dashboardView">
       <div class="chatHeader">
-        <div class="dropdown">
+        <!-- <div class="dropdown">
           <button @click="handleDropdownClick()" class="dropbtn">
             <img :class="{ spin: settingsCogSpinner }" :src="settingsCog" alt="settings cog" />
           </button>
           <Transition name="bounce">
             <div class="scrollCheckboxWrapper" v-if="showDropdown">
               <div class="mobileNavOptions">
-                <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
+                <a class="loginButton" @click="signUserIn">Login</a>
                 <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
                 <RouterLink to="/dashboard" v-if="isLoggedIn">Dashboard</RouterLink>
                 <RouterLink type="href" class="linkToProfile" :to="'/profile/' + user.uid" v-if="isLoggedIn">My Profile</RouterLink>
@@ -133,7 +133,7 @@ export default {
               </div>
             </div>
           </Transition>
-        </div>
+        </div> -->
         <div class="mobileNav">
           <div :class="hamburgerClickedRef ? 'mobileMenuView' : 'mobileMenuHidden'" v-if="hamburgerClickedRef">
             <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
@@ -192,7 +192,7 @@ export default {
 /* mobile first css */
 @media screen and (max-width: 800px) {
 
-  .mobileNavOptions {
+  /* .mobileNavOptions {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -208,7 +208,6 @@ export default {
     position: absolute;
     right: 0;
     margin-right: 20px;
-    /* margin-left: 0vw; */
   }
 
   .mobileMenuView {
@@ -235,7 +234,6 @@ export default {
   }
 
   .dashboardView {
-    /* height: 50vh; */
   }
 
   .bounce-enter-active {
@@ -243,7 +241,7 @@ export default {
   }
   .bounce-leave-active {
     animation: bounce-in 0.5s reverse;
-  }
+  } */
 
   .spin {
  animation: spin 10s linear infinite;
@@ -270,7 +268,7 @@ export default {
     }
   }
 
-  .dropbtn {
+  /* .dropbtn {
     background-color: white;
     padding: 5px;
     font-size: 12px;
@@ -290,7 +288,7 @@ export default {
     transition: all 0.2s ease;
     background-color: white;
     padding: 2px 0px 0px 2px;
-  }
+  } */
   .messageWrapper {
     border-top: 1px solid rgba(65,84,104, .1);
     box-shadow: #415468;
