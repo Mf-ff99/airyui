@@ -404,30 +404,41 @@ export default {
 }
 
 /* styles applied to both mobile and desktop */
-.submit-button {
-            width: 100px;
-            height: 50px;
-            background-color: #415468;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-        }
 
-        /* Loading animation using keyframes */
-        @keyframes slide {
-            0% {
-                width: 100px;
-            }
-            100% {
-                width: 40px;
-            }
-        }
-        /* Style for the loading state */
-        .loading {
-            background-color: #ccc;
-            animation: slide 1s linear infinite;
-        }
+/* dark mode */
+@media (prefers-color-scheme: dark) {
+  .messageBodyWrapperRecipient {
+    color: white;
+  }
+
+  .messageFooter {
+    color: white !important;
+  }
+}
+.submit-button {
+    width: 100px;
+    height: 50px;
+    background-color: #415468;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+/* Loading animation using keyframes */
+@keyframes slide {
+    0% {
+        width: 100px;
+    }
+    100% {
+        width: 40px;
+    }
+}
+/* Style for the loading state */
+.loading {
+    background-color: #ccc;
+    animation: slide 1s linear infinite;
+}
 
 </style>

@@ -312,8 +312,12 @@ export default {
 /* color scheme for dark/light mode */
 @media (prefers-color-scheme: dark) {
   #app {
-    background-color: black !important;
-    color: black !important;
+    background-color: gray !important;
+    /* color: black !important; */
+  }
+
+  .message {
+    color: white !important;
   }
 
   h1 {
@@ -334,7 +338,7 @@ export default {
   }
   
   .messageWrapper div {
-    color: black !important;
+    /* color: black !important; */
   }
 
   main {
