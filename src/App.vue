@@ -312,7 +312,7 @@ export default {
 /* color scheme for dark/light mode */
 @media (prefers-color-scheme: dark) {
   #app {
-    background-color: gray !important;
+    /* background-color: gray !important; */
     /* color: black !important; */
   }
 
