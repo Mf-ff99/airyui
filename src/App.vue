@@ -201,6 +201,18 @@ export default {
     animation: bounce-in 0.5s reverse;
   }
 
+  @keyframes rotate-cog {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(90deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+
   @keyframes bounce-in {
     0% {
       transform: translateY(-100%);
@@ -313,6 +325,7 @@ export default {
 @media (prefers-color-scheme: dark) {
   #app {
     /* background color for dark mode */
+    background-color: black !important;
   }
 
   .message {
@@ -341,7 +354,7 @@ export default {
   }
 
   main {
-    background-color: black !important;
+    /* background-color: black !important; */
     color: white !important;
   }
 
@@ -357,6 +370,31 @@ export default {
 
   div.messageCreatedDate {
     color: white !important;
+  }
+
+  .dropdown {
+    background-color: black;
+    top: 0px;
+    padding-top: 20px;
+    color: white !important;
+    border: 1px solid red;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .dropbtn {
+    background-color: black;
+    /* filter: invert(100%); */
+  }
+
+  .dropbtn:active {
+    /* animation */
+    animation: rotate-cog .8s;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .dropbtn img {
+    background-color: white;
+    filter: invert(100%);
   }
 }
 
