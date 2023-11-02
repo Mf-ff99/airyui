@@ -180,10 +180,10 @@ export default {
     margin-top: 35px;
     transition: all .5s ease-in-out;
     border-radius: 5px;
-    border: 1px solid #eee;
+    border: 2px solid #eee;
     z-index: 1;
     padding-top: 10px;
-    animation: bounce-in 0.5s;
+    /* animation: bounce-in .8s; */
   }
 
   .mobileMenuHidden {
@@ -195,7 +195,7 @@ export default {
   }
 
   .bounce-enter-active {
-    animation: bounce-in 0.5s;
+    animation: bounce-in 0.8s;
   }
   .bounce-leave-active {
     animation: bounce-in 0.5s reverse;
@@ -216,11 +216,14 @@ export default {
   @keyframes bounce-in {
     0% {
       transform: translateY(-100%);
+      opacity: 0;
     }
     100% {
       transform: translateY(0);
+      opacity: 1;
     }
   }
+
   .splash {
     display: flex;
     flex-direction: column;
@@ -376,9 +379,7 @@ export default {
     background-color: black;
     top: 0px;
     padding-top: 20px;
-    color: white !important;
-    border: 1px solid red;
-    transition: all 0.5s ease-in-out;
+    color: white  !important;
   }
 
   .dropbtn {
