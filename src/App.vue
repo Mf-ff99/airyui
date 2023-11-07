@@ -324,12 +324,39 @@ export default {
 
 }
 
+.submitForm textarea:active {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none; /*remove the resize handle on the bottom right*/
+}
+
 /* color scheme for dark/light mode */
 @media (prefers-color-scheme: dark) {
   #app {
     /* background color for dark mode */
     background-color: black !important;
   }
+
+  .submitForm {
+    background-color: rgb(56,42,88) !important;
+  }
+
+  .submit-button {
+    background-color: rgba(159, 179, 180, 0.8) !important;
+    color: black !important;
+  }
+
+  .submitForm textarea {
+    background-color: rgb(56,42,88) !important;
+    color: #eee !important;
+  }
+
 
   .message {
     color: white !important;
