@@ -88,8 +88,8 @@ export default {
           <button @click="handleDropdownClick()" class="dropbtn">
             <img :class="{ spin: settingsCogSpinner }" :src="settingsCog" alt="settings cog" />
           </button>
-          <Transition name="bounce">
-            <div class="scrollCheckboxWrapper" v-if="showDropdown">
+          <!-- <Transition name="bounce"> -->
+            <div :class="showDropdown ? 'dropdownMenu' : 'hiddenDropdownMenu'">
               <div class="mobileNavOptions">
                 <a class="loginButton" @click="signUserIn" v-if="!isLoggedIn">Login</a>
                 <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink> 
@@ -106,7 +106,7 @@ export default {
                 </div>
               </div>
             </div>
-          </Transition>
+          <!-- </Transition> -->
         </div>
       </nav>
     </div>
@@ -148,6 +148,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     flex-direction: column;
+    transition: all .8s ease-in-out;
   }
 
   .mobileNavOptions {
@@ -302,6 +303,32 @@ export default {
   .pcNavbar {
     display: none;
   }
+
+  .scrollCheckboxWrapper {
+    /* transition: all .8s ease-in-out; */
+  }
+
+  .dropdown {
+    background-color: rgba(159, 179, 180, 0);
+    padding: 20px;
+  }
+
+  .dropdownMenu {
+    transform: translateY(0);
+    transition: all .8s ease-in-out;
+    background-color: black;
+    /* padding: 20px; */
+    padding-left: 5px;
+    padding-bottom: 5px;
+    /* border-radius: 3px; */
+    border-bottom: 1px solid rgba(159, 179, 180, 1);
+    z-index: 1;
+  }
+  
+  .hiddenDropdownMenu {
+    transition: all .8s ease-in-out;
+    transform: translateY(-500px)
+  }
 }
 
 @media screen and (min-width: 800px) {
@@ -328,11 +355,9 @@ export default {
   border: none;
   overflow: auto;
   outline: none;
-
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-
   resize: none; /*remove the resize handle on the bottom right*/
 }
 
@@ -403,15 +428,15 @@ export default {
   }
 
   .dropdown {
-    background-color: black;
+    background-color: rgba(159, 179, 180, 0);
     top: 0px;
-    padding-top: 20px;
     color: white  !important;
   }
 
   .dropbtn {
     background-color: black;
     /* filter: invert(100%); */
+    z-index: 2;
   }
 
   .dropbtn:active {
